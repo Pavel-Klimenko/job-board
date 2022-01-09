@@ -1,6 +1,13 @@
 ![Logo](https://github.com/Pavel-Klimenko/job-board/blob/master/public/img/logo.png)
 
-Биржа труда для программистов.
+<h1>Job Board</h1>
+<h3>Биржа труда для программистов</h3>
+Использован адаптивный шаблон с сайта: https://colorlib.com/
+
+Стек технологий:
+PHP Version 7.4.27
+Laravel Framework 8.65.0
+MySQL
 
 Основный разделы портала:
 
