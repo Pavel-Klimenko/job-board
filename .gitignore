@@ -12,5 +12,7 @@ yarn-error.log
 .idea
 /.vscode
 /.env
-/.env.example
 /storage/logs/
+/storage/framework/cache/data/
+/storage/framework/sessions/
+/storage/framework/views/
