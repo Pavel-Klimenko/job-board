@@ -36,7 +36,7 @@ MySQL
 
 <h3>Установка проекта:</h3>
 
-1) Клонировать проект на сервер
+1) Клонировать проект на сервер: git clone https://github.com/Pavel-Klimenko/job-board.git
 2) Установить внешние покеты PHP: composer install
 3) Установить внешние покеты JS: npm install
 4) Скопировать файл .env.example в .env в корневой папке: copy .env.example .env
