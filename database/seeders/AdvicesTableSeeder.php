@@ -1,7 +1,7 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\InterviewAdvices;
+use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Models\Vacancies;
 use App\Constants;
@@ -22,7 +22,7 @@ class AdvicesTableSeeder extends Seeder
         $company = User::where('NAME', 'EPAM')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
 
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,
@@ -34,7 +34,7 @@ class AdvicesTableSeeder extends Seeder
 
         $candidate = User::where('NAME', 'Olga')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,
@@ -46,7 +46,7 @@ class AdvicesTableSeeder extends Seeder
 
         $candidate = User::where('NAME', 'Victor')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,
@@ -65,7 +65,7 @@ class AdvicesTableSeeder extends Seeder
         $company = User::where('NAME', 'iTechArt')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
 
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,
@@ -78,7 +78,7 @@ class AdvicesTableSeeder extends Seeder
         $company = User::where('NAME', 'Giperlink')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
 
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,
@@ -91,7 +91,7 @@ class AdvicesTableSeeder extends Seeder
         $company = User::where('NAME', 'Techin')->firstOrFail();
         $vacancy = Vacancies::where('COMPANY_ID', $company->id)->firstOrFail();
 
-        InterviewAdvices::create(
+        InterviewInvitations::create(
             [
                 'COMPANY_ID' => $company->id,
                 'CANDIDATE_ID' => $candidate->id,

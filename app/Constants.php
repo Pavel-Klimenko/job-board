@@ -58,8 +58,4 @@ class Constants
         'review-igor' => '/img/demoData/reviews/igor.png',
         'review-pavel' => '/img/demoData/reviews/pavel.jpg',
     ];
-
-
-
-
 }

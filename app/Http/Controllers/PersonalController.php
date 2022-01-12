@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\JobCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Vacancies;
-use App\Models\InterviewAdvices;
+use App\Models\InterviewInvitations;
 use App\Services\Helper;
 use App\Constants;
 
@@ -39,7 +37,7 @@ class PersonalController extends BaseController
         $title = 'Company vacancies';
         $user = auth()->user();
 
-        $itemsOnPage = 2;
+        $itemsOnPage = 4;
         $vacancies = User::find($user->id)
             ->vacancies()
             ->paginate($itemsOnPage)
@@ -90,7 +88,7 @@ class PersonalController extends BaseController
 
     public function changeAdviceStatus($ADVICE_ID, $STATUS)
     {
-        $advice = InterviewAdvices::find($ADVICE_ID);
+        $advice = InterviewInvitations::find($ADVICE_ID);
         $advice->STATUS = $STATUS;
         $advice->save();
         return back();
@@ -100,7 +98,7 @@ class PersonalController extends BaseController
     public function createInterviewInvite(Request $request)
     {
 
-        $invitation = new InterviewAdvices();
+        $invitation = new InterviewInvitations();
         $vacancy = Helper::getTableRow(Vacancies::class, 'ID', $request->VACANCY_ID);
 
 

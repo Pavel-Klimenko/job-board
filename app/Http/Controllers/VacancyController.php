@@ -1,14 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\InterviewAdvices;
+use App\Models\InterviewInvitations;
 use App\Models\JobCategories;
 use App\Models\User;
 use App\Services\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 use App\Models\Vacancies;
 
 
@@ -60,7 +59,7 @@ class VacancyController extends BaseController
 
         }
 
-        $itemsOnPage = 2;
+        $itemsOnPage = 4;
         $vacancies = $vacancies->paginate($itemsOnPage)->withQueryString();
 
 
@@ -120,7 +119,7 @@ class VacancyController extends BaseController
         if ($isCandidateFlag) {
             $candidate = auth()->user();
 
-            $candidateInvitation = InterviewAdvices::select('ID','STATUS')
+            $candidateInvitation = InterviewInvitations::select('ID','STATUS')
                 ->where('CANDIDATE_ID', $candidate->id)
                 ->where('COMPANY_ID', $company->id)
                 ->where('VACANCY_ID', $vacancy->ID)
@@ -135,8 +134,6 @@ class VacancyController extends BaseController
             return view('detail_pages.vacancy',
                 compact('vacancy', 'category', 'company'));
         }
-
-
     }
 
 

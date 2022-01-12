@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use TCG\Voyager\Models\Role;
 use App\Constants;
 use App\Services\Helper;
-use App\Models\InterviewAdvices;
+use App\Models\InterviewInvitations;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -63,21 +63,21 @@ class User extends \TCG\Voyager\Models\User
     public function allAdvices()
     {
         $foreingKey = $this->foreignKey();
-        return $this->hasMany(InterviewAdvices::class, $foreingKey);
+        return $this->hasMany(InterviewInvitations::class, $foreingKey);
     }
 
     //подтвержденные
     public function acceptedAdvices()
     {
         $foreingKey = $this->foreignKey();
-        return $this->hasMany(InterviewAdvices::class, $foreingKey)
+        return $this->hasMany(InterviewInvitations::class, $foreingKey)
             ->where('invitations_to_interview.STATUS', Constants::INTERVIEW_ADVICES_STATUSES['ACCEPTED']);
     }
 
     public function rejectedAdvices()
     {
         $foreingKey = $this->foreignKey();
-        return $this->hasMany(InterviewAdvices::class, $foreingKey)
+        return $this->hasMany(InterviewInvitations::class, $foreingKey)
             ->where('invitations_to_interview.STATUS', Constants::INTERVIEW_ADVICES_STATUSES['REJECTED']);
     }
 

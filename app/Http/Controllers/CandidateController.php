@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InterviewInvitations;
 use App\Models\User;
-use App\Models\Vacancies;
 use App\Services\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
-use App\Constants;
 use App\Models\JobCategories;
 
 
@@ -111,8 +107,7 @@ class CandidateController extends BaseController
 
 
     public function createVacancyInquiry(Request $request) {
-        //COMPANY_ID=1&CANDIDATE_ID=10&VACANCY_ID=64&COVERING_LETTER=test
-        $inquries = new CandidatesInquries();
+        $inquries = new InterviewInvitations();
         $inquries->COMPANY_ID = $request->COMPANY_ID;
         $inquries->CANDIDATE_ID = $request->CANDIDATE_ID;
         $inquries->VACANCY_ID = $request->VACANCY_ID;
