@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+Route::get('test', [Controllers\TestController::class, 'testMethod']);
+
+//Route::get('rendermail', function() {
+//    return Mail::render('mail.candidateNotification', [
+//        'sender' => (object)['name' => 'test', 'email' => 'test@gmail.com', 'message' => 'Test message', 'subject' => 'Test subject']
+//    ]);
+//});
 
 
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
