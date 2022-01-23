@@ -108,7 +108,7 @@ class UsersTableSeeder extends Seeder
             'NAME' => 'Alexander',
             'ICON' => Constants::DEMO_ICONS[2],
             'IMAGE' => Constants::DEMO_IMAGES['candidate-alexander'],
-            'EMAIL' => 'Alexander@test.com',
+            'EMAIL' => 'mr-freeman89@mail.ru',
             'PHONE' => '+49715811132',
             'password' => bcrypt('almaz'),
             'role_id' => $roleCandidate->id,

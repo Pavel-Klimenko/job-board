@@ -11,6 +11,7 @@ use App\Models\JobCategories;
 
 
 
+
 class CandidateController extends BaseController
 {
 
@@ -77,6 +78,17 @@ class CandidateController extends BaseController
      */
     public function getCandidate($id)
     {
+
+/*        $cachedItem = Redis::get('candidate_' . $id);
+        dump($cachedItem);
+        //caching
+        if(isset($cachedItem)) {
+            $candidate = json_decode($cachedItem, FALSE);
+        }else {
+            $candidate = User::find($id);
+            Redis::set('candidate_' . $id, $candidate);
+        }*/
+
         $candidate = User::find($id);
 
         $isCompanyFlag = Helper::isCompany();

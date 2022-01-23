@@ -6,11 +6,14 @@ use App\Models\JobCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
+use App\Events\CandidateInvitation;
 use App\Models\User;
 use App\Models\Vacancies;
 use App\Models\InterviewInvitations;
 use App\Services\Helper;
 use App\Constants;
+
+
 
 
 class PersonalController extends BaseController
@@ -109,6 +112,26 @@ class PersonalController extends BaseController
             $invitation->VACANCY_ID = $request->VACANCY_ID;
             $invitation->VACANCY_NAME = $vacancy->NAME;
             $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['ACCEPTED'];
+
+
+            $candidate = User::find($request->CANDIDATE_ID);
+
+            //sending notification to candidate email
+            $date = (object)[
+                'name' => Constants::SITE_NAME,
+                'email' => Constants::EMAIL,
+                'message' => 'You are invited for an interview!',
+                'subject' => 'New interview invitation!',
+                'candidate_email' => $candidate->EMAIL,
+                'company_name' => Auth::user()->NAME,
+                'company_email' => Auth::user()->EMAIL,
+                'company_phone' => Auth::user()->PHONE,
+                'company_website' => Auth::user()->WEB_SITE,
+                'vacancy_id' => $request->VACANCY_ID,
+                'vacancy_name' => $vacancy->NAME,
+            ];
+
+            event(new CandidateInvitation($date));
         }
 
 

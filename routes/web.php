@@ -16,14 +16,16 @@ use \Illuminate\Support\Facades\Mail;
 |
 */
 
+Route::get('test-email', [Controllers\JobController::class, 'enqueue'])->name('add-mail-to-queue');
 
+
+
+//debug routs
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
+Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo']);
 
-//Route::get('rendermail', function() {
-//    return Mail::render('mail.candidateNotification', [
-//        'sender' => (object)['name' => 'test', 'email' => 'test@gmail.com', 'message' => 'Test message', 'subject' => 'Test subject']
-//    ]);
-//});
+
+
 
 
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
@@ -77,9 +79,6 @@ Route::middleware(['candidate.area'])->group(function () {
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
-
-
-Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo'])->name('phpinfo');
 
 
 

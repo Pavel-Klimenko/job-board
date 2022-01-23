@@ -6,6 +6,8 @@ class Constants
     const ADDRESS = '273 Jersey City Blvd Jersey City, NJ 07305, USA';
     const PHONE = '+100 (440) 9865 562';
     const EMAIL = 'jobBoardIT@gmail.com';
+    const SITE_NAME = 'jobBoard';
+
 
     const USER_ROLE_NAMES = [
         'admin' => 'admin',
