@@ -47,13 +47,5 @@ class SendCandidateNotification extends Controller
 
 
         SendEmail::dispatch($details);
-
-
-/*         Mail::queue('mail.candidateNotification', ['date' => $event->date], function($message) use ($event) {
-             $message->from($event->date->email, $event->date->name);
-             $message->to('mr-freeman89@mail.ru');
-             $message->subject($event->date->subject);
-         });*/
-
     }
 }
