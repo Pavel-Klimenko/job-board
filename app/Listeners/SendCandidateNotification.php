@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use \Illuminate\Support\Facades\Mail;
-use App\Jobs\QueueSenderEmail;
 use App\Jobs\SendEmail;
 
 class SendCandidateNotification extends Controller

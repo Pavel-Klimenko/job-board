@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Redis;
 class RedisService
 {
 
-
     public function __construct()
     {
         Redis::connect('localhost');
