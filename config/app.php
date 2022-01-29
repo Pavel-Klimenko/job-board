@@ -232,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'helper' => App\Facades\HelperFacade::class,
+        'redisService' => App\Facades\RedisServiceFacade::class,
         'Constants' => App\Constants::class,
     ],
 

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Services\Helper;
+use App\Services\RedisService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\JobCategories;
+use Illuminate\Support\Facades\Redis;
 
 
 
@@ -79,17 +81,19 @@ class CandidateController extends BaseController
     public function getCandidate($id)
     {
 
-/*        $cachedItem = Redis::get('candidate_' . $id);
-        dump($cachedItem);
-        //caching
-        if(isset($cachedItem)) {
-            $candidate = json_decode($cachedItem, FALSE);
+        $redisService = new RedisService();
+
+        $cachedObject = $redisService->getObjectIntoCache('candidate_'.$id);
+
+        if (isset($cachedObject) && $cachedObject) {
+            $candidate = $cachedObject;
+            echo 'вернул из кеша';
         }else {
             $candidate = User::find($id);
-            Redis::set('candidate_' . $id, $candidate);
-        }*/
+            $redisService->putObjectIntoCache('candidate_'.$id, $candidate);
+            echo 'добавил в кеш';
+        }
 
-        $candidate = User::find($id);
 
         $isCompanyFlag = Helper::isCompany();
         $isCandidate = Helper::isCandidate();

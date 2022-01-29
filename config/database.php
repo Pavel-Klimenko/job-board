@@ -117,9 +117,9 @@ return [
     |
     */
 
-/*    'redis' => [
+    'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'predis'),
+        'client' => env('REDIS_CLIENT', 'phpredis'),
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
@@ -127,7 +127,7 @@ return [
         ],
 
         'default' => [
-            'url' => env('REDIS_URL'),
+            'url' => env('REDIS_URL','tcp://127.0.0.1:6379?database=0'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', '6379'),
@@ -142,5 +142,5 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
-    ],*/
+    ],
 ];
