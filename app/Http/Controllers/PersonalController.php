@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VacancyInterviewRequest;
 use App\Models\JobCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,11 +90,41 @@ class PersonalController extends BaseController
 
 
 
-    public function changeAdviceStatus($ADVICE_ID, $STATUS)
+    public function changeAdviceStatus($INVITE_ID, $STATUS)
     {
-        $advice = InterviewInvitations::find($ADVICE_ID);
-        $advice->STATUS = $STATUS;
-        $advice->save();
+
+        $invitation = InterviewInvitations::find($INVITE_ID);
+        $candidate = User::find($invitation->CANDIDATE_ID);
+        $company = User::find($invitation->COMPANY_ID);
+
+
+        $invitation->STATUS = $STATUS;
+        $invitation->save();
+
+
+        //sending notification to candidate email
+        if ($STATUS == 'rejected') {
+            $message = 'Unfortunately company can\'t invite you to the interview';
+        } elseif ($STATUS == 'accepted') {
+            $message = 'You have been invited for an interview';
+        }
+
+
+       $date = (object)[
+            'name' => Constants::SITE_NAME,
+            'email' => Constants::EMAIL,
+            'message' => $message,
+            'candidate_email' => $candidate->EMAIL,
+            'company_name' => $company->NAME,
+            'company_email' => $company->EMAIL,
+            'company_phone' => $company->PHONE,
+            'company_website' => $company->WEB_SITE,
+            'vacancy_id' => $invitation->VACANCY_ID,
+            'vacancy_name' => $invitation->VACANCY_NAME,
+        ];
+
+
+        event(new CandidateInvitation($date));
         return back();
     }
 
@@ -121,7 +152,6 @@ class PersonalController extends BaseController
                 'name' => Constants::SITE_NAME,
                 'email' => Constants::EMAIL,
                 'message' => 'You are invited for an interview!',
-                'subject' => 'New interview invitation!',
                 'candidate_email' => $candidate->EMAIL,
                 'company_name' => Auth::user()->NAME,
                 'company_email' => Auth::user()->EMAIL,
@@ -143,6 +173,29 @@ class PersonalController extends BaseController
             $invitation->VACANCY_NAME = $vacancy->NAME;
             $invitation->CANDIDATE_COVERING_LETTER = $request->CANDIDATE_COVERING_LETTER;
             $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['NO_STATUS'];
+
+
+            $candidate = User::find(Auth::user()->id);
+            $company = User::find($request->COMPANY_ID);
+
+            //sending notification to candidate email
+            $date = (object)[
+                'name' => Constants::SITE_NAME,
+                'email' => Constants::EMAIL,
+                //'template' => '',
+                'message' => 'Candidate send ad interview request',
+                'company_email' => $company->EMAIL,
+                'candidate_id' => $candidate->id,
+                'candidate_name' => $candidate->NAME,
+                'candidate_email' => $candidate->EMAIL,
+                'candidate_phone' => $candidate->PHONE,
+                'covering_letter' => $request->CANDIDATE_COVERING_LETTER,
+                'vacancy_id' => $request->VACANCY_ID,
+                'vacancy_name' => $vacancy->NAME,
+            ];
+
+            event(new VacancyInterviewRequest($date));
+
         }
 
         $invitation->save();

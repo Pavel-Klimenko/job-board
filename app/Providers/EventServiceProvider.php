@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\VacancyInterviewRequest;
+use App\Listeners\SendCompanyNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -33,6 +35,11 @@ class EventServiceProvider extends ServiceProvider
         Event::listen(
             CandidateInvitation::class,
             [SendCandidateNotification::class, 'handle']
+        );
+
+        Event::listen(
+            VacancyInterviewRequest::class,
+            [SendCompanyNotification::class, 'handle']
         );
     }
 }

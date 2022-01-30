@@ -5,6 +5,7 @@ use App\Models\InterviewInvitations;
 use App\Models\JobCategories;
 use App\Models\User;
 use App\Services\Helper;
+use App\Services\RedisService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
@@ -110,6 +111,21 @@ class VacancyController extends BaseController
     {
 
         $vacancy = Vacancies::find($id);
+
+/*        $redisService = new RedisService();
+
+        $cachedObject = $redisService->getObjectIntoCache('vacancy_'.$id);
+
+        if (isset($cachedObject) && $cachedObject) {
+            $vacancy = $cachedObject;
+            echo 'вернул из кеша';
+        }else {
+            $vacancy = Vacancies::find($id);
+            $redisService->putObjectIntoCache('vacancy_'.$id, $vacancy);
+            echo 'добавил в кеш';
+        }*/
+
+
         $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
         $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);
 

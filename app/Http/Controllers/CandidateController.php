@@ -9,8 +9,6 @@ use App\Services\RedisService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\JobCategories;
-use Illuminate\Support\Facades\Redis;
-
 
 
 
@@ -81,7 +79,9 @@ class CandidateController extends BaseController
     public function getCandidate($id)
     {
 
-        $redisService = new RedisService();
+        $candidate = User::find($id);
+
+/*        $redisService = new RedisService();
 
         $cachedObject = $redisService->getObjectIntoCache('candidate_'.$id);
 
@@ -92,7 +92,7 @@ class CandidateController extends BaseController
             $candidate = User::find($id);
             $redisService->putObjectIntoCache('candidate_'.$id, $candidate);
             echo 'добавил в кеш';
-        }
+        }*/
 
 
         $isCompanyFlag = Helper::isCompany();

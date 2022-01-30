@@ -1,11 +1,6 @@
 <?php
 
 namespace App\Services;
-
-use App\Models\JobCategories;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Roles;
-use App\Constants;
 use Illuminate\Support\Facades\Redis;
 
 class RedisService
@@ -28,6 +23,5 @@ class RedisService
         $value = Redis::get($keyName);
         return unserialize($value);
     }
-
 
 }

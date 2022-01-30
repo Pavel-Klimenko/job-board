@@ -32,8 +32,8 @@ class EmailForQueuing extends Mailable
     public function build()
     {
         return $this->from(Constants::EMAIL, 'JobBoard notification')
-            ->subject('interview invitation')
-            ->view('mail.candidateNotification')
+            ->subject('JobBoard notification')
+            ->view('mail.companyNotification')
             ->with('data', $this->details);
     }
 }

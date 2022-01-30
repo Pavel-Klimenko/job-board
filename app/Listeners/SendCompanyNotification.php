@@ -3,13 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\CandidateInvitation;
+use App\Events\VacancyInterviewRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use \Illuminate\Support\Facades\Mail;
 use App\Jobs\SendEmail;
 
-class SendCandidateNotification extends Controller
+class SendCompanyNotification extends Controller
 {
     /**
      * Create the event listener.
@@ -27,18 +28,19 @@ class SendCandidateNotification extends Controller
      * @param  CandidateInvitation  $event
      * @return void
      */
-    public function handle(CandidateInvitation $event)
+    public function handle(VacancyInterviewRequest $event)
     {
 
         $details = [
             'name' => $event->date->name,
             'email' => $event->date->email,
-            'email_to' => $event->date->candidate_email,
+            'email_to' => $event->date->company_email,
             'message' => $event->date->message,
-            'company_name' => $event->date->company_name,
-            'company_email' => $event->date->company_email,
-            'company_phone' => $event->date->company_phone,
-            'company_website' => $event->date->company_website,
+            'candidate_id' => $event->date->candidate_id,
+            'candidate_name' => $event->date->candidate_name,
+            'candidate_email' => $event->date->candidate_email,
+            'candidate_phone' => $event->date->candidate_phone,
+            'covering_letter' => $event->date->covering_letter,
             'vacancy_id' => $event->date->vacancy_id,
             'vacancy_name' => $event->date->vacancy_name,
         ];
