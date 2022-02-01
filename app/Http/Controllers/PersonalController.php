@@ -15,11 +15,8 @@ use App\Services\Helper;
 use App\Constants;
 
 
-
-
 class PersonalController extends BaseController
 {
-
     public function getPersonalInfo()
     {
         $user = auth()->user();
@@ -109,7 +106,6 @@ class PersonalController extends BaseController
             $message = 'You have been invited for an interview';
         }
 
-
        $date = (object)[
             'name' => Constants::SITE_NAME,
             'email' => Constants::EMAIL,
@@ -122,7 +118,6 @@ class PersonalController extends BaseController
             'vacancy_id' => $invitation->VACANCY_ID,
             'vacancy_name' => $invitation->VACANCY_NAME,
         ];
-
 
         event(new CandidateInvitation($date));
         return back();
@@ -144,11 +139,10 @@ class PersonalController extends BaseController
             $invitation->VACANCY_NAME = $vacancy->NAME;
             $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['ACCEPTED'];
 
-
             $candidate = User::find($request->CANDIDATE_ID);
 
             //sending notification to candidate email
-            $date = (object)[
+            $date = (object) [
                 'name' => Constants::SITE_NAME,
                 'email' => Constants::EMAIL,
                 'message' => 'You are invited for an interview!',
@@ -173,7 +167,6 @@ class PersonalController extends BaseController
             $invitation->VACANCY_NAME = $vacancy->NAME;
             $invitation->CANDIDATE_COVERING_LETTER = $request->CANDIDATE_COVERING_LETTER;
             $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['NO_STATUS'];
-
 
             $candidate = User::find(Auth::user()->id);
             $company = User::find($request->COMPANY_ID);
@@ -224,7 +217,6 @@ class PersonalController extends BaseController
 
             $user->save();
             return back();
-
     }
 
 
@@ -262,6 +254,5 @@ class PersonalController extends BaseController
         $user->save();
         return back();
     }
-
 
 }

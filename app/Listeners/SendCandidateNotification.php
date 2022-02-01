@@ -4,10 +4,11 @@ namespace App\Listeners;
 
 use App\Events\CandidateInvitation;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendEmailToCandidate;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use \Illuminate\Support\Facades\Mail;
-use App\Jobs\SendEmail;
+use App\Jobs\SendEmailToCompany;
 
 class SendCandidateNotification extends Controller
 {
@@ -43,7 +44,6 @@ class SendCandidateNotification extends Controller
             'vacancy_name' => $event->date->vacancy_name,
         ];
 
-
-        SendEmail::dispatch($details);
+        SendEmailToCandidate::dispatch($details)->onQueue('candidate-notification');
     }
 }

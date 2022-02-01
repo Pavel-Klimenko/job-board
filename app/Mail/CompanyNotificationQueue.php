@@ -8,7 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Constants;
 
-class EmailForQueuing extends Mailable
+class CompanyNotificationQueue extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,7 +32,7 @@ class EmailForQueuing extends Mailable
     public function build()
     {
         return $this->from(Constants::EMAIL, 'JobBoard notification')
-            ->subject('JobBoard notification')
+            ->subject('Candidate applied vacancy')
             ->view('mail.companyNotification')
             ->with('data', $this->details);
     }

@@ -6,7 +6,7 @@ use App\Constants;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
-use App\Jobs\SendEmail;
+use App\Jobs\SendEmailToCompany;
 use App\Http\Controllers\Controller;
 
 class JobController extends BaseController
@@ -21,7 +21,7 @@ class JobController extends BaseController
     public function enqueue(Request $request)
     {
         $details = ['email' => 'mr-freeman89@mail.ru'];
-        SendEmail::dispatch($details);
+        SendEmailToCompany::dispatch($details);
     }
 
 }

@@ -8,10 +8,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\EmailForQueuing;
+use App\Mail\CompanyNotificationQueue;
 use \Illuminate\Support\Facades\Mail;
 
-class SendEmail implements ShouldQueue
+class SendEmailToCompany implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,7 +35,7 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        $email = new EmailForQueuing($this->details);
+        $email = new CompanyNotificationQueue($this->details);
         Mail::to($this->details['email_to'])->send($email);
     }
 }

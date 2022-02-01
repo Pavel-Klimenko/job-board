@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use \Illuminate\Support\Facades\Mail;
-use App\Jobs\SendEmail;
+use App\Jobs\SendEmailToCompany;
 
 class SendCompanyNotification extends Controller
 {
@@ -30,7 +30,6 @@ class SendCompanyNotification extends Controller
      */
     public function handle(VacancyInterviewRequest $event)
     {
-
         $details = [
             'name' => $event->date->name,
             'email' => $event->date->email,
@@ -45,7 +44,6 @@ class SendCompanyNotification extends Controller
             'vacancy_name' => $event->date->vacancy_name,
         ];
 
-
-        SendEmail::dispatch($details);
+        SendEmailToCompany::dispatch($details)->onQueue('company-notification');
     }
 }

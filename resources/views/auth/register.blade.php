@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Registration
+@endsection
+
 @section('content')
     <div class="job_details_area">
         <div class="container">
