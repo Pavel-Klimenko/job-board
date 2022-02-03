@@ -1,15 +1,19 @@
 <?php
 
 namespace App\Services;
+
+use App\Contracts\CacheContract;
 use Illuminate\Support\Facades\Redis;
 
-class RedisService
+class RedisCache implements CacheContract
 {
 
-    public function __construct()
-    {
-        Redis::connect('localhost');
-    }
+    //сделать проверку подключен ли redis
+
+//    public function __construct()
+//    {
+//        Redis::connect('localhost');
+//    }
 
 
     public function putObjectIntoCache($keyName, $object)
@@ -22,6 +26,11 @@ class RedisService
     {
         $value = Redis::get($keyName);
         return unserialize($value);
+    }
+
+    public function test()
+    {
+        echo 'redis!!!';
     }
 
 }

@@ -1,11 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Contracts\CacheContract;
 use App\Models\InterviewInvitations;
 use App\Models\JobCategories;
 use App\Models\User;
 use App\Services\Helper;
-use App\Services\RedisService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
@@ -14,6 +14,13 @@ use App\Models\Vacancies;
 
 class VacancyController extends BaseController
 {
+
+    protected $cacheService;
+
+    public function __construct(CacheContract $cacheService){
+        $this->cacheService = $cacheService;
+    }
+
 
     public function getVacancies(Request $request)
     {
@@ -109,22 +116,15 @@ class VacancyController extends BaseController
 
     public function getVacancy($id)
     {
-
-        $vacancy = Vacancies::find($id);
-
-/*        $redisService = new RedisService();
-
-        $cachedObject = $redisService->getObjectIntoCache('vacancy_'.$id);
-
+        $cachedObject = $this->cacheService->getObjectIntoCache('vacancy_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $vacancy = $cachedObject;
-            echo 'вернул из кеша';
+            //echo 'вернул из кеша';
         }else {
             $vacancy = Vacancies::find($id);
-            $redisService->putObjectIntoCache('vacancy_'.$id, $vacancy);
-            echo 'добавил в кеш';
-        }*/
-
+            $this->cacheService->putObjectIntoCache('vacancy_'.$id, $vacancy);
+            //echo 'добавил в кеш';
+        }
 
         $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
         $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);

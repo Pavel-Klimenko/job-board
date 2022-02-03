@@ -155,14 +155,13 @@ return [
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
-        //Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         //Custom Helper class
-        App\Providers\HelperServiceProvider::class,
+        App\Providers\CacheServiceProvider::class,
 
 
         /*
@@ -220,7 +219,7 @@ return [
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'RateLimiter' => Illuminate\Support\Facades\RateLimiter::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        //'Redis' => Illuminate\Support\Facades\Redis::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
@@ -232,7 +231,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'helper' => App\Facades\HelperFacade::class,
-        'redisService' => App\Facades\RedisServiceFacade::class,
         'Constants' => App\Constants::class,
     ],
 

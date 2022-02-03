@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Contracts\CacheContract;
+use App\Models\User;
 use App\Services\Helper;
 use App\Constants;
 use Illuminate\Http\Request;
@@ -11,6 +13,14 @@ use App\Models\UserMessages;
 
 class ContactController extends BaseController
 {
+
+    protected $cacheService;
+
+    public function __construct(CacheContract $cacheService){
+        $this->cacheService = $cacheService;
+    }
+
+
     /**Rendering the page with JobBoard info
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -21,6 +31,16 @@ class ContactController extends BaseController
           'PHONE' => Constants::PHONE,
           'EMAIL' => Constants::EMAIL
         ];
+
+        $cachedObject = $this->cacheService->getObjectIntoCache('contact_data');
+        if (isset($cachedObject) && $cachedObject) {
+            $contactData = $cachedObject;
+            //echo 'вернул из кеша';
+        } else {
+            $this->cacheService->putObjectIntoCache('contact_data', $contactData);
+            //echo 'добавил в кеш';
+        }
+
         return view('contact', $contactData);
     }
 

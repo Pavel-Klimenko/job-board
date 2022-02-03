@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Services\Helper;
-use App\Services\RedisService;
+use App\Services\RedisCacheService;
+use App\Services\DatabaseCacheService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\JobCategories;
-
+use App\Contracts\CacheContract;
 
 
 class CandidateController extends BaseController
 {
+
+    protected $cacheService;
+
+    public function __construct(CacheContract $cacheService){
+        $this->cacheService = $cacheService;
+    }
+
 
     /**Get Vacancies using filter
      *
@@ -78,27 +87,19 @@ class CandidateController extends BaseController
      */
     public function getCandidate($id)
     {
-
-        $candidate = User::find($id);
-
-/*        $redisService = new RedisService();
-
-        $cachedObject = $redisService->getObjectIntoCache('candidate_'.$id);
-
+        $cachedObject = $this->cacheService->getObjectIntoCache('candidate_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $candidate = $cachedObject;
-            echo 'вернул из кеша';
-        }else {
+            //echo 'вернул из кеша';
+        } else {
             $candidate = User::find($id);
-            $redisService->putObjectIntoCache('candidate_'.$id, $candidate);
-            echo 'добавил в кеш';
-        }*/
-
+            $this->cacheService->putObjectIntoCache('candidate_'.$id, $candidate);
+            //echo 'добавил в кеш';
+        }
 
         $isCompanyFlag = Helper::isCompany();
         $isCandidate = Helper::isCandidate();
         $category = Helper::getTableRow(JobCategories::class, 'ID', $candidate->CATEGORY_ID);
-
 
         if ($isCompanyFlag) {
             $company = auth()->user();

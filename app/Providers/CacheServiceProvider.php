@@ -4,7 +4,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App;
 
-class RedisServiceServiceProvider extends ServiceProvider
+class CacheServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -13,9 +13,11 @@ class RedisServiceServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        App::bind('redisService', function () {
-            return new App\Services\RedisService();
-        });
+        if (env('CURRENT_OPERATIONAL_SYSTEM') == 'windows') {
+            $this->app->bind('App\Contracts\CacheContract','App\Services\DatabaseCache');
+        } else {
+            $this->app->bind('App\Contracts\CacheContract','App\Services\RedisCache');
+        }
     }
 
     /**

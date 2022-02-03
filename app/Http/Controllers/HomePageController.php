@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CacheContract;
 use App\Models\User;
 use App\Services\Helper;
 use Illuminate\Http\Request;
@@ -13,6 +14,13 @@ use App\Constants;
 
 class HomePageController extends Controller
 {
+
+    protected $cacheService;
+
+    public function __construct(CacheContract $cacheService){
+        $this->cacheService = $cacheService;
+    }
+
 
     public function renderHomePage()
     {
@@ -36,6 +44,7 @@ class HomePageController extends Controller
 
         $reviewsQuantuty = 10;
         $reviews = Reviews::limit($reviewsQuantuty)->get();
+
 
         return view('homepage',
             compact('cities',
