@@ -28,9 +28,10 @@ class RedisCache implements CacheContract
         return unserialize($value);
     }
 
-    public function test()
-    {
-        echo 'redis!!!';
+    public function deleteKeyFromCache($keyName) {
+
     }
+
+
 
 }

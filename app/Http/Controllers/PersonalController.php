@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 use App\Events\CandidateInvitation;
+use App\Contracts\CacheContract;
+
 use App\Models\User;
 use App\Models\Vacancies;
 use App\Models\InterviewInvitations;
@@ -17,6 +19,15 @@ use App\Constants;
 
 class PersonalController extends BaseController
 {
+
+    protected $cacheService;
+
+    public function __construct(CacheContract $cacheService){
+        $this->cacheService = $cacheService;
+    }
+
+
+
     public function getPersonalInfo()
     {
         $user = auth()->user();
@@ -251,8 +262,40 @@ class PersonalController extends BaseController
             $user->ABOUT_ME = $request->ABOUT_ME;
         }
 
+
+        $this->cacheService->deleteKeyFromCache('user_'.$user->id);
+
+
         $user->save();
         return back();
     }
+
+
+    public function updateVacancyInfo(Request $request)
+    {
+        sleep(1);
+
+        $row = $request->all();
+
+        $vacancy = Vacancies::find($request->VACANCY_ID);
+
+        $vacancy->NAME = $request->NAME;
+        $vacancy->COUNTRY = $request->COUNTRY;
+        $vacancy->CITY = $request->CITY;
+        $vacancy->CATEGORY_ID = $request->CATEGORY_ID;
+        $vacancy->COMPANY_ID = $request->COMPANY_ID;
+        $vacancy->SALARY_FROM = $request->SALARY_FROM;
+        $vacancy->DESCRIPTION = $request->DESCRIPTION;
+        $vacancy->RESPONSIBILITY = $request->RESPONSIBILITY;
+        $vacancy->QUALIFICATIONS = $request->QUALIFICATIONS;
+        $vacancy->BENEFITS = $request->BENEFITS;
+
+
+        dump($row);
+
+        //$vacancy->save();
+        //return back();
+    }
+
 
 }

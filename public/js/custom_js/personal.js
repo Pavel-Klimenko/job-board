@@ -1,7 +1,14 @@
 $( document ).ready(function() {
     $("#edit_personal_info").click(function() {
-        showEditForm();
+        showEditPersonalDataForm();
     });
+
+    $(".edit_vacancy").click(function() {
+        showEditVacancyForm();
+    });
+
+
+
 
     $('#user-image').change(function() {
         let filename = $('#user-image').val();
@@ -12,7 +19,17 @@ $( document ).ready(function() {
 });
 
 
-function showEditForm() {
+
+function showEditVacancyForm() {
+    $('.blog_details, .add_vacancy_button').hide();
+    $('.blog_details.edit-form').show();
+}
+
+
+
+
+
+function showEditPersonalDataForm() {
     $('#edit_personal_info').hide();
     $('.blog_details.user-info').hide();
 

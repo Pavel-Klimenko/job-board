@@ -119,11 +119,11 @@ class VacancyController extends BaseController
         $cachedObject = $this->cacheService->getObjectIntoCache('vacancy_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $vacancy = $cachedObject;
-            //echo 'вернул из кеша';
-        }else {
+            echo 'вернул из кеша';
+        } else {
             $vacancy = Vacancies::find($id);
             $this->cacheService->putObjectIntoCache('vacancy_'.$id, $vacancy);
-            //echo 'добавил в кеш';
+            echo 'добавил в кеш';
         }
 
         $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
@@ -155,9 +155,54 @@ class VacancyController extends BaseController
 
     public function deleteVacancy(Request $request)
     {
-        $row = Vacancies::find($request->VACANCY_ID);
-        $row->delete();
+        $vacancy = Vacancies::find($request->VACANCY_ID);
+        $vacancy->delete();
+        $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
         return back();
     }
+
+
+
+    public function updateVacancy(Request $request)
+    {
+        sleep(1);
+
+        $request->validate([
+            'NAME' => 'required|max:255',
+            'COUNTRY' => 'required|max:255',
+            'CITY' => 'required|max:255',
+            'CATEGORY_ID' => 'required|not_in:0',
+            'SALARY_FROM' => 'required|max:255',
+            'DESCRIPTION' => 'required|max:2500',
+            'RESPONSIBILITY' => 'required|max:2500',
+            'QUALIFICATIONS' => 'required|max:2500',
+            'BENEFITS' => 'required|max:2500',
+        ]);
+
+
+
+/*        $vacancies = new Vacancies();
+
+        $vacancies->NAME = $request->NAME;
+        $vacancies->ICON = Auth::user()->ICON;
+        $vacancies->IMAGE = Auth::user()->IMAGE;
+        $vacancies->COUNTRY = $request->COUNTRY;
+        $vacancies->CITY = $request->CITY;
+        $vacancies->CATEGORY_ID = $request->CATEGORY_ID;
+        $vacancies->COMPANY_ID = Auth::user()->id;
+        $vacancies->SALARY_FROM = $request->SALARY_FROM;
+        $vacancies->DESCRIPTION = $request->DESCRIPTION;
+        $vacancies->RESPONSIBILITY = Helper::convertTextPointsToJson($request->RESPONSIBILITY);
+        $vacancies->QUALIFICATIONS = Helper::convertTextPointsToJson($request->QUALIFICATIONS);
+        $vacancies->BENEFITS = $request->BENEFITS;
+        $vacancies->save();
+
+        $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
+
+        return redirect()->route('personal-vacancies');*/
+    }
+
+
+
 
 }

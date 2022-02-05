@@ -19,13 +19,11 @@ use \Illuminate\Support\Facades\Mail;
 Route::get('test-email', [Controllers\JobController::class, 'enqueue'])->name('add-mail-to-queue');
 
 
-
 //debug routs
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
+
+
 Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo']);
-
-
-
 
 
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
@@ -53,8 +51,11 @@ Route::middleware(['company.area'])->group(function () {
         Route::view('add-vacancy', 'forms.addVacancy')->name('add-vacancy');
     });
 
-    Route::post('delete-vacancy', [Controllers\VacancyController::class, 'deleteVacancy'])
+    Route::get('delete-vacancy', [Controllers\VacancyController::class, 'deleteVacancy'])
         ->name('delete-vacancy');
+
+    Route::get('update-vacancy', [Controllers\VacancyController::class, 'updateVacancy'])
+        ->name('update-vacancy');
 
     Route::group(['prefix' => 'create'], function () {
         Route::post('vacancy', [Controllers\VacancyController::class, 'createVacancy'])
@@ -101,6 +102,9 @@ Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
 
     Route::post('update-user-info', [Controllers\PersonalController::class, 'updateUserInfo'])
         ->name('update-user-info');
+
+    Route::post('update-vacancy', [Controllers\PersonalController::class, 'updateUserInfo'])
+        ->name('update-vacancy');
 });
 
 

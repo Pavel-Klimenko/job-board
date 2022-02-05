@@ -5,6 +5,5 @@ interface CacheContract
 {
     public function putObjectIntoCache($keyName, $object);
     public function getObjectIntoCache($keyName);
-
-    public function test();
+    public function deleteKeyFromCache($keyName);
 }

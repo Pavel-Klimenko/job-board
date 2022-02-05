@@ -80,11 +80,11 @@
 <script src="{{ asset('js/main.js') }}"></script>
 
 
-<script src="{{ asset('js/custom_js/general.js') }}"></script>
 
-@if (Route::current()->getName() == 'personal-info')
-    <script src="{{ asset('js/custom_js/personal.js') }}"></script>
-@endif
+<script src="{{ asset('js/custom_js/general.js') }}"></script>
+<script src="{{ asset('js/custom_js/personal.js') }}"></script>
+
+
 
 @if (Route::current()->getName() == 'register')
     <script src="{{ asset('js/custom_js/register.js') }}"></script>

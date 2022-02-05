@@ -91,11 +91,11 @@
 <script src="<?php echo e(asset('js/main.js')); ?>"></script>
 
 
-<script src="<?php echo e(asset('js/custom_js/general.js')); ?>"></script>
 
-<?php if(Route::current()->getName() == 'personal-info'): ?>
-    <script src="<?php echo e(asset('js/custom_js/personal.js')); ?>"></script>
-<?php endif; ?>
+<script src="<?php echo e(asset('js/custom_js/general.js')); ?>"></script>
+<script src="<?php echo e(asset('js/custom_js/personal.js')); ?>"></script>
+
+
 
 <?php if(Route::current()->getName() == 'register'): ?>
     <script src="<?php echo e(asset('js/custom_js/register.js')); ?>"></script>

@@ -4,6 +4,8 @@
             <div class="col-lg-8">
                 <div class="apply_job_form white-bg">
                     <h4>Add new vacancy</h4>
+
+
                     <form action="{{ route('create-vacancy') }}" method="post">
                         @csrf
                         <div class="row">
@@ -104,6 +106,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

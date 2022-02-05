@@ -1,5 +1,6 @@
 <div class="job_details_area">
     <div class="apply_job_form white-bg">
+
         <form action="{{ route('update-user-info') }}" method="post">
             @csrf
 
@@ -63,6 +64,7 @@
 
 
         </form>
+
     </div>
 </div>
 

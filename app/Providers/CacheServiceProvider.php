@@ -13,9 +13,9 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (env('CURRENT_OPERATIONAL_SYSTEM') == 'windows') {
+        if (env('CURRENT_CACHE_SERVICE') == 'database') {
             $this->app->bind('App\Contracts\CacheContract','App\Services\DatabaseCache');
-        } else {
+        } elseif(env('CURRENT_CACHE_SERVICE') == 'redis') {
             $this->app->bind('App\Contracts\CacheContract','App\Services\RedisCache');
         }
     }

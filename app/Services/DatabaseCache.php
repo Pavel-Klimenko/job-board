@@ -21,11 +21,11 @@ class DatabaseCache implements CacheContract
     }
 
 
-    public function test()
-    {
-        echo 'database!!!';
+    public function deleteKeyFromCache($keyName) {
+        if (Cache::store('database')->get($keyName)) {
+            Cache::store('database')->forget($keyName);
+        }
     }
-
 
 
 }

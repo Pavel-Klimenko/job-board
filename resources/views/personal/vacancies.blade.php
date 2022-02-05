@@ -24,11 +24,19 @@
                                             <li><a href="javascript:void(0);"><i class="fa fa-user"></i>{{$vacancy->COUNTRY}}</a></li>
                                             <li><a href="javascript:void(0);"><i class="fa fa-comments"></i>{{$vacancy->CITY}}</a></li>
                                         </ul><br/>
-                                        <form action="{{ route('delete-vacancy') }}" method="post">
+
+{{--                                        <form action="{{ route('delete-vacancy') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="VACANCY_ID" value="{{$vacancy->ID}}">
                                             <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                        </form><br/>
+                                            <button type="submit" class="btn btn-success">Edit vacancy</button>
+                                        </form><br/>--}}
+
+                                        <p>
+                                            <a class="btn btn-outline-danger" href="{{ route('delete-vacancy', ['VACANCY_ID' => $vacancy->ID]) }}">Delete</a>
+                                            <a class="btn btn-outline-success edit_vacancy">Edit vacancy</a>
+                                            {{--<a class="btn btn-outline-success save_vacancy" style="display: none" href="{{ route('update-vacancy', ['VACANCY_ID' => $vacancy->ID]) }}">Save</a>--}}
+                                        </p>
                                     @endforeach
                                 @else
                                     <div class="col-lg-12 col-md-12">
@@ -36,7 +44,14 @@
                                     </div>
                                 @endif
                             </div><br/>
-                            <a href="{{ route('add-vacancy') }}" class="btn btn-outline-success">Add new vacancy</a>
+                            <a href="{{ route('add-vacancy') }}" class="btn btn-outline-success add_vacancy_button">Add new vacancy</a>
+
+
+                            <div class="blog_details edit-form" style="display: none">
+                                @include('personal.inc.edit-forms.editVacancy')
+                            </div>
+
+
                         </article>
 
                         <!-- pagination  -->

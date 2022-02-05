@@ -1,3 +1,7 @@
+<?php $__env->startSection('title'); ?>
+    Login
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
     <div class="job_details_area">
         <div class="container">

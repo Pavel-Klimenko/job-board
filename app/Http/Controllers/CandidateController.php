@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Services\Helper;
-use App\Services\RedisCacheService;
-use App\Services\DatabaseCacheService;
+use App\Services\RedisCache;
+use App\Services\DatabaseCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\JobCategories;
 use App\Contracts\CacheContract;
+
+
+use Illuminate\Support\Facades\Redis;
 
 
 class CandidateController extends BaseController
@@ -87,14 +90,15 @@ class CandidateController extends BaseController
      */
     public function getCandidate($id)
     {
-        $cachedObject = $this->cacheService->getObjectIntoCache('candidate_'.$id);
+
+        $cachedObject = $this->cacheService->getObjectIntoCache('user_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $candidate = $cachedObject;
-            //echo 'вернул из кеша';
+            echo 'вернул из кеша';
         } else {
             $candidate = User::find($id);
-            $this->cacheService->putObjectIntoCache('candidate_'.$id, $candidate);
-            //echo 'добавил в кеш';
+            $this->cacheService->putObjectIntoCache('user_'.$id, $candidate);
+            echo 'добавил в кеш';
         }
 
         $isCompanyFlag = Helper::isCompany();

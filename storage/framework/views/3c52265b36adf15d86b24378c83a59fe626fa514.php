@@ -23,11 +23,14 @@
                                             <li><a href="javascript:void(0);"><i class="fa fa-user"></i><?php echo e($vacancy->COUNTRY); ?></a></li>
                                             <li><a href="javascript:void(0);"><i class="fa fa-comments"></i><?php echo e($vacancy->CITY); ?></a></li>
                                         </ul><br/>
-                                        <form action="<?php echo e(route('delete-vacancy')); ?>" method="post">
-                                            <?php echo csrf_field(); ?>
-                                            <input type="hidden" name="VACANCY_ID" value="<?php echo e($vacancy->ID); ?>">
-                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                        </form><br/>
+
+
+
+                                        <p>
+                                            <a class="btn btn-outline-danger" href="<?php echo e(route('delete-vacancy', ['VACANCY_ID' => $vacancy->ID])); ?>">Delete</a>
+                                            <a class="btn btn-outline-success edit_vacancy">Edit vacancy</a>
+                                            
+                                        </p>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php else: ?>
                                     <div class="col-lg-12 col-md-12">
@@ -35,7 +38,14 @@
                                     </div>
                                 <?php endif; ?>
                             </div><br/>
-                            <a href="<?php echo e(route('add-vacancy')); ?>" class="btn btn-outline-success">Add new vacancy</a>
+                            <a href="<?php echo e(route('add-vacancy')); ?>" class="btn btn-outline-success add_vacancy_button">Add new vacancy</a>
+
+
+                            <div class="blog_details edit-form" style="display: none">
+                                <?php echo $__env->make('personal.inc.edit-forms.editVacancy', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            </div>
+
+
                         </article>
 
                         <!-- pagination  -->
