@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /storage/*.key
+/storage
 /vendor
 .phpunit.result.cache
 docker-compose.override.yml
@@ -12,7 +13,3 @@ yarn-error.log
 .idea
 /.vscode
 /.env
-/storage/logs/
-/storage/framework/cache/data/
-/storage/framework/sessions/
-/storage/framework/views/

@@ -1,13 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\Helper;
-use App\Constants;
-
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailToCompany;
-use App\Http\Controllers\Controller;
+
 
 class JobController extends BaseController
 {

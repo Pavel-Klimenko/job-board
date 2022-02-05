@@ -5,21 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Services\Helper;
-use App\Services\RedisCache;
-use App\Services\DatabaseCache;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\JobCategories;
 use App\Contracts\CacheContract;
 
 
-use Illuminate\Support\Facades\Redis;
-
 
 class CandidateController extends BaseController
 {
-
     protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
