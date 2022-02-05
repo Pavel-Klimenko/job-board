@@ -1,7 +1,7 @@
 ![Logo](https://github.com/Pavel-Klimenko/job-board/blob/master/public/img/logo.png)
 
 <h1>Job Board</h1>
-<h3>Job board for software developers/h3>
+<h3>Job board for software developers</h3>
 Responsive website template from: https://colorlib.com/
 
 Technology stack:
