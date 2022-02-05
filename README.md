@@ -6,8 +6,8 @@ Responsive website template from: https://colorlib.com/
 
 Technology stack:
     
--PHP Version 7.4.27
--Laravel Framework 8.65.0
+-PHP Version 7.4.27<br/>
+-Laravel Framework 8.65.0<br/>
 -MySQL
 
 <h3>Main sections of the portal:</h3>
