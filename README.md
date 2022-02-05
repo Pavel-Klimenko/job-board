@@ -38,14 +38,14 @@ Technology stack:
 15) scheduled tasks    
 
 
-<h3>Установка проекта:</h3>
+<h3>Deploying the project:</h3>
 
-1) Клонировать проект на сервер: git clone https://github.com/Pavel-Klimenko/job-board.git
-2) Установить внешние покеты PHP: composer install
-3) Установить внешние покеты JS: npm install
-4) Скопировать файл .env.example в .env в корневой папке: copy .env.example .env
-5) Открыть файл .env и прописать подключение к базе данных проекта, название приложения и url адрес APP_URL
-6) Сгенерировать Application key: php artisan key:generate
-7) Накатить существующие миграции: php artisan migrate
-8) Заполнить сайт демо данными: php artisan db:seed --class=DemoDataSeeder
-9) Запустить Job-board!
+1) clone the project: git clone https://github.com/Pavel-Klimenko/job-board.git
+2) install external assets: composer install; npm install
+3) copy file .env.example to .env in root folder: copy .env.example .env
+5) open the .env file and set the connection to the project database, the name of the application and the url address APP_URL
+6) generate Application key: php artisan key:generate
+7) create cache folder tree: 
+mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; mkdir storage/framework/{cache,sessions,views}; mkdir storage/framework/cache/data; 
+8) create tables in database: php artisan migrate
+9) seeding demo data: php artisan db:seed --class=DemoDataSeeder
