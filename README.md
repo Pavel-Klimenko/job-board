@@ -1,39 +1,41 @@
 ![Logo](https://github.com/Pavel-Klimenko/job-board/blob/master/public/img/logo.png)
 
 <h1>Job Board</h1>
-<h3>Биржа труда для программистов</h3>
-Использован адаптивный шаблон с сайта: https://colorlib.com/
+<h3>Job board for software developers/h3>
+Responsive website template from: https://colorlib.com/
 
-Стек технологий:
-PHP Version 7.4.27
-Laravel Framework 8.65.0
-MySQL
+Technology stack:
+    
+-PHP Version 7.4.27
+-Laravel Framework 8.65.0
+-MySQL
 
-<h3>Основные разделы портала:</h3>
+<h3>Main sections of the portal:</h3>
 
-1) Главная страница (Home)
-2) Вакансии (browse-job)
-3) Кандидаты (candidates)
-4) Форма обратной связи с администрацией (Contact)
-5) Форма для отзыва о портале (Leave Review)
-6) Личный кабинет (Personal Area)
+1) Main page
+2) Vacancies page
+3) Candidates page
+4) Administration feedback form
+5) Portal feedback form
+6) Personal area
 
-<h3>Реализованный функционал:</h3>
+<h3>Main functionality:</h3>
 
-1) списки вакансий и резюме кандидатов, категорий вакансий, компаний
-2) фильтр по вакансиям, кандидатам
-3) регистрация с указанием типа аккаунта (кандидата, компания)
-4) авторизация
-5) постраничная навигация
-6) форма обратной связи
-7) форма отзыва о портале job-board
-8) Личный кабинет компании и кандидата
-9) Возможность оставлять отклики на вакансии (кандидат)
-10) Возможность подтверждать или отклонять отклик кандидата (компании)
-11) Возможность создавать и удалять вакансии в личном кабинете (компании)
-12) Возможность редактировать персональную информацию и менять логотип
-13) Почтовые оповещения на email адреса кандидатов и компаний
-14) Очереди на Redis
+1) lists of vacancies and resumes of candidates, categories of vacancies, companies
+2) filter by vacancies, candidates
+3) registration indicating the type of account (candidate, company)
+4) authorization
+5) page navigation
+6) forms
+7) personal account of the company and the candidate
+8) opportunity to leave responses to vacancies (candidate)
+9) possibility to confirm or reject the candidate's (company's) response
+10) ability to create and delete vacancies in your account (company)
+11) ability to edit personal information and change the logo
+12) email alerts to email addresses of candidates and companies
+13) queues
+14) caching
+15) scheduled tasks    
 
 
 <h3>Установка проекта:</h3>
