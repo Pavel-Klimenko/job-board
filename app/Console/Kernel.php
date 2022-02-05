@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         //deleting rejected interview request
         $schedule->call(function () {
             InterviewInvitations::where('STATUS', 'rejected')->delete();
-        })->weekly()->sundays()->at('00:00');
+        })->monthly()->sundays()->at('00:00');
 
 
         $schedule->call(function () {
