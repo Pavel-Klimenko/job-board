@@ -34,7 +34,8 @@
 
                                         <p>
                                             <a class="btn btn-outline-danger" href="{{ route('delete-vacancy', ['VACANCY_ID' => $vacancy->ID]) }}">Delete</a>
-                                            <a class="btn btn-outline-success edit_vacancy">Edit vacancy</a>
+                                            <input type="hidden" name="_token" id="token_for_vacancy_{{$vacancy->ID}}" value="{{ csrf_token() }}">
+                                            <a class="btn btn-outline-success edit_vacancy" data-vacancy-id="{{$vacancy->ID}}">Edit vacancy</a>
                                             {{--<a class="btn btn-outline-success save_vacancy" style="display: none" href="{{ route('update-vacancy', ['VACANCY_ID' => $vacancy->ID]) }}">Save</a>--}}
                                         </p>
                                     @endforeach

@@ -1,12 +1,14 @@
 <div class="job_details_area">
     <div class="apply_job_form white-bg">
 
-        {{--<form action="{{ route('update-vacancy') }}" method="post">
+        <form action="{{ route('update-vacancy') }}" method="post" class="edit_vacancy">
             @csrf
+
             <div class="row">
+
                 <div class="col-md-12">
                     <div class="input_field">
-                        <input type="text" name="NAME" value="{{ old('NAME') }}" placeholder="Vacancy title">
+                        <input type="text" name="NAME" class="vacancy NAME" placeholder="Vacancy title">
                     </div>
                     @error('NAME')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -15,7 +17,7 @@
 
                 <div class="col-md-6">
                     <div class="input_field">
-                        <input type="text" name="COUNTRY" value="{{ old('COUNTRY') }}" placeholder="Country">
+                        <input type="text" name="COUNTRY" class="vacancy COUNTRY" placeholder="Country">
                     </div>
                     @error('COUNTRY')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -24,14 +26,14 @@
 
                 <div class="col-md-6">
                     <div class="input_field">
-                        <input type="text" name="CITY" value="{{ old('CITY') }}" placeholder="City">
+                        <input type="text" name="CITY" class="vacancy CITY" placeholder="City">
                     </div>
                     @error('CITY')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
                     @enderror
                 </div>
 
-                <div class="col-md-12">
+{{--                <div class="col-md-12">
                     <div class="single_field input_field">
                         <select required name="CATEGORY_ID" class="wide">
                             <option selected disabled>Programming language</option>
@@ -42,11 +44,11 @@
                             @endforeach
                         </select>
                     </div>
-                </div><br /><br /><br />
+                </div><br /><br /><br />--}}
 
                 <div class="col-md-6">
                     <div class="input_field">
-                        <input type="number" max="9999999" name="SALARY_FROM" value="{{ old('SALARY_FROM') }}" placeholder="Salary from (USD)">
+                        <input type="number" max="9999999" name="SALARY_FROM" class="vacancy SALARY_FROM" placeholder="Salary from (USD)">
                     </div>
                     @error('SALARY_FROM')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -56,8 +58,8 @@
 
                 <div class="col-md-12">
                     <div class="input_field">
-                                        <textarea name="DESCRIPTION" id="" cols="30" rows="10"
-                                                  placeholder="Vacancy description">{{ old('DESCRIPTION') }}</textarea>
+                                        <textarea name="DESCRIPTION" class="vacancy DESCRIPTION" cols="30" rows="10"
+                                                  placeholder="Vacancy description"></textarea>
                     </div>
                     @error('DESCRIPTION')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -66,8 +68,8 @@
 
                 <div class="col-md-12">
                     <div class="input_field">
-                                        <textarea name="RESPONSIBILITY" id="" cols="30" rows="10"
-                                                  placeholder="Responsibilities. Every responsibility on a new line">{{ old('RESPONSIBILITY') }}</textarea>
+                                        <textarea name="RESPONSIBILITY" class="vacancy RESPONSIBILITY" cols="30" rows="10"
+                                                  placeholder="Responsibilities. Every responsibility on a new line"></textarea>
                     </div>
                     @error('RESPONSIBILITY')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -76,8 +78,8 @@
 
                 <div class="col-md-12">
                     <div class="input_field">
-                                        <textarea name="QUALIFICATIONS" id="" cols="30" rows="10"
-                                                  placeholder="Qualifications. Every qualification on a new line">{{ old('QUALIFICATIONS') }}</textarea>
+                                        <textarea name="QUALIFICATIONS" class="vacancy QUALIFICATIONS" cols="30" rows="10"
+                                                  placeholder="Qualifications. Every qualification on a new line"></textarea>
                     </div>
                     @error('QUALIFICATIONS')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -86,8 +88,8 @@
 
                 <div class="col-md-12">
                     <div class="input_field">
-                                        <textarea name="BENEFITS" id="" cols="30" rows="10"
-                                                  placeholder="Vacancy benefits">{{ old('BENEFITS') }}</textarea>
+                                        <textarea name="BENEFITS" class="vacancy BENEFITS" cols="30" rows="10"
+                                                  placeholder="Vacancy benefits"></textarea>
                     </div>
                     @error('BENEFITS')
                     <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
@@ -99,8 +101,10 @@
                         <button class="boxed-btn3 w-100 send-data-form" type="submit">Add vacancy</button>
                     </div>
                 </div>
+
             </div>
-        </form>--}}
+
+        </form>
 
     </div>
 </div>

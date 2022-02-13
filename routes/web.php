@@ -19,6 +19,16 @@ use \Illuminate\Support\Facades\Mail;
 Route::get('test-email', [Controllers\JobController::class, 'enqueue'])->name('add-mail-to-queue');
 
 
+Route::group(['prefix' => 'ajax'], function () {
+    Route::post('get-vacancy',[Controllers\AjaxController::class, 'getVacancyById']);
+});
+
+
+
+
+
+
+
 //debug routs
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
 
