@@ -11,8 +11,6 @@ $( document ).ready(function() {
     });
 
 
-
-
     $('#user-image').change(function() {
         let filename = $('#user-image').val();
         $('.uploaded-file').html('File added: ' + filename);
@@ -24,7 +22,6 @@ $( document ).ready(function() {
 
 
 function showEditVacancyForm(vacancyId) {
-
     $.ajax({
         type:'POST',
         url:'/ajax/get-vacancy',
@@ -34,45 +31,47 @@ function showEditVacancyForm(vacancyId) {
             "ID": vacancyId
         },
 
-        success:function(data){
+        success:function(data) {
             console.log(data);
             //$("#msg").html(data.msg);
-
-
-            console.log(data.vacancy.NAME);
-
 
             $('.blog_details, .add_vacancy_button').hide();
             $('.blog_details.edit-form').show();
 
 
             //filling vacancy form
-            $('.edit_vacancy .vacancy.NAME').val(data.vacancy.NAME);
-            $('.edit_vacancy .vacancy.COUNTRY').val(data.vacancy.COUNTRY);
-            $('.edit_vacancy .vacancy.CITY').val(data.vacancy.CITY);
+            $('.edit_vacancy_form .vacancy.NAME').val(data.vacancy.NAME);
+            $('.edit_vacancy_form .vacancy.COUNTRY').val(data.vacancy.COUNTRY);
+            $('.edit_vacancy_form .vacancy.CITY').val(data.vacancy.CITY);
+            $('.edit_vacancy_form .vacancy.SALARY_FROM').val(data.vacancy.SALARY_FROM);
 
-            $('.edit_vacancy .vacancy.SALARY_FROM').val(data.vacancy.SALARY_FROM);
-
-            $('.edit_vacancy .vacancy.DESCRIPTION').html(data.vacancy.DESCRIPTION);
-
-
-            //TODO: списком сделать!
-            $('.edit_vacancy .vacancy.RESPONSIBILITY').html(data.vacancy.RESPONSIBILITY);
-            $('.edit_vacancy .vacancy.QUALIFICATIONS').html(data.vacancy.QUALIFICATIONS);
+            //$('.edit_vacancy_form .vacancy.CATEGORY_ID').val(data.vacancy.CATEGORY_ID);
 
 
-            $('.edit_vacancy .vacancy.BENEFITS').html(data.vacancy.BENEFITS);
+            //TODO добавить этот гет запрос в строку url без перезагрузки и потом получить AJAX категорию
+                //?CATEGORY_ID={{$vacancy->CATEGORY_ID}}
 
+            //console.log(data.vacancy.CATEGORY_ID);
+            //let sdsd = $(`.edit_vacancy_form ul.list li[data-value=${data.vacancy.CATEGORY_ID}]`).prop('selected', 'selected');
+            //console.log(sdsd);
 
-
+            $('.edit_vacancy_form .vacancy.DESCRIPTION').html(data.vacancy.DESCRIPTION);
+            fillTextAreaByOptions(data.vacancy.RESPONSIBILITY, '.edit_vacancy_form .vacancy.RESPONSIBILITY');
+            fillTextAreaByOptions(data.vacancy.QUALIFICATIONS, '.edit_vacancy_form .vacancy.QUALIFICATIONS');
+            $('.edit_vacancy_form .vacancy.BENEFITS').html(data.vacancy.BENEFITS);
         }
     });
-
-
 
 }
 
 
+//TODO перенести такие функции в HELPER для JS
+function fillTextAreaByOptions(jsonListOfOptions, selector) {
+    let arrayOfOptions = JSON.parse(jsonListOfOptions);
+    for (key in arrayOfOptions) {
+        $(selector).append(arrayOfOptions[key] + "\n");
+    }
+}
 
 
 

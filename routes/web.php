@@ -23,15 +23,8 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('get-vacancy',[Controllers\AjaxController::class, 'getVacancyById']);
 });
 
-
-
-
-
-
-
 //debug routs
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
-
 
 Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo']);
 
@@ -47,7 +40,6 @@ Route::group(['prefix' => 'detail-page'], function () {
     Route::get('vacancy/{id}', [Controllers\VacancyController::class, 'getVacancy'])->name('show-vacancy');
     Route::get('candidate/{id}', [Controllers\CandidateController::class, 'getCandidate'])->name('show-candidate');
 });
-
 
 
 Route::group(['prefix' => 'form'], function () {
@@ -74,6 +66,7 @@ Route::middleware(['company.area'])->group(function () {
             ->name('create-review');
     });
 });
+
 
 //candidate routes
 Route::middleware(['candidate.area'])->group(function () {

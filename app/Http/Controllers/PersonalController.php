@@ -48,6 +48,7 @@ class PersonalController extends BaseController
     {
         $title = 'Company vacancies';
         $user = auth()->user();
+        $jobCategories = JobCategories::all();
 
         $itemsOnPage = 4;
         $vacancies = User::find($user->id)
@@ -55,7 +56,8 @@ class PersonalController extends BaseController
             ->paginate($itemsOnPage)
             ->withQueryString();
 
-        return view('personal.vacancies',  compact('vacancies', 'title'));
+        return view('personal.vacancies',
+            compact('vacancies', 'jobCategories', 'title'));
     }
 
 
