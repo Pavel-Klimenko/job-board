@@ -79,7 +79,7 @@ class Helper
      */
     public static function convertTextPointsToJson($TEXT_POINTS)
     {
-        $listOfPoints = str_replace(" ", "", $TEXT_POINTS);
+        $listOfPoints = preg_replace('/\s{3,}/', '', $TEXT_POINTS);
         $arrListOfPoints = explode(PHP_EOL, $listOfPoints);
         return json_encode($arrListOfPoints);
     }

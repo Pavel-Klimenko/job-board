@@ -23,10 +23,8 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('get-vacancy',[Controllers\AjaxController::class, 'getVacancyById']);
 });
 
-//debug routs
-Route::get('test', [Controllers\TestController::class, 'testMethod']);
 
-Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo']);
+
 
 
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
@@ -56,7 +54,7 @@ Route::middleware(['company.area'])->group(function () {
     Route::get('delete-vacancy', [Controllers\VacancyController::class, 'deleteVacancy'])
         ->name('delete-vacancy');
 
-    Route::get('update-vacancy', [Controllers\VacancyController::class, 'updateVacancy'])
+    Route::post('update-vacancy', [Controllers\VacancyController::class, 'updateVacancy'])
         ->name('update-vacancy');
 
     Route::group(['prefix' => 'create'], function () {
@@ -76,12 +74,6 @@ Route::middleware(['candidate.area'])->group(function () {
     Route::group(['prefix' => 'create'], function () {
         Route::post('candidate', [Controllers\CandidateController::class, 'createCandidate'])->name('create-candidate');
     });
-});
-
-
-//Admin panel
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
 });
 
 
@@ -106,8 +98,8 @@ Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
     Route::post('update-user-info', [Controllers\PersonalController::class, 'updateUserInfo'])
         ->name('update-user-info');
 
-    Route::post('update-vacancy', [Controllers\PersonalController::class, 'updateUserInfo'])
-        ->name('update-vacancy');
+ /*   Route::post('update-vacancy', [Controllers\PersonalController::class, 'updateUserInfo'])
+        ->name('update-vacancy');*/
 });
 
 
@@ -119,5 +111,20 @@ Route::get('logout', [Controllers\Auth\LoginController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
-
 Auth::routes();
+
+
+
+//Admin panel
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
+
+
+//debug routs
+Route::get('test', [Controllers\TestController::class, 'testMethod'])->middleware('auth');
+Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo'])->middleware('auth');
+
+
+
+

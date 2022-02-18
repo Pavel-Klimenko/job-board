@@ -32,7 +32,7 @@ function showEditVacancyForm(vacancyId) {
         },
 
         success:function(data) {
-            console.log(data);
+            //console.log(data);
             //$("#msg").html(data.msg);
 
             $('.blog_details, .add_vacancy_button').hide();
@@ -40,20 +40,18 @@ function showEditVacancyForm(vacancyId) {
 
 
             //filling vacancy form
+
+            $('.edit_vacancy_form .vacancy.VACANCY_ID').val(vacancyId);
             $('.edit_vacancy_form .vacancy.NAME').val(data.vacancy.NAME);
             $('.edit_vacancy_form .vacancy.COUNTRY').val(data.vacancy.COUNTRY);
             $('.edit_vacancy_form .vacancy.CITY').val(data.vacancy.CITY);
             $('.edit_vacancy_form .vacancy.SALARY_FROM').val(data.vacancy.SALARY_FROM);
 
-            //$('.edit_vacancy_form .vacancy.CATEGORY_ID').val(data.vacancy.CATEGORY_ID);
 
-
-            //TODO добавить этот гет запрос в строку url без перезагрузки и потом получить AJAX категорию
-                //?CATEGORY_ID={{$vacancy->CATEGORY_ID}}
-
-            //console.log(data.vacancy.CATEGORY_ID);
-            //let sdsd = $(`.edit_vacancy_form ul.list li[data-value=${data.vacancy.CATEGORY_ID}]`).prop('selected', 'selected');
-            //console.log(sdsd);
+            let categoryId = data.vacancy.CATEGORY_ID;
+            $(`.blog_details.edit-form .vacancy.CATEGORY_ID li[data-value=${categoryId}]`)
+                .trigger('click')
+                .trigger('click');
 
             $('.edit_vacancy_form .vacancy.DESCRIPTION').html(data.vacancy.DESCRIPTION);
             fillTextAreaByOptions(data.vacancy.RESPONSIBILITY, '.edit_vacancy_form .vacancy.RESPONSIBILITY');

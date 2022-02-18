@@ -273,31 +273,4 @@ class PersonalController extends BaseController
     }
 
 
-    public function updateVacancyInfo(Request $request)
-    {
-        sleep(1);
-
-        $row = $request->all();
-
-        $vacancy = Vacancies::find($request->VACANCY_ID);
-
-        $vacancy->NAME = $request->NAME;
-        $vacancy->COUNTRY = $request->COUNTRY;
-        $vacancy->CITY = $request->CITY;
-        $vacancy->CATEGORY_ID = $request->CATEGORY_ID;
-        $vacancy->COMPANY_ID = $request->COMPANY_ID;
-        $vacancy->SALARY_FROM = $request->SALARY_FROM;
-        $vacancy->DESCRIPTION = $request->DESCRIPTION;
-        $vacancy->RESPONSIBILITY = $request->RESPONSIBILITY;
-        $vacancy->QUALIFICATIONS = $request->QUALIFICATIONS;
-        $vacancy->BENEFITS = $request->BENEFITS;
-
-
-        dump($row);
-
-        //$vacancy->save();
-        //return back();
-    }
-
-
 }

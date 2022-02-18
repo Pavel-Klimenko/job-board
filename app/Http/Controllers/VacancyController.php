@@ -166,40 +166,24 @@ class VacancyController extends BaseController
     public function updateVacancy(Request $request)
     {
         sleep(1);
-
-        $request->validate([
-            'NAME' => 'required|max:255',
-            'COUNTRY' => 'required|max:255',
-            'CITY' => 'required|max:255',
-            'CATEGORY_ID' => 'required|not_in:0',
-            'SALARY_FROM' => 'required|max:255',
-            'DESCRIPTION' => 'required|max:2500',
-            'RESPONSIBILITY' => 'required|max:2500',
-            'QUALIFICATIONS' => 'required|max:2500',
-            'BENEFITS' => 'required|max:2500',
-        ]);
-
-
-
-/*        $vacancies = new Vacancies();
-
-        $vacancies->NAME = $request->NAME;
-        $vacancies->ICON = Auth::user()->ICON;
-        $vacancies->IMAGE = Auth::user()->IMAGE;
-        $vacancies->COUNTRY = $request->COUNTRY;
-        $vacancies->CITY = $request->CITY;
-        $vacancies->CATEGORY_ID = $request->CATEGORY_ID;
-        $vacancies->COMPANY_ID = Auth::user()->id;
-        $vacancies->SALARY_FROM = $request->SALARY_FROM;
-        $vacancies->DESCRIPTION = $request->DESCRIPTION;
-        $vacancies->RESPONSIBILITY = Helper::convertTextPointsToJson($request->RESPONSIBILITY);
-        $vacancies->QUALIFICATIONS = Helper::convertTextPointsToJson($request->QUALIFICATIONS);
-        $vacancies->BENEFITS = $request->BENEFITS;
-        $vacancies->save();
+        $vacancy = Vacancies::find($request->VACANCY_ID);
+        $vacancy->NAME = $request->NAME;
+        $vacancy->ICON = Auth::user()->ICON;
+        $vacancy->IMAGE = Auth::user()->IMAGE;
+        $vacancy->COUNTRY = $request->COUNTRY;
+        $vacancy->CITY = $request->CITY;
+        $vacancy->CATEGORY_ID = $request->CATEGORY_ID;
+        $vacancy->COMPANY_ID = Auth::user()->id;
+        $vacancy->SALARY_FROM = $request->SALARY_FROM;
+        $vacancy->DESCRIPTION = $request->DESCRIPTION;
+        $vacancy->RESPONSIBILITY = Helper::convertTextPointsToJson($request->RESPONSIBILITY);
+        $vacancy->QUALIFICATIONS = Helper::convertTextPointsToJson($request->QUALIFICATIONS);
+        $vacancy->BENEFITS = $request->BENEFITS;
+        $vacancy->save();
 
         $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
 
-        return redirect()->route('personal-vacancies');*/
+        return back();
     }
 
 
