@@ -49,3 +49,6 @@ Technology stack:
 mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; mkdir storage/framework/{cache,sessions,views}; mkdir storage/framework/cache/data; 
 8) create tables in database: php artisan migrate
 9) seeding demo data: php artisan db:seed --class=DemoDataSeeder
+
+
+Link to the site deployed project: https://bestest.xyz/
