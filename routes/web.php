@@ -115,10 +115,15 @@ Auth::routes();
 
 
 
-//Admin panel
+
 Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
+    Route::get('main', [Controllers\AdminController::class, 'renderAdminPanel'])
+        ->name('admin-main');
+    Route::get('main/{name}', [Controllers\AdminController::class, 'renderUserList'])
+        ->name('admin-users');
 });
+
+
 
 
 //debug routs
