@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->json('SKILLS')->nullable();
             $table->json('LANGUAGES')->nullable();
             $table->mediumText('ABOUT_ME')->nullable();
+            $table->boolean('ACTIVE')->default(false);
 
             //company
             $table->integer('EMPLOYEE_CNT')->nullable();

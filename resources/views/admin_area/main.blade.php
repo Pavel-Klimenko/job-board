@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="row">
-                    <a href="#!">
+                    <a href="{{ route('admin-users', ['name' => $candidatesRole]) }}">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">person</i>
                             <span class="indigo-text text-lighten-1"><h5>Candidates</h5></span>
@@ -21,7 +21,7 @@
                     <div class="col s1">&nbsp;</div>
                     <div class="col s1">&nbsp;</div>
 
-                    <a href="#!">
+                    <a href="{{ route('admin-users', ['name' => $companiesRole]) }}">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">view_list</i>
                             <span class="indigo-text text-lighten-1"><h5>Companies</h5></span>

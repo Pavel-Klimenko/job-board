@@ -5,13 +5,13 @@
                 <img style="margin-top: 5%;" width="100" height="100" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463990208/photo_dkkrxc.png" class="circle responsive-img" />
 
                 <p style="margin-top: -13%;">
-                    Tirth Patel
+                    Admin panel
                 </p>
             </div>
         </div>
     </li>
 
-    {{--<li id="dash_dashboard"><a class="waves-effect" href="#!"><b>Dashboard</b></a></li>--}}
+    <li id="dash_dashboard"><a class="waves-effect" href="#!"><b>Dashboard</b></a></li>
 
     <ul class="collapsible" data-collapsible="accordion">
         <li id="dash_users">

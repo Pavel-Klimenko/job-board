@@ -3,7 +3,7 @@
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom_css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom_css/admin_panel/admin.css') }}">
 </head>
 
 <body>

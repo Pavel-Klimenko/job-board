@@ -114,15 +114,19 @@ Route::get('logout', [Controllers\Auth\LoginController::class, 'logout'])
 Auth::routes();
 
 
-
-
+//Admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     Route::get('main', [Controllers\AdminController::class, 'renderAdminPanel'])
         ->name('admin-main');
     Route::get('main/{name}', [Controllers\AdminController::class, 'renderUserList'])
         ->name('admin-users');
+    Route::get('user/{id}', [Controllers\AdminController::class, 'renderUser'])
+        ->name('admin-profile');
+    Route::post('update-user', [Controllers\AdminController::class, 'updateUserInfo'])
+        ->name('admin-update-user');
+    Route::post('delete-user', [Controllers\AdminController::class, 'deleteUser'])
+        ->name('admin-delete-user');
 });
-
 
 
 
