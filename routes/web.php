@@ -122,10 +122,12 @@ Route::group(['prefix' => 'admin'], function () {
         ->name('admin-users');
     Route::get('user/{id}', [Controllers\AdminController::class, 'renderUser'])
         ->name('admin-profile');
-    Route::post('update-user', [Controllers\AdminController::class, 'updateUserInfo'])
+    Route::post('admin-update-user', [Controllers\AdminController::class, 'updateUserInfo'])
         ->name('admin-update-user');
-    Route::post('delete-user', [Controllers\AdminController::class, 'deleteUser'])
-        ->name('admin-delete-user');
+    Route::get('admin-delete-entity', [Controllers\AdminController::class, 'deleteEntity'])
+        ->name('admin-delete-entity');
+    Route::get('admin-change-active-status', [Controllers\AdminController::class, 'changeActiveStatus'])
+        ->name('admin-change-active-status');
 });
 
 

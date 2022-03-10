@@ -50,7 +50,6 @@ class AdminController extends BaseController
         $roleId = Helper::getRoleIdByName($roleName);
         $users = $users->where('role_id', $roleId)->get();
 
-
         return view('admin_area.candidates.list',
             compact('roles', 'candidatesRole', 'companiesRole', 'users'));
 
@@ -115,11 +114,22 @@ class AdminController extends BaseController
     }
 
 
-    //TODO: сделать функции типа deleteEntity, activateEntity
-    public function deleteUser(Request $request) {
-        $vacancy = User::find($request->id);
-        $vacancy->delete();
-        $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
+    public function deleteEntity(Request $request)  {
+        if (in_array($request->entity, Constants::USER_ENTITIES)) {
+            $user = User::find($request->id);
+            $user->delete();
+            $this->cacheService->deleteKeyFromCache('user_'.$request->id);
+        }
+        return back();
+    }
+
+    public function changeActiveStatus(Request $request)  {
+        if (in_array($request->entity, Constants::USER_ENTITIES)) {
+            $user = User::find($request->id);
+            $user->ACTIVE = ($user->ACTIVE == 1) ? 0 : 1;
+            $user->save();
+            $this->cacheService->deleteKeyFromCache('user_'.$request->id);
+        }
         return back();
     }
 

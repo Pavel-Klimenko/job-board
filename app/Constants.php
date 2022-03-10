@@ -29,7 +29,7 @@ class Constants
         'reviews' => '/img/usersData/reviews/',
     ];
 
-
+    const USER_ENTITIES = ['candidate', 'company'];
 
     //Demo data
 

@@ -75,8 +75,6 @@ class VacancyController extends BaseController
     }
 
 
-
-
     public function createVacancy(Request $request)
     {
         sleep(1);
@@ -111,8 +109,6 @@ class VacancyController extends BaseController
 
         return redirect()->route('personal-vacancies');
     }
-
-
 
     public function getVacancy($id)
     {
@@ -152,7 +148,6 @@ class VacancyController extends BaseController
         }
     }
 
-
     public function deleteVacancy(Request $request)
     {
         $vacancy = Vacancies::find($request->VACANCY_ID);
@@ -160,7 +155,6 @@ class VacancyController extends BaseController
         $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
         return back();
     }
-
 
 
     public function updateVacancy(Request $request)

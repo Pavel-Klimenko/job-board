@@ -40,12 +40,9 @@
                                 <td>
                                     {{$candidate->created_at->format('Y/m/d')}}
                                 </td>
-
                                 @php
-                                    $activeStatus = ($candidate->ACTIVE) ? 'active' : 'not active';
+                                    $activeStatus = ($candidate->ACTIVE == 1) ? 'active' : 'not active';
                                 @endphp
-
-
                                 <td class="text-center">
                                     <span class="label label-default">{{$activeStatus}}</span>
                                 </td>
@@ -60,20 +57,27 @@
                                         </span>
                                     </a>
 
-     {{--                               <a href="#" class="table-link">
-									<span class="fa-stack">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
-                                    </a>--}}
-
-                                    <a href="{{ route('admin-delete-user', ['id' => $candidate->id]) }}" class="table-link danger">
+                                    <a href="{{ route('admin-delete-entity', ['entity' => 'candidate', 'id' => $candidate->id]) }}"
+                                       class="table-link danger">
                                         <span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
                                             <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
                                         </span>
                                     </a>
 
+                                    @php
+                                        $action = ($candidate->ACTIVE == 1) ? 'Deactivate' : 'Activate';
+                                    @endphp
+
+                                    <a href="{{ route('admin-change-active-status',[
+                                             'entity' => 'candidate',
+                                             'id' => $candidate->id
+                                             ]) }}"
+                                       class="table-link link-success">
+                                        <span class="fa-stack">
+                                            {{$action}}
+                                        </span>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
