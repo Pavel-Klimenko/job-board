@@ -19,6 +19,12 @@ class AdminController extends BaseController
     protected $jobCategories;
     protected $cacheService;
 
+    //TODO Аналитика для админки:
+    // 1) Количество новых пользователей портала (зарегистрированных) за промежуток времени
+        //из них компаний и кандидатов (количество)
+    // 2) Количество приглашений кандидатов на интервью за промежуток времени
+    // 3) Построение графиков на основе аналитики
+
 
     public function __construct(CacheContract $cacheService) {
         $this->candidatesRole = Constants::USER_ROLE_NAMES['candidate'];
@@ -76,7 +82,7 @@ class AdminController extends BaseController
         $candidateRoleId = 3;
         $user = User::find($request->id);
 
-        //TODO: подключить блоками кода через include
+        //TODO: подключить блоками кода через include или массив с полями компании и пользователя
         if ($request->role_id == $companyRoleId) {
             $roleName = 'company';
 /*            $user->NAME = $request->NAME;
@@ -104,9 +110,7 @@ class AdminController extends BaseController
             $user->ABOUT_ME = $request->ABOUT_ME;
         }
 
-
         $this->cacheService->deleteKeyFromCache('user_'.$user->id);
-
 
         $user->save();
         return redirect()->route('admin-users', ['name' => $roleName]);
@@ -131,8 +135,4 @@ class AdminController extends BaseController
         }
         return back();
     }
-
-
-
-
 }
