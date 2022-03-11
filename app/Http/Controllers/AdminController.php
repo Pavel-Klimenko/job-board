@@ -50,14 +50,13 @@ class AdminController extends BaseController
         $roleId = Helper::getRoleIdByName($roleName);
         $users = $users->where('role_id', $roleId)->get();
 
-        return view('admin_area.candidates.list',
-            compact('roles', 'candidatesRole', 'companiesRole', 'users'));
+        return view('admin_area.users_list',
+            compact('roles', 'candidatesRole', 'companiesRole', 'users', 'userType'));
 
     }
 
 
     public function renderUser($id) {
-
         $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
