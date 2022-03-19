@@ -13,79 +13,60 @@
                     <table class="table user-list">
                         <thead>
                         <tr>
-                            <th><span>User</span></th>
+                            <th><span>User name</span></th>
+                            <th><span>Review</span></th>
                             <th><span>Created</span></th>
                             <th class="text-center"><span>Status</span></th>
-                            <th><span>Email</span></th>
-                            <th>&nbsp;</th>
                         </tr>
                         </thead>
                         <tbody>
 
-{{--                        @foreach ($users as $user)--}}
-{{--                            @php--}}
-{{--                            if ($userType == 'candidate') {--}}
-{{--                                    $model = \App\Models\JobCategories::class;--}}
-{{--                                    $category = \App\Services\Helper::getTableRow($model, 'ID', $user->CATEGORY_ID);--}}
-{{--                            }--}}
-{{--                            @endphp--}}
-{{--                            <tr>--}}
-{{--                                <td>--}}
-{{--                                    <img src="{{ $user->ICON }}" alt="">--}}
-{{--                                    <a href="{{ route('admin-profile', ['id' => $user->id]) }}" class="user-link">{{$user->NAME}}</a>--}}
+                        @foreach ($reviews as $review)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('admin-review', ['id' => $review->ID]) }}" class="user-link">{{$review->NAME}}</a>
+                                </td>
+                                <td>{{ substr($review->REVIEW, 0, 20)}}...</td>
+                                <td>{{$review->created_at->format('Y/m/d')}}</td>
+                                @php
+                                    $activeStatus = ($review->ACTIVE == 1) ? 'active' : 'not active';
+                                @endphp
+                                <td class="text-center">
+                                    <span class="label label-default">{{$activeStatus}}</span>
+                                </td>
 
-{{--                                    @if ($userType == 'candidate')--}}
-{{--                                        <span class="user-subhead">--}}
-{{--                                            {{ $user->LEVEL }}--}}
-{{--                                            {{ ucfirst($user->NAME)}}--}}
-{{--                                            developer--}}
-{{--                                        </span>--}}
-{{--                                    @endif--}}
-{{--                                </td>--}}
-{{--                                <td>--}}
-{{--                                    {{$user->created_at->format('Y/m/d')}}--}}
-{{--                                </td>--}}
-{{--                                @php--}}
-{{--                                    $activeStatus = ($user->ACTIVE == 1) ? 'active' : 'not active';--}}
-{{--                                @endphp--}}
-{{--                                <td class="text-center">--}}
-{{--                                    <span class="label label-default">{{$activeStatus}}</span>--}}
-{{--                                </td>--}}
-{{--                                <td>--}}
-{{--                                    <a href="mailto:{{ $user->EMAIL }}">{{ $user->EMAIL }}</a>--}}
-{{--                                </td>--}}
-{{--                                <td style="width: 20%;">--}}
-{{--                                    <a href="{{ route('admin-profile', ['id' => $user->id]) }}" class="table-link">--}}
-{{--                                        <span class="fa-stack">--}}
-{{--                                            <i class="fa fa-square fa-stack-2x"></i>--}}
-{{--                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>--}}
-{{--                                        </span>--}}
-{{--                                    </a>--}}
+                                <td style="width: 20%;">
+                                    <a href="{{ route('admin-review', ['id' => $review->ID]) }}" class="table-link">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
 
-{{--                                    <a href="{{ route('admin-delete-entity', ['entity' => 'candidate', 'id' => $user->id]) }}"--}}
-{{--                                       class="table-link danger">--}}
-{{--                                        <span class="fa-stack">--}}
-{{--                                            <i class="fa fa-square fa-stack-2x"></i>--}}
-{{--                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>--}}
-{{--                                        </span>--}}
-{{--                                    </a>--}}
+                                    <a href="{{ route('admin-delete-entity', ['entity' => 'review', 'id' => $review->ID]) }}"
+                                       class="table-link danger">
+                                        <span class="fa-stack">
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </a>
 
-{{--                                    @php--}}
-{{--                                        $action = ($user->ACTIVE == 1) ? 'Deactivate' : 'Activate';--}}
-{{--                                    @endphp--}}
+                                    @php
+                                        $action = ($review->ACTIVE == 1) ? 'Deactivate' : 'Activate';
+                                    @endphp
 
-{{--                                    <a href="{{ route('admin-change-active-status',[--}}
-{{--                                             'entity' => 'candidate',--}}
-{{--                                             'id' => $user->id--}}
-{{--                                             ]) }}"--}}
-{{--                                       class="table-link link-success">--}}
-{{--                                        <span class="fa-stack">--}}
-{{--                                            {{$action}}--}}
-{{--                                        </span>--}}
-{{--                                    </a>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
+                                    <a href="{{ route('admin-change-active-status',[
+                                             'entity' => 'review',
+                                             'id' => $review->ID
+                                             ]) }}"
+                                       class="table-link link-success">
+                                        <span class="fa-stack">
+                                            {{$action}}
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

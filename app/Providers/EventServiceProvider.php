@@ -1,16 +1,12 @@
 <?php
 
 namespace App\Providers;
-
-use App\Events\VacancyInterviewRequest;
-use App\Listeners\SendCompanyNotification;
+use App\Events;
+use App\Listeners;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-
-use App\Events\CandidateInvitation;
-use App\Listeners\SendCandidateNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -33,13 +29,19 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Event::listen(
-            CandidateInvitation::class,
-            [SendCandidateNotification::class, 'handle']
+            Events\CandidateInvitation::class,
+            [Listeners\SendCandidateNotification::class, 'handle']
         );
 
         Event::listen(
-            VacancyInterviewRequest::class,
-            [SendCompanyNotification::class, 'handle']
+            Events\VacancyInterviewRequest::class,
+            [Listeners\SendCompanyNotification::class, 'handle']
         );
+
+        Event::listen(
+            Events\NewUserRegistered::class,
+            [Listeners\UserRegisteredHandler::class, 'handle']
+        );
+
     }
 }

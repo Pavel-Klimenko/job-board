@@ -125,14 +125,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('main/{name}', [Controllers\AdminController::class, 'renderUserList'])
         ->name('admin-users');
 
+    Route::post('admin-update-user', [Controllers\AdminController::class, 'updateUserInfo'])
+        ->name('admin-update-user');
+
     Route::get('admin/vacancies', [Controllers\AdminController::class, 'renderVacanciesList'])
         ->name('admin-vacancies');
 
     Route::get('admin/reviews', [Controllers\AdminController::class, 'renderReviewsList'])
         ->name('admin-reviews');
-
-
-
 
     Route::get('user/{id}', [Controllers\AdminController::class, 'renderUser'])
         ->name('admin-profile');
@@ -140,12 +140,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('vacancy/{id}', [Controllers\AdminController::class, 'renderVacancy'])
         ->name('admin-vacancy');
 
+    Route::get('review/{id}', [Controllers\AdminController::class, 'renderReview'])
+        ->name('admin-review');
 
-    Route::post('admin-update-user', [Controllers\AdminController::class, 'updateUserInfo'])
-        ->name('admin-update-user');
+
 
     Route::post('admin-update-vacancy', [Controllers\AdminController::class, 'updateVacancy'])
         ->name('admin-update-vacancy');
+
+    Route::post('admin-update-review', [Controllers\AdminController::class, 'updateReview'])
+        ->name('admin-update-review');
 
 
 

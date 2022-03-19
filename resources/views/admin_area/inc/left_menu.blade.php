@@ -3,15 +3,12 @@
         <div class="indigo darken-2 white-text" style="height: 180px;">
             <div class="row">
                 <img style="margin-top: 5%;" width="100" height="100" src="https://res.cloudinary.com/dacg0wegv/image/upload/t_media_lib_thumb/v1463990208/photo_dkkrxc.png" class="circle responsive-img" />
-
-                <p style="margin-top: -13%;">
-                    Admin panel
-                </p>
+                <p style="margin-top: -13%;">Admin panel</p>
             </div>
         </div>
     </li>
 
-    <li id="dash_dashboard"><a class="waves-effect" href="#!"><b>Dashboard</b></a></li>
+    <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-main') }}"><b>Dashboard</b></a></li>
 
     <ul class="collapsible" data-collapsible="accordion">
         <li id="dash_users">
@@ -31,9 +28,7 @@
             </div>
         </li>
 
-
         <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-vacancies') }}"><b>Vacancies</b></a></li>
-        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-reviews') }}"><b>User reviews</b></a></li>
-
+        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-reviews') }}"><b>Reviews</b></a></li>
     </ul>
 </ul>

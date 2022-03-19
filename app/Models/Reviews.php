@@ -10,4 +10,7 @@ class Reviews extends Model
     protected $table = 'reviews';
     protected $primaryKey = 'ID';
 
+    public static function getReviewFields() {
+        return ['NAME', 'PHOTO' , 'REVIEW'];
+    }
 }

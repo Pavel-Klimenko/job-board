@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Roles;
 use App\Constants;
 use App\Services\Helper;
+use App\Events\NewUserRegistered;
 
 
 class RegisterController extends Controller
@@ -109,11 +110,14 @@ class RegisterController extends Controller
     {
 
         $roleName = Constants::USER_ROLE_NAMES[$data['role_name']];
-        $roleId = Helper::getRoleIdByName($roleName);
+        //$roleId = Helper::getRoleIdByName($roleName);
+        $roleId = Constants::USER_ROLES_IDS[$roleName];
+
         $iconNumber = mt_rand(0, 5);
 
         if ($roleName == 'company') {
-            return User::create([
+
+            $arrUserFields = [
                 'NAME' => $data['name'],
                 'ICON' => Constants::DEMO_ICONS[$iconNumber],
                 //'IMAGE' => $data['IMAGE'],
@@ -126,11 +130,26 @@ class RegisterController extends Controller
                 'DESCRIPTION' => $data['DESCRIPTION'],
                 'password' => Hash::make($data['password']),
                 'role_id' => $roleId,
-            ]);
+            ];
+
+//            $newUser = User::create([
+//                'NAME' => $data['name'],
+//                'ICON' => Constants::DEMO_ICONS[$iconNumber],
+//                //'IMAGE' => $data['IMAGE'],
+//                'EMAIL' => $data['email'],
+//                'PHONE' => $data['PHONE'],
+//                'COUNTRY' => $data['COUNTRY'],
+//                'CITY' => $data['CITY'],
+//                'EMPLOYEE_CNT' => $data['EMPLOYEE_CNT'],
+//                'WEB_SITE' => $data['WEB_SITE'],
+//                'DESCRIPTION' => $data['DESCRIPTION'],
+//                'password' => Hash::make($data['password']),
+//                'role_id' => $roleId,
+//            ]);
 
         } elseif ($roleName == 'candidate') {
 
-            return User::create([
+            $arrUserFields = [
                 'NAME' => 'Pavel',
                 'ICON' => Constants::DEMO_ICONS[$iconNumber],
                 //'IMAGE' => Constants::DEMO_IMAGES['candidate-pavel'],
@@ -149,17 +168,58 @@ class RegisterController extends Controller
                 'ABOUT_ME' => $data['ABOUT_ME'],
                 'password' => Hash::make($data['password']),
                 'role_id' => $roleId,
-            ]);
+            ];
+
+
+//            return User::create([
+//                'NAME' => 'Pavel',
+//                'ICON' => Constants::DEMO_ICONS[$iconNumber],
+//                //'IMAGE' => Constants::DEMO_IMAGES['candidate-pavel'],
+//                'EMAIL' => $data['email'],
+//                'PHONE' => $data['PHONE'],
+//                'COUNTRY' => $data['COUNTRY'],
+//                'CITY' => $data['CITY'],
+//                'CATEGORY_ID' => $data['CATEGORY_ID'],
+//                'LEVEL' => $data['LEVEL'],
+//                'YEARS_EXPERIENCE' => $data['YEARS_EXPERIENCE'],
+//                'SALARY' => $data['SALARY'],
+//                'EXPERIENCE' => $data['EXPERIENCE'],
+//                'EDUCATION' => $data['EDUCATION'],
+//                'SKILLS' => Helper::convertTextPointsToJson($data['SKILLS']),
+//                'LANGUAGES' => Helper::convertTextPointsToJson($data['LANGUAGES']),
+//                'ABOUT_ME' => $data['ABOUT_ME'],
+//                'password' => Hash::make($data['password']),
+//                'role_id' => $roleId,
+//            ]);
 
         } else {
-            return User::create([
+            $arrUserFields = [
                 'NAME' => $data['name'],
                 'EMAIL' => $data['email'],
                 'role_id' => $roleId,
                 'password' => Hash::make($data['password']),
-            ]);
+            ];
+
+//            $newUser = User::create([
+//                'NAME' => $data['name'],
+//                'EMAIL' => $data['email'],
+//                'role_id' => $roleId,
+//                'password' => Hash::make($data['password']),
+//            ]);
         }
 
+        $newUser = User::create($arrUserFields);
+
+        //sending notification to candidate email
+        $date = (object) [
+            'user_id' => $newUser->id,
+            'role_id' => $roleId,
+        ];
+
+        event(new NewUserRegistered($date));
+
+
+        return $newUser;
 
     }
 
