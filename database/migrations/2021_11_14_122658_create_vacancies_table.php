@@ -27,6 +27,7 @@ class CreateVacanciesTable extends Migration
             $table->json('RESPONSIBILITY')->nullable();
             $table->json('QUALIFICATIONS')->nullable();
             $table->mediumText('BENEFITS')->nullable();
+            $table->boolean('ACTIVE')->default(false);
             $table->timestamps();
         });
     }

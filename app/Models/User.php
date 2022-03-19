@@ -105,6 +105,25 @@ class User extends \TCG\Voyager\Models\User
         return $query->where('role_id', $roleId);
     }
 
+    public static function getCandidateFields() {
+        return [
+            'NAME', 'IMAGE' , 'COUNTRY',
+            'CITY', 'PHONE', 'CATEGORY_ID',
+            'LEVEL', 'YEARS_EXPERIENCE',
+            'SALARY', 'EXPERIENCE',
+            'EDUCATION', 'SKILLS',
+            'LANGUAGES', 'ABOUT_ME',
+        ];
+    }
+
+    public static function getCompanyFields() {
+        return [
+            'NAME', 'IMAGE' , 'COUNTRY',
+            'CITY', 'PHONE', 'EMPLOYEE_CNT',
+            'WEB_SITE', 'DESCRIPTION'
+        ];
+    }
+
 
 
 }

@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Reviews;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use function Doctrine\Common\Cache\Psr6\get;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Roles;
 use App\Models\User;
+use App\Models\Vacancies;
 use App\Constants;
 use App\Services\Helper;
 use Illuminate\Http\Request;
@@ -24,6 +28,12 @@ class AdminController extends BaseController
         //из них компаний и кандидатов (количество)
     // 2) Количество приглашений кандидатов на интервью за промежуток времени
     // 3) Построение графиков на основе аналитики
+
+
+
+    //TODO сделать пагинацию и фильтрацию в списках
+    //TODO объединить методы CRUD (render, update и т.д.) можно через интерфейс
+    //TODO разобраться с '/////////' в JSON полях
 
 
     public function __construct(CacheContract $cacheService) {
@@ -46,7 +56,6 @@ class AdminController extends BaseController
 
 
     public function renderUserList($userType) {
-
         $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
@@ -58,7 +67,18 @@ class AdminController extends BaseController
 
         return view('admin_area.users_list',
             compact('roles', 'candidatesRole', 'companiesRole', 'users', 'userType'));
+    }
 
+
+    public function renderVacanciesList() {
+        //TODO left меню вынести в свой компонент blade
+        $roles = $this->roles;
+        $candidatesRole = $this->candidatesRole;
+        $companiesRole = $this->companiesRole;
+
+        $vacancies = Vacancies::all();
+        return view('admin_area.vacancies',
+            compact('roles', 'candidatesRole', 'companiesRole', 'vacancies'));
     }
 
 
@@ -66,73 +86,137 @@ class AdminController extends BaseController
         $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
-        $jobCategories = $this->jobCategories;
 
         $user = User::find($id);
-        $category = Helper::getTableRow(JobCategories::class, 'ID', $user->CATEGORY_ID);
 
-        return view('admin_area.candidates.profile',
-            compact('user', 'category', 'roles', 'candidatesRole', 'companiesRole', 'jobCategories'));
+        if ($user->role_id == Constants::USER_IDS[$candidatesRole]) {
+            $jobCategories = $this->jobCategories;
+            $category = Helper::getTableRow(JobCategories::class, 'ID', $user->CATEGORY_ID);
+            return view('admin_area.candidate',
+                compact('user', 'category', 'roles', 'candidatesRole', 'companiesRole', 'jobCategories'));
+        }
+
+        if ($user->role_id == Constants::USER_IDS[$companiesRole]) {
+            return view('admin_area.company',
+                compact('user', 'roles', 'candidatesRole', 'companiesRole'));
+        }
     }
 
 
     public function updateUserInfo(Request $request)
     {
-        $companyRoleId = 2;
-        $candidateRoleId = 3;
         $user = User::find($request->id);
 
-        //TODO: подключить блоками кода через include или массив с полями компании и пользователя
-        if ($request->role_id == $companyRoleId) {
-            $roleName = 'company';
-/*            $user->NAME = $request->NAME;
-            $user->COUNTRY = $request->COUNTRY;
-            $user->CITY = $request->CITY;
-            $user->PHONE = $request->PHONE;
-            $user->EMPLOYEE_CNT = $request->EMPLOYEE_CNT;
-            $user->WEB_SITE = $request->WEB_SITE;
-            $user->DESCRIPTION = $request->DESCRIPTION;*/
-        } elseif ($request->role_id == $candidateRoleId) {
-            $roleName = 'candidate';
-            $user->NAME = $request->NAME;
-            $user->COUNTRY = $request->COUNTRY;
-            $user->CITY = $request->CITY;
-            $user->PHONE = $request->PHONE;
-            $user->CATEGORY_ID = $request->CATEGORY_ID;
-            $user->LEVEL = $request->LEVEL;
-            $user->YEARS_EXPERIENCE = $request->YEARS_EXPERIENCE;
-            $user->SALARY = $request->SALARY;
-            $user->YEARS_EXPERIENCE = $request->YEARS_EXPERIENCE;
-            $user->EXPERIENCE = $request->EXPERIENCE;
-            $user->EDUCATION = $request->EDUCATION;
-            $user->SKILLS = $request->SKILLS;
-            $user->LANGUAGES = $request->LANGUAGES;
-            $user->ABOUT_ME = $request->ABOUT_ME;
+        if ($request->role_id == Constants::USER_IDS[$this->companiesRole]) {
+            $userList = $this->companiesRole;
+            $arrUserFields = User::getCompanyFields();
+        } elseif ($request->role_id == Constants::USER_IDS[$this->candidatesRole]) {
+            $userList = $this->candidatesRole;
+            $arrUserFields = User::getCandidateFields();
+        }
+
+        foreach ($arrUserFields as $field) {
+            $user->$field = $request->$field;
         }
 
         $this->cacheService->deleteKeyFromCache('user_'.$user->id);
 
         $user->save();
-        return redirect()->route('admin-users', ['name' => $roleName]);
+        return redirect()->route('admin-users', ['name' => $userList]);
     }
+
+
+    public function renderVacancy($id) {
+        $roles = $this->roles;
+        $candidatesRole = $this->candidatesRole;
+        $companiesRole = $this->companiesRole;
+
+        $vacancy = Vacancies::find($id);
+        $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
+        $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);
+        $jobCategories = $this->jobCategories;
+
+        return view('admin_area.vacancy',
+            compact('vacancy', 'jobCategories', 'category', 'company', 'roles', 'candidatesRole', 'companiesRole'));
+
+    }
+
+    public function updateVacancy(Request $request)
+    {
+        $vacancy = Vacancies::find($request->id);
+        $arrVacancyFields = Vacancies::getVacancyFields();
+
+        foreach ($arrVacancyFields as $field) {
+            if (in_array($field, Vacancies::$arrJsonFields)) {
+                $vacancy->$field = Helper::convertTextPointsToJson($request->$field);
+            } else {
+                $vacancy->$field = $request->$field;
+            }
+        }
+
+        $vacancy->save();
+        $this->cacheService->deleteKeyFromCache('vacancy_'.$request->id);
+        return redirect()->route('admin-vacancies');
+    }
+
+
+
+
+    public function renderReviewsList() {
+        //TODO left меню вынести в свой компонент blade
+        $roles = $this->roles;
+        $candidatesRole = $this->candidatesRole;
+        $companiesRole = $this->companiesRole;
+
+        $reviews = Reviews::all();
+
+
+//        $review = new Reviews();
+//
+//        $review->NAME = $request->NAME;
+//        $review->REVIEW = $request->REVIEW;
+//        $review->PHOTO = $linkToImage;
+//
+//
+//        $review->save();
+
+
+        return view('admin_area.reviews',
+            compact('reviews','roles', 'candidatesRole', 'companiesRole'));
+    }
+
 
 
     public function deleteEntity(Request $request)  {
         if (in_array($request->entity, Constants::USER_ENTITIES)) {
-            $user = User::find($request->id);
-            $user->delete();
-            $this->cacheService->deleteKeyFromCache('user_'.$request->id);
+            $model = User::class;
+            $cachePrefix = 'user_';
+        } elseif ($request->entity = 'vacancy') {
+            $model = Vacancies::class;
+            $cachePrefix = 'vacancy_';
         }
+
+        $entity = $model::find($request->id);
+        $entity->delete();
+        $this->cacheService->deleteKeyFromCache($cachePrefix.$request->id);
+
         return back();
     }
 
     public function changeActiveStatus(Request $request)  {
         if (in_array($request->entity, Constants::USER_ENTITIES)) {
-            $user = User::find($request->id);
-            $user->ACTIVE = ($user->ACTIVE == 1) ? 0 : 1;
-            $user->save();
-            $this->cacheService->deleteKeyFromCache('user_'.$request->id);
+            $model = User::class;
+            $cachePrefix = 'user_';
+        } elseif ($request->entity = 'vacancy') {
+            $model = Vacancies::class;
+            $cachePrefix = 'vacancy_';
         }
+
+        $entity = $model::find($request->id);
+        $entity->ACTIVE = ($entity->ACTIVE == 1) ? 0 : 1;
+        $entity->save();
+        $this->cacheService->deleteKeyFromCache($cachePrefix.$request->id);
+
         return back();
     }
 }

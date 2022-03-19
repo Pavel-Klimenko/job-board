@@ -35,7 +35,6 @@ class VacancyController extends BaseController
             $arrRequest['CATEGORY_ID'] = $category->ID;
         }
 
-
         $filterParams = ['CATEGORY_ID', 'CITY', 'COMPANY_ID'];
 
         if (!empty($arrRequest)) {

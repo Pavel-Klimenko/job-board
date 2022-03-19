@@ -115,20 +115,47 @@ Auth::routes();
 
 
 //Admin panel routes
+
+
+//TODO: здесь сделать одни и те же методы, а внутри менять классы интерфейсом
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('main', [Controllers\AdminController::class, 'renderAdminPanel'])
         ->name('admin-main');
     Route::get('main/{name}', [Controllers\AdminController::class, 'renderUserList'])
         ->name('admin-users');
+
+    Route::get('admin/vacancies', [Controllers\AdminController::class, 'renderVacanciesList'])
+        ->name('admin-vacancies');
+
+    Route::get('admin/reviews', [Controllers\AdminController::class, 'renderReviewsList'])
+        ->name('admin-reviews');
+
+
+
+
     Route::get('user/{id}', [Controllers\AdminController::class, 'renderUser'])
         ->name('admin-profile');
+
+    Route::get('vacancy/{id}', [Controllers\AdminController::class, 'renderVacancy'])
+        ->name('admin-vacancy');
+
+
     Route::post('admin-update-user', [Controllers\AdminController::class, 'updateUserInfo'])
         ->name('admin-update-user');
+
+    Route::post('admin-update-vacancy', [Controllers\AdminController::class, 'updateVacancy'])
+        ->name('admin-update-vacancy');
+
+
+
+
     Route::get('admin-delete-entity', [Controllers\AdminController::class, 'deleteEntity'])
         ->name('admin-delete-entity');
     Route::get('admin-change-active-status', [Controllers\AdminController::class, 'changeActiveStatus'])
         ->name('admin-change-active-status');
 });
+
 
 
 

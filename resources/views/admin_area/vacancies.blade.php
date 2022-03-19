@@ -13,51 +13,46 @@
                     <table class="table user-list">
                         <thead>
                         <tr>
-                            <th><span>User</span></th>
+                            <th><span>Title</span></th>
+                            <th><span>Category</span></th>
                             <th><span>Created</span></th>
                             <th class="text-center"><span>Status</span></th>
-                            <th><span>Email</span></th>
-                            <th>&nbsp;</th>
+                            <th><span>City</span></th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @foreach ($users as $candidate)
+                        @foreach ($vacancies as $vacancy)
                             @php
-                                $model = \App\Models\JobCategories::class;
-                                $category = \App\Services\Helper::getTableRow($model, 'ID', $candidate->CATEGORY_ID);
+                               $jobCategories = \App\Models\JobCategories::class;
+                               $category = \App\Services\Helper::getTableRow($jobCategories, 'ID', $vacancy->CATEGORY_ID);
+                               $user = \App\Models\User::class;
+                               $company = \App\Services\Helper::getTableRow($user, 'id', $vacancy->COMPANY_ID);
                             @endphp
+
+
                             <tr>
                                 <td>
-                                    <img src="{{ $candidate->ICON }}" alt="">
-                                    <a href="{{ route('admin-profile', ['id' => $candidate->id]) }}" class="user-link">{{$candidate->NAME}}</a>
-                                    <span class="user-subhead">
-                                        {{ $candidate->LEVEL }}
-                                        {{ ucfirst($category->NAME)}}
-                                        developer
-                                    </span>
+                                    <a href="{{ route('admin-vacancy', ['id' => $vacancy->ID]) }}" class="user-link">{{$vacancy->NAME}}</a>
                                 </td>
-                                <td>
-                                    {{$candidate->created_at->format('Y/m/d')}}
-                                </td>
+                                <td>{{$category->NAME}}</td>
+                                <td>{{$vacancy->created_at->format('Y/m/d')}}</td>
                                 @php
-                                    $activeStatus = ($candidate->ACTIVE == 1) ? 'active' : 'not active';
+                                    $activeStatus = ($vacancy->ACTIVE == 1) ? 'active' : 'not active';
                                 @endphp
                                 <td class="text-center">
                                     <span class="label label-default">{{$activeStatus}}</span>
                                 </td>
-                                <td>
-                                    <a href="mailto:{{ $candidate->EMAIL }}">{{ $candidate->EMAIL }}</a>
-                                </td>
+                                <td>{{ $vacancy->CITY }}</td>
                                 <td style="width: 20%;">
-                                    <a href="{{ route('admin-profile', ['id' => $candidate->id]) }}" class="table-link">
+                                    <a href="{{ route('admin-vacancy', ['id' => $vacancy->ID]) }}" class="table-link">
                                         <span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
                                             <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                                         </span>
                                     </a>
 
-                                    <a href="{{ route('admin-delete-entity', ['entity' => 'candidate', 'id' => $candidate->id]) }}"
+                                    <a href="{{ route('admin-delete-entity', ['entity' => 'vacancy', 'id' => $vacancy->ID]) }}"
                                        class="table-link danger">
                                         <span class="fa-stack">
                                             <i class="fa fa-square fa-stack-2x"></i>
@@ -66,17 +61,15 @@
                                     </a>
 
                                     @php
-                                        $action = ($candidate->ACTIVE == 1) ? 'Deactivate' : 'Activate';
+                                        $action = ($vacancy->ACTIVE == 1) ? 'Deactivate' : 'Activate';
                                     @endphp
 
                                     <a href="{{ route('admin-change-active-status',[
-                                             'entity' => 'candidate',
-                                             'id' => $candidate->id
+                                             'entity' => 'vacancy',
+                                             'id' => $vacancy->ID
                                              ]) }}"
                                        class="table-link link-success">
-                                        <span class="fa-stack">
-                                            {{$action}}
-                                        </span>
+                                        <span class="fa-stack">{{$action}}</span>
                                     </a>
                                 </td>
                             </tr>
@@ -84,15 +77,15 @@
                         </tbody>
                     </table>
                 </div>
-{{--                <ul class="pagination pull-right">
-                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-                </ul>--}}
+                {{--                <ul class="pagination pull-right">
+                                    <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                                </ul>--}}
             </div>
         </div>
     </div>

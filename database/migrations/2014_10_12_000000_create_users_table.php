@@ -36,7 +36,6 @@ class CreateUsersTable extends Migration
             $table->json('SKILLS')->nullable();
             $table->json('LANGUAGES')->nullable();
             $table->mediumText('ABOUT_ME')->nullable();
-            $table->boolean('ACTIVE')->default(false);
 
             //company
             $table->integer('EMPLOYEE_CNT')->nullable();
@@ -44,6 +43,7 @@ class CreateUsersTable extends Migration
             $table->mediumText('DESCRIPTION')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('ACTIVE')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -18,6 +18,7 @@ class CreateReviewsTable extends Migration
             $table->string('NAME')->nullable();
             $table->string('PHOTO')->nullable();
             $table->mediumText('REVIEW')->nullable();
+            $table->boolean('ACTIVE')->default(false);
             $table->timestamps();
         });
     }

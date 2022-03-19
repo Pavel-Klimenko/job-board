@@ -8,6 +8,12 @@ class Constants
     const EMAIL = 'jobBoardIT@gmail.com';
     const SITE_NAME = 'jobBoard';
 
+    const USER_IDS = [
+        'admin' => 1,
+        'company' => 2,
+        'candidate' => 3,
+    ];
+
 
     const USER_ROLE_NAMES = [
         'admin' => 'admin',
