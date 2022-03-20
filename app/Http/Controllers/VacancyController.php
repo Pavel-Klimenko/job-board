@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\CacheContract;
+use App\Events\NewEntityCreated;
 use App\Models\InterviewInvitations;
 use App\Models\JobCategories;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Vacancies;
+use Illuminate\Support\Facades\Hash;
 
 
 class VacancyController extends BaseController
@@ -90,21 +92,32 @@ class VacancyController extends BaseController
             'BENEFITS' => 'required|max:2500',
         ]);
 
-        $vacancies = new Vacancies();
+        $arrVacancyFields = [
+            'NAME' => $request->NAME,
+            'ICON' => Auth::user()->ICON,
+            'IMAGE' => Auth::user()->IMAGE,
+            'COUNTRY' => $request->COUNTRY,
+            'CITY' => $request->CITY,
+            'CATEGORY_ID' => $request->CATEGORY_ID,
+            'COMPANY_ID' => Auth::user()->id,
+            'SALARY_FROM' => $request->SALARY_FROM,
+            'DESCRIPTION' => $request->DESCRIPTION,
+            'RESPONSIBILITY' => Helper::convertTextPointsToJson($request->RESPONSIBILITY),
+            'QUALIFICATIONS' => Helper::convertTextPointsToJson($request->QUALIFICATIONS),
+            'BENEFITS' => $request->BENEFITS
+        ];
 
-        $vacancies->NAME = $request->NAME;
-        $vacancies->ICON = Auth::user()->ICON;
-        $vacancies->IMAGE = Auth::user()->IMAGE;
-        $vacancies->COUNTRY = $request->COUNTRY;
-        $vacancies->CITY = $request->CITY;
-        $vacancies->CATEGORY_ID = $request->CATEGORY_ID;
-        $vacancies->COMPANY_ID = Auth::user()->id;
-        $vacancies->SALARY_FROM = $request->SALARY_FROM;
-        $vacancies->DESCRIPTION = $request->DESCRIPTION;
-        $vacancies->RESPONSIBILITY = Helper::convertTextPointsToJson($request->RESPONSIBILITY);
-        $vacancies->QUALIFICATIONS = Helper::convertTextPointsToJson($request->QUALIFICATIONS);
-        $vacancies->BENEFITS = $request->BENEFITS;
-        $vacancies->save();
+
+        $newVacancy = Vacancies::create($arrVacancyFields);
+
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'vacancy',
+            'message' =>  'Added new vacancy',
+            'entity_id' => $newVacancy->ID,
+        ];
+
+        event(new NewEntityCreated($date));
 
         return redirect()->route('personal-vacancies');
     }

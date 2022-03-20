@@ -32,7 +32,7 @@ class AdminNotificationQueue extends Mailable
     public function build()
     {
         return $this->from(Constants::EMAIL, 'Notification for admin JobBoard')
-            ->subject('New user registered')
+            ->subject($this->details['message'])
             ->view('mail.adminNotification')
             ->with('data', $this->details);
     }

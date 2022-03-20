@@ -95,6 +95,18 @@
                         </div>
                     </div>
 
+                    <div class="row mb-3">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0"><b>Activity:</b></h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <select required name="ACTIVE" class="wide">
+                                <option value="1" @if($user->ACTIVE == 1) selected @endif>Active</option>
+                                <option value="0" @if($user->ACTIVE == 0) selected @endif>Not Active</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-3"></div>
                         <div class="col-sm-9 text-secondary">

@@ -112,7 +112,7 @@ class User extends \TCG\Voyager\Models\User
             'LEVEL', 'YEARS_EXPERIENCE',
             'SALARY', 'EXPERIENCE',
             'EDUCATION', 'SKILLS',
-            'LANGUAGES', 'ABOUT_ME',
+            'LANGUAGES', 'ABOUT_ME', 'ACTIVE'
         ];
     }
 
@@ -120,7 +120,7 @@ class User extends \TCG\Voyager\Models\User
         return [
             'NAME', 'IMAGE' , 'COUNTRY',
             'CITY', 'PHONE', 'EMPLOYEE_CNT',
-            'WEB_SITE', 'DESCRIPTION'
+            'WEB_SITE', 'DESCRIPTION', 'ACTIVE'
         ];
     }
 

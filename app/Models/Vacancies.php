@@ -9,6 +9,7 @@ use App\Models\User;
 
 class Vacancies extends Model
 {
+    protected $guarded = [];
     protected $table = 'vacancies';
     protected $primaryKey = 'ID';
 
@@ -16,7 +17,7 @@ class Vacancies extends Model
 
     public static function getVacancyFields() {
         return [
-            'NAME', 'COUNTRY' , 'CITY',
+            'NAME', 'COUNTRY' , 'CITY', 'ACTIVE',
             'CATEGORY_ID', 'SALARY_FROM', 'DESCRIPTION',
             'RESPONSIBILITY', 'QUALIFICATIONS', 'BENEFITS'
         ];

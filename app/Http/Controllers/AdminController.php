@@ -34,6 +34,7 @@ class AdminController extends BaseController
     //TODO сделать пагинацию и фильтрацию в списках
     //TODO объединить методы CRUD (render, update и т.д.) можно через интерфейс
     //TODO разобраться с '/////////' в JSON полях
+    //TODO сделать события при обновлении сущности
 
 
     public function __construct(CacheContract $cacheService) {

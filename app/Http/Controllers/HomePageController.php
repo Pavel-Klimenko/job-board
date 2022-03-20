@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\CacheContract;
+use App\Events\NewEntityCreated;
 use App\Models\User;
 use App\Services\Helper;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Reviews;
 use App\Models\JobCategories;
@@ -83,17 +86,24 @@ class HomePageController extends Controller
         $linkToImage = $imgPath.$filename;
 
 
-        $review = new Reviews();
+        $arrReviewFields = [
+            'NAME' => $request->NAME,
+            'REVIEW' => $request->REVIEW,
+            'PHOTO' => $linkToImage,
+        ];
 
-        $review->NAME = $request->NAME;
-        $review->REVIEW = $request->REVIEW;
-        $review->PHOTO = $linkToImage;
+        $newReview = Reviews::create($arrReviewFields);
 
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'review',
+            'message' =>  'Added new review',
+            'entity_id' => $newReview->ID,
+        ];
 
-        $review->save();
+        event(new NewEntityCreated($date));
 
         return redirect()->route('homepage');
-
     }
 
 }

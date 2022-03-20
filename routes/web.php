@@ -25,8 +25,6 @@ Route::group(['prefix' => 'ajax'], function () {
 
 
 
-
-
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
 Route::get('browse-job', [Controllers\VacancyController::class, 'getVacancies'])->name('browse-job');
 Route::get('candidates', [Controllers\CandidateController::class, 'getCandidates'])->name('candidates');

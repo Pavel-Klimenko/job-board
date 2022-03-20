@@ -10,12 +10,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewUserRegistered
+class NewEntityCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $date;
-
     /**
      * Create a new event instance.
      *

@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\NewUserRegistered;
+use App\Events\NewEntityCreated;
 use App\Jobs\SendEmailToAdmin;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class UserRegisteredHandler
+class NewEntityHandler
 {
     /**
      * Create the event listener.
@@ -22,14 +22,15 @@ class UserRegisteredHandler
     /**
      * Handle the event.
      *
-     * @param  NewUserRegistered  $event
+     * @param  NewEntityCreated  $event
      * @return void
      */
-    public function handle(NewUserRegistered $event)
+    public function handle(NewEntityCreated $event)
     {
         $details = [
-            'user_id' => $event->date->user_id,
-            'role_id' => $event->date->role_id,
+            'entity' => $event->date->entity,
+            'message' => $event->date->message,
+            'entity_id' => $event->date->entity_id,
         ];
 
         SendEmailToAdmin::dispatch($details)->onQueue('admin-notification');

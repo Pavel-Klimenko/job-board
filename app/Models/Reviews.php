@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reviews extends Model
 {
+    protected $guarded = [];
     protected $table = 'reviews';
     protected $primaryKey = 'ID';
 
     public static function getReviewFields() {
-        return ['NAME', 'PHOTO' , 'REVIEW'];
+        return ['NAME', 'PHOTO' , 'REVIEW', 'ACTIVE'];
     }
 }
