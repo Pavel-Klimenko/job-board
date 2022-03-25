@@ -162,7 +162,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 //debug routs
-Route::get('test', [Controllers\TestController::class, 'testMethod'])->middleware('auth');
+Route::get('test', [Controllers\TestController::class, 'testMethod']);
 Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo'])->middleware('auth');
 
 
