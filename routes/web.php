@@ -150,12 +150,19 @@ Route::group(['prefix' => 'admin'], function () {
         ->name('admin-update-review');
 
 
-
-
     Route::get('admin-delete-entity', [Controllers\AdminController::class, 'deleteEntity'])
         ->name('admin-delete-entity');
     Route::get('admin-change-active-status', [Controllers\AdminController::class, 'changeActiveStatus'])
         ->name('admin-change-active-status');
+
+
+    Route::get('analytics-vacancies', [Controllers\AdminController::class, 'renderVacanciesAnalytics'])
+        ->name('analytics-vacancies');
+
+    Route::get('analytics-users', [Controllers\AdminController::class, 'renderUserRatio'])
+        ->name('analytics-users');
+
+
 });
 
 

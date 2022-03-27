@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+//use CpChart\Data;
+//use CpChart\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use function Doctrine\Common\Cache\Psr6\get;
@@ -11,9 +13,18 @@ use App\Models\Vacancies;
 use App\Models\Reviews;
 use App\Constants;
 use App\Services\Helper;
+use App\Services\Charts;
 use Illuminate\Http\Request;
 use App\Models\JobCategories;
 use App\Contracts\CacheContract;
+
+use Carbon\Carbon;
+
+use CpChart\Chart\Pie;
+use CpChart\Data;
+use CpChart\Image;
+
+
 
 class AdminController extends BaseController
 {
@@ -240,4 +251,47 @@ class AdminController extends BaseController
 
         return back();
     }
+
+
+
+    public function renderVacanciesAnalytics() {
+       $currentMonth = Helper::getCurrentMonth();
+
+       //dump($currentMonth);
+
+       $quantityOfMonths = 3;
+       $monthsRange = range(0,$quantityOfMonths - 1);
+       rsort($monthsRange);
+
+       $arrMonths = [];
+       $monthsInYear = 12;
+       foreach ($monthsRange as $month) {
+           $monthNumber = $currentMonth - $month;
+           $monthNumber = ($monthNumber < 1) ? $monthsInYear + $monthNumber : $monthNumber;
+           $arrMonths[] = $monthNumber;
+       }
+
+        $chartData = [];
+        foreach ($arrMonths as $month) {
+            $rowData = Helper::getQuantityMonthlyRows(Vacancies::class, $month);
+            $chartData['MONTHS'][] = $rowData['MONTHS'];
+            $chartData['QUANTITY_OF_VACANCIES'][] = $rowData['CNT_ROWS'];
+        }
+
+        Charts::renderLineChart('New vacancies', $chartData['QUANTITY_OF_VACANCIES'], $chartData['MONTHS']);
+    }
+
+
+    public function renderUserRatio() {
+        $candidatesQuantity = User::candidates()->count();
+        $companiesQuantity = User::companies()->count();
+        Charts::renderPieChart([$candidatesQuantity, $companiesQuantity], ["Candidates", "Companies"]);
+    }
+
+
+
+    //        return view('admin_area.analytics.vacancies',
+//            compact( 'roles', 'candidatesRole', 'companiesRole'));
+
+
 }

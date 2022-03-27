@@ -31,33 +31,33 @@
             </div>
         </div>
 
-{{--        <div class="col s6">--}}
-{{--            <div style="padding: 35px;" align="center" class="card">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="left card-title">--}}
-{{--                        <b>Product Management</b>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="row">--}}
-{{--                    <a href="#!">--}}
-{{--                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">--}}
-{{--                            <i class="indigo-text text-lighten-1 large material-icons">store</i>--}}
-{{--                            <span class="indigo-text text-lighten-1"><h5>Product</h5></span>--}}
-{{--                        </div>--}}
-{{--                    </a>--}}
+        <div class="col s6">
+            <div style="padding: 35px;" align="center" class="card">
+                <div class="row">
+                    <div class="left card-title">
+                        <b>Website growth analytics</b>
+                    </div>
+                </div>
+                <div class="row">
+                    <a href="{{ route('analytics-vacancies') }}">
+                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
+                            <i class="indigo-text text-lighten-1 large material-icons">store</i>
+                            <span class="indigo-text text-lighten-1"><h5>Vacancies</h5></span>
+                        </div>
+                    </a>
 
-{{--                    <div class="col s1">&nbsp;</div>--}}
-{{--                    <div class="col s1">&nbsp;</div>--}}
+                    <div class="col s1">&nbsp;</div>
+                    <div class="col s1">&nbsp;</div>
 
-{{--                    <a href="#!">--}}
-{{--                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">--}}
-{{--                            <i class="indigo-text text-lighten-1 large material-icons">assignment</i>--}}
-{{--                            <span class="indigo-text text-lighten-1"><h5>Orders</h5></span>--}}
-{{--                        </div>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+                    <a href="{{ route('analytics-users') }}">
+                        <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
+                            <i class="indigo-text text-lighten-1 large material-icons">assignment</i>
+                            <span class="indigo-text text-lighten-1"><h5>Users</h5></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
 
     </div>
 

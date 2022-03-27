@@ -231,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'helper' => App\Facades\HelperFacade::class,
+        'charts' => App\Facades\ChartsFacade::class,
         'Constants' => App\Constants::class,
     ],
 

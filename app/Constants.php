@@ -14,7 +14,6 @@ class Constants
         'candidate' => 3,
     ];
 
-
     const USER_ROLE_NAMES = [
         'admin' => 'admin',
         'company' => 'company',
@@ -66,4 +65,6 @@ class Constants
         'review-igor' => '/img/demoData/reviews/igor.png',
         'review-pavel' => '/img/demoData/reviews/pavel.jpg',
     ];
+
+    const MONTHS = [1 => 'Jan.', 2 => 'Feb.', 3 => 'Mar.', 4 => 'Apr.', 5 => 'May', 6 => 'Jun.', 7 => 'Jul.', 8 => 'Aug.', 9 => 'Sep.', 10 => 'Oct.', 11 => 'Nov.', 12 => 'Dec.'];
 }

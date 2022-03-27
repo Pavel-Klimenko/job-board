@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\JobCategories;
+use App\Models\Vacancies;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Roles;
 use App\Constants;
@@ -110,5 +112,35 @@ class Helper
         return array_pop($fileExtension);
     }
 
+
+    /**Get data of selected year and month
+     *
+     * @param int $year
+     * @param int $month
+     * @return mixed
+     */
+    public static function getMonthlyData($model, int $year, int $month) {
+        $data = $model::whereYear('created_at', $year)
+            ->whereMonth('created_at', $month)
+            ->get();
+        return $data;
+    }
+
+    public static function getQuantityMonthlyRows($model, int $month) {
+        $countOfRows = $model::whereYear('created_at', self::getCurrentYear())
+            ->whereMonth('created_at', $month)
+            ->count();
+        return ['MONTHS' => Constants::MONTHS[$month], 'CNT_ROWS' => $countOfRows];
+    }
+
+
+
+    public static function getCurrentYear() {
+        return Carbon::now()->year;
+    }
+
+    public static function getCurrentMonth() {
+        return Carbon::now()->month;
+    }
 
 }
