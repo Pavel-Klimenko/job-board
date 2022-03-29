@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 //use CpChart\Data;
 //use CpChart\Image;
+use App\Models\InterviewInvitations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use function Doctrine\Common\Cache\Psr6\get;
@@ -170,7 +171,6 @@ class AdminController extends BaseController
     }
 
 
-
     public function renderReviewsList() {
         //TODO left меню вынести в свой компонент blade
         $roles = $this->roles;
@@ -254,7 +254,7 @@ class AdminController extends BaseController
 
 
 
-    public function renderVacanciesAnalytics() {
+    public function renderLineChartAnalytics($entity) {
        $currentMonth = Helper::getCurrentMonth();
 
        //dump($currentMonth);
@@ -271,27 +271,37 @@ class AdminController extends BaseController
            $arrMonths[] = $monthNumber;
        }
 
+       if ($entity == 'vacancies') {
+           $model = Vacancies::class;
+       } elseif ($entity == 'users') {
+           $model = User::class;
+       }
+
         $chartData = [];
         foreach ($arrMonths as $month) {
-            $rowData = Helper::getQuantityMonthlyRows(Vacancies::class, $month);
+            $rowData = Helper::getQuantityMonthlyRows($model, $month);
             $chartData['MONTHS'][] = $rowData['MONTHS'];
-            $chartData['QUANTITY_OF_VACANCIES'][] = $rowData['CNT_ROWS'];
+            $chartData['QUANTITY'][] = $rowData['CNT_ROWS'];
         }
 
-        Charts::renderLineChart('New vacancies', $chartData['QUANTITY_OF_VACANCIES'], $chartData['MONTHS']);
+        Charts::renderLineChart('New vacancies', $chartData['QUANTITY'], $chartData['MONTHS']);
     }
 
-
-    public function renderUserRatio() {
-        $candidatesQuantity = User::candidates()->count();
-        $companiesQuantity = User::companies()->count();
-        Charts::renderPieChart([$candidatesQuantity, $companiesQuantity], ["Candidates", "Companies"]);
+    public function renderRatioAnalytics($entity) {
+        if ($entity == 'users') {
+            $candidatesQuantity = User::candidates()->count();
+            $companiesQuantity = User::companies()->count();
+            $arrData = [$candidatesQuantity, $companiesQuantity];
+            $arrTitles = ["Candidates", "Companies"];
+        } elseif ($entity == 'invitations') {
+            $acceptedInvitations = InterviewInvitations::accepted()->count();
+            $rejectedInvitations = InterviewInvitations::rejected()->count();
+            $noStatusInvitations = InterviewInvitations::nostatus()->count();
+            $arrData = [$acceptedInvitations, $rejectedInvitations, $noStatusInvitations];
+            $arrTitles = ["Accepted", "Rejected", "No status"];
+        }
+        Charts::renderPieChart($arrData, $arrTitles);
     }
-
-
-
-    //        return view('admin_area.analytics.vacancies',
-//            compact( 'roles', 'candidatesRole', 'companiesRole'));
 
 
 }

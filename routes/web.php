@@ -156,12 +156,11 @@ Route::group(['prefix' => 'admin'], function () {
         ->name('admin-change-active-status');
 
 
-    Route::get('analytics-vacancies', [Controllers\AdminController::class, 'renderVacanciesAnalytics'])
-        ->name('analytics-vacancies');
+    Route::get('analytics-line-chart/{entity}', [Controllers\AdminController::class, 'renderLineChartAnalytics'])
+        ->name('analytics-line-chart');
 
-    Route::get('analytics-users', [Controllers\AdminController::class, 'renderUserRatio'])
-        ->name('analytics-users');
-
+    Route::get('analytics-pie-chart/{entity}', [Controllers\AdminController::class, 'renderRatioAnalytics'])
+        ->name('analytics-pie-chart');
 
 });
 
