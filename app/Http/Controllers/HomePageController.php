@@ -17,36 +17,33 @@ use App\Constants;
 
 class HomePageController extends Controller
 {
-
     protected $cacheService;
-
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
     }
 
-
     public function renderHomePage()
     {
-
         $cities = DB::table('vacancies')->select('CITY')
             ->distinct()
             ->where('CITY', '<>', '')
+            ->where('ACTIVE', 1)
             ->get();
 
         $jobCategories = JobCategories::all();
         $vacancyCategories = $this->getVacanciesCategories();
 
         $vacanciesQuantuty = 6;
-        $vacancies = Vacancies::limit($vacanciesQuantuty)->get();
+        $vacancies = Vacancies::limit($vacanciesQuantuty)->where('ACTIVE', 1)->get();
 
         $candidatesQuantuty = 15;
-        $candidates = User::candidates()->limit($candidatesQuantuty)->get();
+        $candidates = User::candidates()->limit($candidatesQuantuty)->where('ACTIVE', 1)->get();
 
         $companiesQuantuty = 4;
-        $companies = User::companies()->limit($companiesQuantuty)->get();
+        $companies = User::companies()->limit($companiesQuantuty)->where('ACTIVE', 1)->get();
 
         $reviewsQuantuty = 10;
-        $reviews = Reviews::limit($reviewsQuantuty)->get();
+        $reviews = Reviews::limit($reviewsQuantuty)->where('ACTIVE', 1)->get();
 
 
         return view('homepage',
@@ -63,7 +60,11 @@ class HomePageController extends Controller
 
     private function getVacanciesCategories()
     {
-        return Vacancies::select('CATEGORY_ID')->distinct()->limit(8)->get();
+        return Vacancies::select('CATEGORY_ID')
+            ->distinct()
+            ->where('ACTIVE', 1)
+            ->limit(8)
+            ->get();
     }
 
 

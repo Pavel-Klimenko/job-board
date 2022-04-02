@@ -16,13 +16,11 @@ use Illuminate\Support\Facades\Hash;
 
 class VacancyController extends BaseController
 {
-
     protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
     }
-
 
     public function getVacancies(Request $request)
     {
@@ -65,16 +63,14 @@ class VacancyController extends BaseController
                 }
                 $vacancies = $vacancies->orderBy($sortFiled, 'desc');
             }
-
         }
 
         $itemsOnPage = 4;
-        $vacancies = $vacancies->paginate($itemsOnPage)->withQueryString();
+        $vacancies = $vacancies->where('ACTIVE', 1)->paginate($itemsOnPage)->withQueryString();
 
 
         return view('lists.browse_job', compact('vacancies'));
     }
-
 
     public function createVacancy(Request $request)
     {
@@ -127,11 +123,9 @@ class VacancyController extends BaseController
         $cachedObject = $this->cacheService->getObjectIntoCache('vacancy_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $vacancy = $cachedObject;
-            echo 'вернул из кеша';
         } else {
             $vacancy = Vacancies::find($id);
             $this->cacheService->putObjectIntoCache('vacancy_'.$id, $vacancy);
-            echo 'добавил в кеш';
         }
 
         $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
@@ -168,7 +162,6 @@ class VacancyController extends BaseController
         return back();
     }
 
-
     public function updateVacancy(Request $request)
     {
         sleep(1);
@@ -191,8 +184,5 @@ class VacancyController extends BaseController
 
         return back();
     }
-
-
-
 
 }

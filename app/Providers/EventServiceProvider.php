@@ -38,22 +38,14 @@ class EventServiceProvider extends ServiceProvider
             [Listeners\SendCompanyNotification::class, 'handle']
         );
 
-
         Event::listen(
             Events\NewEntityCreated::class,
             [Listeners\NewEntityHandler::class, 'handle']
         );
 
-
-//        Event::listen(
-//            Events\NewUserRegistered::class,
-//            [Listeners\UserRegisteredHandler::class, 'handle']
-//        );
-//
-//        Event::listen(
-//            Events\NewVacancyAdded::class,
-//            [Listeners\NewVacancyHandler::class, 'handle']
-//        );
-
+        Event::listen(
+            Events\NewUserMessage::class,
+            [Listeners\UserMessageHandler::class, 'handle']
+        );
     }
 }

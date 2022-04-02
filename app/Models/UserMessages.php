@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserMessages extends Model
 {
+    protected $guarded = [];
     protected $table = 'user_messages';
     protected $primaryKey = 'ID';
 

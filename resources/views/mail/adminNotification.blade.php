@@ -8,8 +8,14 @@
 
 <div>
     <div style="width: 50%; padding: 40px 25%; text-align: center;">
-        <p><b>Admin needs to check created entity and make it active for displaying in the public area of the JobBoard</b></p>
-        <p><a href="{{env('APP_URL')}}/admin/{{$data['entity']}}/{{$data['entity_id']}}">Open new {{$data['entity']}} in the admin area</a></p>
+        @if($data['entity_id'])
+            <p><b>Admin needs to check created entity and make it active for displaying in the public area of the JobBoard</b></p>
+            <p><a href="{{env('APP_URL')}}/admin/{{$data['entity']}}/{{$data['entity_id']}}">Open new {{$data['entity']}} in the admin area</a></p>
+        @endif
+
+        @if($data['entity'] == 'contact')
+            <p>{{$data['text']}}</p>
+        @endif
     </div>
 </div>
 

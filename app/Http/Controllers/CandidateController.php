@@ -20,7 +20,6 @@ class CandidateController extends BaseController
         $this->cacheService = $cacheService;
     }
 
-
     /**Get Vacancies using filter
      *
      * @param Request $request
@@ -28,10 +27,8 @@ class CandidateController extends BaseController
      */
     public function getCandidates(Request $request)
     {
-
         $arrRequest = $request->all();
-        $candidates = User::candidates();
-
+        $candidates = User::candidates()->where('ACTIVE', 1);
 
         if ($request->has('CATEGORY_NAME')) {
             $model = JobCategories::class;
@@ -84,15 +81,12 @@ class CandidateController extends BaseController
      */
     public function getCandidate($id)
     {
-
         $cachedObject = $this->cacheService->getObjectIntoCache('user_'.$id);
         if (isset($cachedObject) && $cachedObject) {
             $candidate = $cachedObject;
-            echo 'вернул из кеша';
         } else {
             $candidate = User::find($id);
             $this->cacheService->putObjectIntoCache('user_'.$id, $candidate);
-            echo 'добавил в кеш';
         }
 
         $isCompanyFlag = Helper::isCompany();
@@ -119,7 +113,6 @@ class CandidateController extends BaseController
         }
 
     }
-
 
     public function createVacancyInquiry(Request $request) {
         $inquries = new InterviewInvitations();

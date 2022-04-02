@@ -4,13 +4,12 @@ namespace App\Jobs;
 
 use App\Mail\AdminNotificationQueue;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\CompanyNotificationQueue;
 use \Illuminate\Support\Facades\Mail;
+use App\Constants;
 
 class SendEmailToAdmin implements ShouldQueue
 {
@@ -36,9 +35,7 @@ class SendEmailToAdmin implements ShouldQueue
      */
     public function handle()
     {
-        $this->details['email_to'] = 'mr-freeman89@mail.ru';
-
         $email = new AdminNotificationQueue($this->details);
-        Mail::to($this->details['email_to'])->send($email);
+        Mail::to(Constants::EMAIL)->send($email);
     }
 }

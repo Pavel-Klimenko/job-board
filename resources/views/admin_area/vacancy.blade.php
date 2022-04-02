@@ -1,5 +1,5 @@
 @include('admin_area.inc.header')
-@include('admin_area.inc.left_menu')
+<x-admin-menu/>
 
 <link rel="stylesheet"
       href="{{ asset('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}">

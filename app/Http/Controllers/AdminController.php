@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-//use CpChart\Data;
-//use CpChart\Image;
+
 use App\Models\InterviewInvitations;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use function Doctrine\Common\Cache\Psr6\get;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Roles;
@@ -19,14 +16,6 @@ use Illuminate\Http\Request;
 use App\Models\JobCategories;
 use App\Contracts\CacheContract;
 
-use Carbon\Carbon;
-
-use CpChart\Chart\Pie;
-use CpChart\Data;
-use CpChart\Image;
-
-
-
 class AdminController extends BaseController
 {
     protected $candidatesRole;
@@ -34,13 +23,6 @@ class AdminController extends BaseController
     protected $roles;
     protected $jobCategories;
     protected $cacheService;
-
-    //TODO Аналитика для админки:
-    // 1) Количество новых пользователей портала (зарегистрированных) за промежуток времени
-        //из них компаний и кандидатов (количество)
-    // 2) Количество приглашений кандидатов на интервью за промежуток времени
-    // 3) Построение графиков на основе аналитики
-
 
 
     //TODO сделать пагинацию и фильтрацию в списках
@@ -59,17 +41,15 @@ class AdminController extends BaseController
 
 
     public function renderAdminPanel() {
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
         return view('admin_area.main',
-            compact('roles', 'candidatesRole', 'companiesRole'));
+            compact( 'candidatesRole', 'companiesRole'));
     }
 
 
     public function renderUserList($userType) {
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -79,11 +59,10 @@ class AdminController extends BaseController
         $users = $users->where('role_id', $roleId)->get();
 
         return view('admin_area.users_list',
-            compact('roles', 'candidatesRole', 'companiesRole', 'users', 'userType'));
+            compact( 'candidatesRole', 'companiesRole', 'users', 'userType'));
     }
 
     public function renderUser($id) {
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -93,12 +72,12 @@ class AdminController extends BaseController
             $jobCategories = $this->jobCategories;
             $category = Helper::getTableRow(JobCategories::class, 'ID', $user->CATEGORY_ID);
             return view('admin_area.candidate',
-                compact('user', 'category', 'roles', 'candidatesRole', 'companiesRole', 'jobCategories'));
+                compact('user', 'category', 'candidatesRole', 'companiesRole', 'jobCategories'));
         }
 
         if ($user->role_id == Constants::USER_ROLES_IDS[$companiesRole]) {
             return view('admin_area.company',
-                compact('user', 'roles', 'candidatesRole', 'companiesRole'));
+                compact('user','candidatesRole', 'companiesRole'));
         }
     }
 
@@ -124,21 +103,16 @@ class AdminController extends BaseController
         return redirect()->route('admin-users', ['name' => $userList]);
     }
 
-
-
     public function renderVacanciesList() {
-        //TODO left меню вынести в свой компонент blade
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
         $vacancies = Vacancies::all();
         return view('admin_area.vacancies',
-            compact('roles', 'candidatesRole', 'companiesRole', 'vacancies'));
+            compact( 'candidatesRole', 'companiesRole', 'vacancies'));
     }
 
     public function renderVacancy($id) {
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -148,7 +122,7 @@ class AdminController extends BaseController
         $jobCategories = $this->jobCategories;
 
         return view('admin_area.vacancy',
-            compact('vacancy', 'jobCategories', 'category', 'company', 'roles', 'candidatesRole', 'companiesRole'));
+            compact('vacancy', 'jobCategories', 'category', 'company', 'candidatesRole', 'companiesRole'));
 
     }
 
@@ -172,25 +146,21 @@ class AdminController extends BaseController
 
 
     public function renderReviewsList() {
-        //TODO left меню вынести в свой компонент blade
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
         $reviews = Reviews::all();
         return view('admin_area.reviews',
-            compact('reviews','roles', 'candidatesRole', 'companiesRole'));
+            compact('reviews', 'candidatesRole', 'companiesRole'));
     }
 
     public function renderReview($id) {
-        $roles = $this->roles;
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
-
         $review = Reviews::find($id);
 
         return view('admin_area.review',
-            compact('review', 'roles', 'candidatesRole', 'companiesRole'));
+            compact('review', 'candidatesRole', 'companiesRole'));
     }
 
 
@@ -253,13 +223,14 @@ class AdminController extends BaseController
     }
 
 
-
+    /**Line chart of growth since start of the current year
+     *
+     * @param $entity
+     */
     public function renderLineChartAnalytics($entity) {
        $currentMonth = Helper::getCurrentMonth();
 
-       //dump($currentMonth);
-
-       $quantityOfMonths = 3;
+       $quantityOfMonths = $currentMonth;
        $monthsRange = range(0,$quantityOfMonths - 1);
        rsort($monthsRange);
 

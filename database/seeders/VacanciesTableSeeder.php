@@ -31,6 +31,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 500,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'Our customer is a leading international tobacco company headquartered in Switzerland. Its 400 offices, 27 factories, 5 research centers, and 5 tobacco processing enterprises are located across the globe. Over the past 7 years, the company has been certified as the best employer in the world, and in 2021, it received regional certifications in the Asia-Pacific region, Europe, North America, Africa, the Middle East, and Latin America.',
             'RESPONSIBILITY' => json_encode([
                 'Conducting analysis of website and application requirements.',
@@ -59,6 +60,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 1500,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'We are looking for highly skilled programmers with experience building web applications in Java. Java Developers are responsible for analyzing user requirements and business objectives, determining application features and functionality, and recommending changes to existing Java-based applications, among other duties.',
             'RESPONSIBILITY' => json_encode([
                 'Designing and implementing Java-based applications.',
@@ -85,6 +87,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 2500,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'We are looking for a Swift Developer to join our team! As a Swift Developer you will be responsible for the development and maintenance of applications aimed towards iOS and OS X. You will oversee development of applications and their integration with back-end services.',
             'RESPONSIBILITY' => json_encode([
                 'Plan, design and implement applications for iOS and OS X',
@@ -112,6 +115,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 400,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'Become a part of the bigger picture and get ready to make important contributions to the development of innovative solutions.
                                 To build a quality and comprehensive error-free technology infrastructure, establish and maintain an effective operational environment with 99.99% run time, and deliver quality, prompt, cost-effective, and reliable technology services to serve the best impossible experience for customers.',
             'RESPONSIBILITY' => json_encode([
@@ -139,6 +143,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 5500,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'We’re looking for an experienced Developer with in-depth experience in Ruby on Rails who will join our team of exceptional developers working in a fast-paced environment to deliver world-class software.',
             'RESPONSIBILITY' => json_encode([
                 'Develop robust٫ scalable and secure features',
@@ -164,6 +169,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 1200,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'We are in search of a JavaScript developer to join the fun, using advanced JavaScript, CSS, and React to optimize design, performance, and quality, while continuously evolving our technology stack. Day to day, you will be responsible for all front end aspects, from designing complex applications to ensuring a positive user experience by analyzing code. Our ideal candidate has an eye for design and the ability to create clean, sharp, and responsive layouts from designs with HTML5, CSS3, and JavaScript.',
             'RESPONSIBILITY' => json_encode([
                 'Write, modify, and debug web applications using Node.js, JavaScript, HTML and CSS',
@@ -188,6 +194,7 @@ class VacanciesTableSeeder extends Seeder
             'CATEGORY_ID' => $category->ID,
             'COMPANY_ID' => $company->id,
             'SALARY_FROM' => 1000,
+            'ACTIVE' => 1,
             'DESCRIPTION' => 'We are looking for an experienced Python developer to join our engineering team and help us create dynamic software applications for our clients. In this role, you will be responsible for writing and testing scalable code, developing back-end components, and integrating user-facing elements in collaboration with front-end developers.',
             'RESPONSIBILITY' => json_encode([
                 'Coordinating with development teams to determine application requirements.',

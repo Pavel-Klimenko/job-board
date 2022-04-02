@@ -1,5 +1,5 @@
 @include('admin_area.inc.header')
-@include('admin_area.inc.left_menu')
+<x-admin-menu/>
 
 <main>
     <div class="row">
@@ -42,7 +42,7 @@
                     <a href="{{ route('analytics-line-chart', ['entity' => 'vacancies']) }}">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">store</i>
-                            <span class="indigo-text text-lighten-1"><h5>Vacancies</h5></span>
+                            <span class="indigo-text text-lighten-1"><h5>New Vacancies</h5></span>
                         </div>
                     </a>
 
@@ -58,7 +58,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="row">
@@ -118,34 +117,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="fixed-action-btn click-to-toggle" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large pink waves-effect waves-light">
-            <i class="large material-icons">add</i>
-        </a>
-
-        <ul>
-            <li>
-                <a class="btn-floating red"><i class="material-icons">note_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add a note</a>
-            </li>
-
-            <li>
-                <a class="btn-floating yellow darken-1"><i class="material-icons">add_a_photo</i></a>
-                <a href="" class="btn-floating fab-tip">Add a photo</a>
-            </li>
-
-            <li>
-                <a class="btn-floating green"><i class="material-icons">alarm_add</i></a>
-                <a href="" class="btn-floating fab-tip">Add an alarm</a>
-            </li>
-
-            <li>
-                <a class="btn-floating blue"><i class="material-icons">vpn_key</i></a>
-                <a href="" class="btn-floating fab-tip">Add a master password</a>
-            </li>
-        </ul>
     </div>
 </main>
 

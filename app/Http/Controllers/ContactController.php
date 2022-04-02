@@ -3,9 +3,11 @@ namespace App\Http\Controllers;
 
 use App\Contracts\CacheContract;
 use App\Constants;
+use App\Events\NewUserMessage;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\UserMessages;
+use Illuminate\Support\Facades\Auth;
 
 
 class ContactController extends BaseController
@@ -32,10 +34,8 @@ class ContactController extends BaseController
         $cachedObject = $this->cacheService->getObjectIntoCache('contact_data');
         if (isset($cachedObject) && $cachedObject) {
             $contactData = $cachedObject;
-            //echo 'вернул из кеша';
         } else {
             $this->cacheService->putObjectIntoCache('contact_data', $contactData);
-            //echo 'добавил в кеш';
         }
 
         return view('contact', $contactData);
@@ -51,15 +51,25 @@ class ContactController extends BaseController
             'MESSAGE' => 'required|max:5000',
         ]);
 
+        $arrContactFields = [
+            'NAME' => $request->NAME,
+            'EMAIL' => $request->EMAIL,
+            'MESSAGE' => $request->MESSAGE,
+        ];
 
-        $messagesTable = new UserMessages();
-        $messagesTable->NAME = $request->NAME;
-        $messagesTable->EMAIL = $request->EMAIL;
-        $messagesTable->MESSAGE = $request->MESSAGE;
-        $messagesTable->save();
+        UserMessages::create($arrContactFields);
+
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'contact',
+            'message' =>  'JobBoard user wrote a message to admin',
+            'text' => $arrContactFields['MESSAGE'],
+            //'entity_id' => $newContact,
+        ];
+
+        event(new NewUserMessage($date));
 
         return redirect()->route('homepage');
-
     }
 
 }

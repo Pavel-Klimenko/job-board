@@ -1,5 +1,5 @@
 @include('admin_area.inc.header')
-@include('admin_area.inc.left_menu')
+<x-admin-menu/>
 
 <link rel="stylesheet"
       href="{{ asset('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') }}">
@@ -36,7 +36,7 @@
                             <h6 class="mb-0"><b>Image url:</b></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            <input type="text" required name="IMAGE" class="form-control" value="{{$user->IMAGE}}">
+                            <input type="text" name="IMAGE" class="form-control" value="{{$user->IMAGE}}">
                         </div>
                     </div>
 

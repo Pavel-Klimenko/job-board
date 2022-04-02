@@ -10,10 +10,12 @@
             <div class="row">
 
                 <div class="col-lg-8">
-                    <div class="blog_item_img">
-                        <img class="card-img rounded-0" width="750" src="{{$candidate->IMAGE}}" alt="">
-                    </div>
-                    <br/><br/>
+                    @if($candidate->IMAGE)
+                        <div class="blog_item_img">
+                            <img class="card-img rounded-0" width="750" src="{{$candidate->IMAGE}}" alt="">
+                        </div>
+                        <br/><br/>
+                    @endif
                     <div class="job_details_header">
                         <div class="single_jobs white-bg d-flex justify-content-between">
                             <div class="jobs_left d-flex align-items-center">

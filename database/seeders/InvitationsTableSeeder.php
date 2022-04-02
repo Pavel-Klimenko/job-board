@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 
-class AdvicesTableSeeder extends Seeder
+class InvitationsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.

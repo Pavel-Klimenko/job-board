@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewEntityCreated;
 use App\Events\VacancyInterviewRequest;
 use App\Models\JobCategories;
 use Illuminate\Http\Request;
@@ -19,14 +20,11 @@ use App\Constants;
 
 class PersonalController extends BaseController
 {
-
     protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
     }
-
-
 
     public function getPersonalInfo()
     {
@@ -43,7 +41,6 @@ class PersonalController extends BaseController
         }
     }
 
-
     public function getCompanyVacancies()
     {
         $title = 'Company vacancies';
@@ -53,13 +50,13 @@ class PersonalController extends BaseController
         $itemsOnPage = 4;
         $vacancies = User::find($user->id)
             ->vacancies()
+            ->where('ACTIVE', 1)
             ->paginate($itemsOnPage)
             ->withQueryString();
 
         return view('personal.vacancies',
             compact('vacancies', 'jobCategories', 'title'));
     }
-
 
     public function getIterviewRequests($requestsType)
     {
@@ -98,15 +95,12 @@ class PersonalController extends BaseController
             compact('candidatesRequests', 'title', 'isCompanyFlag', 'isCandidateFlag'));
     }
 
-
-
     public function changeAdviceStatus($INVITE_ID, $STATUS)
     {
 
         $invitation = InterviewInvitations::find($INVITE_ID);
         $candidate = User::find($invitation->CANDIDATE_ID);
         $company = User::find($invitation->COMPANY_ID);
-
 
         $invitation->STATUS = $STATUS;
         $invitation->save();
@@ -135,7 +129,6 @@ class PersonalController extends BaseController
         event(new CandidateInvitation($date));
         return back();
     }
-
 
     public function createInterviewInvite(Request $request)
     {
@@ -208,7 +201,6 @@ class PersonalController extends BaseController
         return back();
     }
 
-
     public function uploadUserImage(Request $request)
     {
             if (Helper::isCompany()) {
@@ -216,7 +208,6 @@ class PersonalController extends BaseController
             } elseif (Helper::isCandidate()) {
                 $imgPath = Constants::USER_IMAGE_FOLDERS['candidates'];
             }
-
 
             $imageFullPath = $_SERVER['DOCUMENT_ROOT'].$imgPath;
             $fileExtension = Helper::getExtension($_FILES["IMAGE"]["name"]);
@@ -227,11 +218,20 @@ class PersonalController extends BaseController
 
             $user = User::find(Auth::user()->id);
             $user->IMAGE = $linkToImage;
-
+            $user->ACTIVE = 0;
             $user->save();
+
+            //sending notification to admin
+            $date = (object) [
+                'entity' => 'user',
+                'message' =>  'User updated avatar',
+                'entity_id' => $user->id,
+            ];
+
+            event(new NewEntityCreated($date));
+
             return back();
     }
-
 
     public function updateUserInfo(Request $request)
     {
@@ -240,37 +240,29 @@ class PersonalController extends BaseController
         $user = User::find(Auth::user()->id);
 
         if (Helper::isCompany()) {
-            $user->NAME = $request->NAME;
-            $user->COUNTRY = $request->COUNTRY;
-            $user->CITY = $request->CITY;
-            $user->PHONE = $request->PHONE;
-            $user->EMPLOYEE_CNT = $request->EMPLOYEE_CNT;
-            $user->WEB_SITE = $request->WEB_SITE;
-            $user->DESCRIPTION = $request->DESCRIPTION;
+            $arrUserFields = User::getCompanyFields();
         } elseif (Helper::isCandidate()) {
-            $user->NAME = $request->NAME;
-            $user->COUNTRY = $request->COUNTRY;
-            $user->CITY = $request->CITY;
-            $user->PHONE = $request->PHONE;
-            $user->CATEGORY_ID = $request->CATEGORY_ID;
-            $user->LEVEL = $request->LEVEL;
-            $user->YEARS_EXPERIENCE = $request->YEARS_EXPERIENCE;
-            $user->SALARY = $request->SALARY;
-            $user->YEARS_EXPERIENCE = $request->YEARS_EXPERIENCE;
-            $user->EXPERIENCE = $request->EXPERIENCE;
-            $user->EDUCATION = $request->EDUCATION;
-            $user->SKILLS = $request->SKILLS;
-            $user->LANGUAGES = $request->LANGUAGES;
-            $user->ABOUT_ME = $request->ABOUT_ME;
+            $arrUserFields = User::getCandidateFields();
         }
 
+        foreach ($arrUserFields as $field) {
+            $user->$field = $request->$field;
+        }
+        $user->ACTIVE = 0;
+        $user->save();
 
         $this->cacheService->deleteKeyFromCache('user_'.$user->id);
 
 
-        $user->save();
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'user',
+            'message' =>  'User updated personal info',
+            'entity_id' => $user->id,
+        ];
+
+        event(new NewEntityCreated($date));
         return back();
     }
-
 
 }

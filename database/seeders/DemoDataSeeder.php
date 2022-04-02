@@ -20,7 +20,7 @@ class DemoDataSeeder extends Seeder {
             UsersTableSeeder::class,
             VacanciesTableSeeder::class,
             ReviewsTableSeeder::class,
-            AdvicesTableSeeder::class,
+            InvitationsTableSeeder::class,
         ]);
     }
 }
