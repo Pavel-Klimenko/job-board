@@ -178,9 +178,19 @@ class VacancyController extends BaseController
         $vacancy->RESPONSIBILITY = Helper::convertTextPointsToJson($request->RESPONSIBILITY);
         $vacancy->QUALIFICATIONS = Helper::convertTextPointsToJson($request->QUALIFICATIONS);
         $vacancy->BENEFITS = $request->BENEFITS;
+        $vacancy->ACTIVE = 0;
         $vacancy->save();
 
         $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
+
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'vacancy',
+            'message' =>  'Updated new vacancy',
+            'entity_id' => $request->VACANCY_ID,
+        ];
+
+        event(new NewEntityCreated($date));
 
         return back();
     }

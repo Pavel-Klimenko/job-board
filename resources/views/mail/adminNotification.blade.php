@@ -10,7 +10,7 @@
     <div style="width: 50%; padding: 40px 25%; text-align: center;">
         @if($data['entity_id'])
             <p><b>Admin needs to check created entity and make it active for displaying in the public area of the JobBoard</b></p>
-            <p><a href="{{env('APP_URL')}}/admin/{{$data['entity']}}/{{$data['entity_id']}}">Open new {{$data['entity']}} in the admin area</a></p>
+            <p><a href="{{env('APP_URL')}}/admin/detail-page/{{$data['entity_id']}}/{{$data['entity']}}">Open new {{$data['entity']}} in the admin area</a></p>
         @endif
 
         @if($data['entity'] == 'contact')
