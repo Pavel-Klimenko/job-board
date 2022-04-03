@@ -51,8 +51,8 @@ mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; 
 9) seeding demo data: php artisan db:seed --class=DemoDataSeeder
 
 
-Admin credentials:
-login: admin@admin.com
+Admin credentials:<br/>
+login: admin@admin.com<br/>
 password: A1P2vK
 
 
