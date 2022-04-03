@@ -55,7 +55,7 @@ mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; 
 login: admin@admin.com<br/>
 password: A1P2vK<br/>
 
-<b>Registerd demo users (candidates, companies):</b><br/>
+<b>Registered demo users (candidates, companies):</b><br/>
 login: user`s email<br/>
 password: almaz<br/>
 
