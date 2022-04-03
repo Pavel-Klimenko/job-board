@@ -51,4 +51,9 @@ mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; 
 9) seeding demo data: php artisan db:seed --class=DemoDataSeeder
 
 
+Admin credentials:
+login: admin@admin.com
+password: A1P2vK
+
+
 Link to the site deployed project: https://bestest.xyz/
