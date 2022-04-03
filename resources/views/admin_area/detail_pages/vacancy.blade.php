@@ -11,10 +11,11 @@
                 <div class="d-flex flex-column align-items-center text-center">
             </div>
 
-            <form action="{{ route('admin-update-vacancy') }}" method="post">
+            <form action="{{ route('update-entity') }}" method="post">
                 @csrf
                 <div class="col-lg-8">
-                    <input type="hidden" required name="id" class="form-control" value="{{$vacancy->ID}}">
+                    <input type="hidden" name="entity" class="form-control" value="vacancy">
+                    <input type="hidden" name="id" class="form-control" value="{{$vacancy->ID}}">
 
                     <div class="row mb-3">
                         <div class="col-sm-3">

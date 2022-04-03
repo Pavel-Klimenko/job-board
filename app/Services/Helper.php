@@ -45,6 +45,9 @@ class Helper
      * @return bool
      *
      */
+
+
+    //TODO объединить эти функции в одну или использовать массив ROLERS_IDS
     public static function isCompany()
     {
         if (Auth::check()) {
@@ -74,6 +77,18 @@ class Helper
         }
     }
 
+    public static function isAdmin()
+    {
+        if (Auth::check()) {
+            $currentRole = Auth::user()->role_id;
+            $roleName = Constants::USER_ROLE_NAMES['admin'];
+            $companyRole = self::getRoleIdByName($roleName);
+            return ($currentRole == $companyRole) ? true : false;
+        } else {
+            return false;
+        }
+    }
+
     /**Convert text point (each on a new line) to json list
      *
      * @param $TEXT_POINTS
@@ -81,6 +96,7 @@ class Helper
      */
     public static function convertTextPointsToJson($TEXT_POINTS)
     {
+        //TODO need fixing
         $listOfPoints = preg_replace('/\s{3,}/', '', $TEXT_POINTS);
         $arrListOfPoints = explode(PHP_EOL, $listOfPoints);
         return json_encode($arrListOfPoints);

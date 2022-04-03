@@ -16,7 +16,7 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="{{ route('homepage') }}">home</a></li>
+                                        <li><a href="{{ route('homepage') }}">Home</a></li>
                                         <li><a href="{{ route('browse-job') }}">Browse Job</a></li>
                                         <li><a href="{{ route('candidates') }}">Candidates</a></li>
 
@@ -29,8 +29,10 @@
 
                                         @if (Auth::guest())
                                             <li><a href="/login/">Login</a></li>
-                                        @else
+                                        @elseif (\App\Services\Helper::isAdmin() == false)
                                             <li><a href="{{ route('personal-info') }}">Personal area</a></li>
+                                        @else
+                                            <li><a href="{{ route('personal-info') }}">Admin area</a></li>
                                         @endif
                                     </ul>
                                 </nav>

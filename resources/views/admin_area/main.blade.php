@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="row">
-                    <a href="{{ route('admin-vacancies') }}">
+                    <a href="{{ route('render-list', ['entity' => 'vacancies']) }}">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">local_offer</i>
                             <span class="indigo-text text-lighten-1"><h5>Vacancies</h5></span>
@@ -80,7 +80,7 @@
                     <div class="col s1">&nbsp;</div>
                     <div class="col s1">&nbsp;</div>
 
-                    <a href="{{ route('admin-reviews') }}">
+                    <a href="{{ route('render-list', ['entity' => 'reviews']) }}">
                         <div style="padding: 30px;" class="grey lighten-3 col s5 waves-effect">
                             <i class="indigo-text text-lighten-1 large material-icons">loyalty</i>
                             <span class="indigo-text text-lighten-1"><h5>Reviews</h5></span>

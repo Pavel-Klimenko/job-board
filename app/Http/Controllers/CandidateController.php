@@ -67,7 +67,7 @@ class CandidateController extends BaseController
 
         }
 
-        $itemsOnPage = 2;
+        $itemsOnPage = 8;
         $candidates = $candidates->paginate($itemsOnPage)->withQueryString();
 
         return view('lists.candidates', compact('candidates'));

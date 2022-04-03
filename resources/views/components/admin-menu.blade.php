@@ -7,7 +7,6 @@
             </div>
         </div>
     </li>
-
     <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-main') }}"><b>Dashboard</b></a></li>
 
     <ul class="collapsible" data-collapsible="accordion">
@@ -27,8 +26,9 @@
                 </ul>
             </div>
         </li>
-
-        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-vacancies') }}"><b>Vacancies</b></a></li>
-        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('admin-reviews') }}"><b>Reviews</b></a></li>
+        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('render-list', ['entity' => 'vacancies']) }}"><b>Vacancies</b></a></li>
+        <li id="dash_dashboard"><a class="waves-effect" href="{{ route('render-list', ['entity' => 'reviews']) }}"><b>Reviews</b></a></li>
     </ul>
+    <li id="dash_dashboard"><a class="waves-effect" href="{{ route('homepage') }}"><b>Go to website</b></a></li>
+
 </ul>

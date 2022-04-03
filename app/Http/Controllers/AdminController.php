@@ -25,10 +25,7 @@ class AdminController extends BaseController
     protected $cacheService;
 
 
-    //TODO сделать пагинацию и фильтрацию в списках
-    //TODO объединить методы CRUD (render, update и т.д.) можно через интерфейс
     //TODO разобраться с '/////////' в JSON полях
-    //TODO сделать события при обновлении сущности
 
 
     public function __construct(CacheContract $cacheService) {
@@ -48,7 +45,6 @@ class AdminController extends BaseController
             compact( 'candidatesRole', 'companiesRole'));
     }
 
-
     public function renderUserList($userType) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
@@ -56,29 +52,31 @@ class AdminController extends BaseController
         $users = new User();
         $roleName = Constants::USER_ROLE_NAMES[$userType];
         $roleId = Helper::getRoleIdByName($roleName);
-        $users = $users->where('role_id', $roleId)->get();
+        $users = $users->where('role_id', $roleId);
 
-        return view('admin_area.users_list',
-            compact( 'candidatesRole', 'companiesRole', 'users', 'userType'));
+        $itemsOnPage = 8;
+        $users = $users->paginate($itemsOnPage);
+
+        $view = 'admin_area.lists.users_list';
+        $arrVariables = ['candidatesRole', 'companiesRole', 'users', 'userType'];
+
+        return view($view, compact($arrVariables));
     }
 
     public function renderUser($id) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
-
         $user = User::find($id);
-
         if ($user->role_id == Constants::USER_ROLES_IDS[$candidatesRole]) {
             $jobCategories = $this->jobCategories;
             $category = Helper::getTableRow(JobCategories::class, 'ID', $user->CATEGORY_ID);
-            return view('admin_area.candidate',
-                compact('user', 'category', 'candidatesRole', 'companiesRole', 'jobCategories'));
+            $view = 'admin_area.detail_pages.candidate';
+            $arrVariables = ['user', 'category', 'candidatesRole', 'companiesRole', 'jobCategories'];
+        } elseif ($user->role_id == Constants::USER_ROLES_IDS[$companiesRole]) {
+            $view = 'admin_area.detail_pages.company';
+            $arrVariables = ['user','candidatesRole', 'companiesRole'];
         }
-
-        if ($user->role_id == Constants::USER_ROLES_IDS[$companiesRole]) {
-            return view('admin_area.company',
-                compact('user','candidatesRole', 'companiesRole'));
-        }
+        return view($view, compact($arrVariables));
     }
 
     public function updateUserInfo(Request $request)
@@ -103,80 +101,64 @@ class AdminController extends BaseController
         return redirect()->route('admin-users', ['name' => $userList]);
     }
 
-    public function renderVacanciesList() {
+    public function renderList($entity) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
-        $vacancies = Vacancies::all();
-        return view('admin_area.vacancies',
-            compact( 'candidatesRole', 'companiesRole', 'vacancies'));
-    }
-
-    public function renderVacancy($id) {
-        $candidatesRole = $this->candidatesRole;
-        $companiesRole = $this->companiesRole;
-
-        $vacancy = Vacancies::find($id);
-        $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
-        $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);
-        $jobCategories = $this->jobCategories;
-
-        return view('admin_area.vacancy',
-            compact('vacancy', 'jobCategories', 'category', 'company', 'candidatesRole', 'companiesRole'));
-
-    }
-
-    public function updateVacancy(Request $request)
-    {
-        $vacancy = Vacancies::find($request->id);
-        $arrVacancyFields = Vacancies::getVacancyFields();
-
-        foreach ($arrVacancyFields as $field) {
-            if (in_array($field, Vacancies::$arrJsonFields)) {
-                $vacancy->$field = Helper::convertTextPointsToJson($request->$field);
-            } else {
-                $vacancy->$field = $request->$field;
-            }
+        if ($entity == 'vacancies') {
+            $model = Vacancies::class;
+            $view = 'admin_area.lists.vacancies';
+        } elseif ($entity == 'reviews') {
+            $model = Reviews::class;
+            $view = 'admin_area.lists.reviews';
         }
 
-        $vacancy->save();
-        $this->cacheService->deleteKeyFromCache('vacancy_'.$request->id);
-        return redirect()->route('admin-vacancies');
+        $itemsOnPage = 8;
+        $listElements = $model::paginate($itemsOnPage);
+        $arrVariables = ['listElements', 'candidatesRole', 'companiesRole'];
+        return view($view, compact($arrVariables));
     }
 
-
-    public function renderReviewsList() {
+    public function renderEntity($id, $entity) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
-        $reviews = Reviews::all();
-        return view('admin_area.reviews',
-            compact('reviews', 'candidatesRole', 'companiesRole'));
-    }
-
-    public function renderReview($id) {
-        $candidatesRole = $this->candidatesRole;
-        $companiesRole = $this->companiesRole;
-        $review = Reviews::find($id);
-
-        return view('admin_area.review',
-            compact('review', 'candidatesRole', 'companiesRole'));
-    }
-
-
-    public function updateReview(Request $request)
-    {
-        $review = Reviews::find($request->id);
-        $arrReviewFields = Reviews::getReviewFields();
-
-        foreach ($arrReviewFields as $field) {
-            $review->$field = $request->$field;
+        if ($entity == 'vacancy') {
+            $vacancy = Vacancies::find($id);
+            $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
+            $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);
+            $jobCategories = $this->jobCategories;
+            $view = 'admin_area.detail_pages.vacancy';
+            $arrVariables = ['vacancy', 'jobCategories', 'category', 'company', 'candidatesRole', 'companiesRole'];
+        } elseif ($entity == 'review') {
+            $review = Reviews::find($id);
+            $view = 'admin_area.detail_pages.review';
+            $arrVariables = ['review', 'candidatesRole', 'companiesRole'];
         }
 
-        $review->save();
-        return redirect()->route('admin-reviews');
+        return view($view, compact($arrVariables));
     }
 
+    public function updateEntity(Request $request)
+    {
+        if ($request->entity == 'vacancy') {
+            $element = Vacancies::find($request->id);
+            $arrFields = Vacancies::getVacancyFields();
+            $linkForRedirect = '/admin/render-list/vacancies';
+            $this->cacheService->deleteKeyFromCache('vacancy_'.$request->id);
+        } elseif ($request->entity == 'review') {
+            $element = Reviews::find($request->id);
+            $arrFields = Reviews::getReviewFields();
+            $linkForRedirect = '/admin/render-list/reviews';
+        }
+
+        foreach ($arrFields as $field) {
+            $element->$field = $request->$field;
+        }
+
+        $element->save();
+        return redirect($linkForRedirect);
+    }
 
 
     public function deleteEntity(Request $request)  {
@@ -258,6 +240,10 @@ class AdminController extends BaseController
         Charts::renderLineChart('New vacancies', $chartData['QUANTITY'], $chartData['MONTHS']);
     }
 
+    /**Pie charts
+     *
+     * @param $entity
+     */
     public function renderRatioAnalytics($entity) {
         if ($entity == 'users') {
             $candidatesQuantity = User::candidates()->count();
@@ -273,6 +259,5 @@ class AdminController extends BaseController
         }
         Charts::renderPieChart($arrData, $arrTitles);
     }
-
 
 }

@@ -19,17 +19,15 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         //ROLES:
-
         $roleAdmin = Role::where('name', 'admin')->firstOrFail();
         $roleCandidate = Role::where('name', 'candidate')->firstOrFail();
         $roleCompany = Role::where('name', 'company')->firstOrFail();
 
-
         //ADMIN
         User::create([
             'NAME' => 'admin',
-            'EMAIL' => 'admin@gmail.com',
-            'password' => bcrypt('almaz'),
+            'EMAIL' => 'admin@admin.com',
+            'password' => bcrypt('A1P2vK'),
             'role_id' => $roleAdmin->id,
         ]);
 

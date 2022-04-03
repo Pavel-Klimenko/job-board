@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-use \Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,63 +113,42 @@ Auth::routes();
 
 //Admin panel routes
 
-
-//TODO: здесь сделать одни и те же методы, а внутри менять классы интерфейсом
-
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin.area'], function () {
     Route::get('main', [Controllers\AdminController::class, 'renderAdminPanel'])
         ->name('admin-main');
+
     Route::get('main/{name}', [Controllers\AdminController::class, 'renderUserList'])
         ->name('admin-users');
+
+    Route::get('render-list/{entity}', [Controllers\AdminController::class, 'renderList'])
+        ->name('render-list');
+
 
     Route::post('admin-update-user', [Controllers\AdminController::class, 'updateUserInfo'])
         ->name('admin-update-user');
 
-    Route::get('admin/vacancies', [Controllers\AdminController::class, 'renderVacanciesList'])
-        ->name('admin-vacancies');
-
-    Route::get('admin/reviews', [Controllers\AdminController::class, 'renderReviewsList'])
-        ->name('admin-reviews');
-
     Route::get('user/{id}', [Controllers\AdminController::class, 'renderUser'])
         ->name('admin-profile');
 
-    Route::get('vacancy/{id}', [Controllers\AdminController::class, 'renderVacancy'])
-        ->name('admin-vacancy');
+    Route::get('detail-page/{id}/{entity}', [Controllers\AdminController::class, 'renderEntity'])
+          ->name('render-entity');
 
-    Route::get('review/{id}', [Controllers\AdminController::class, 'renderReview'])
-        ->name('admin-review');
-
-
-
-    Route::post('admin-update-vacancy', [Controllers\AdminController::class, 'updateVacancy'])
-        ->name('admin-update-vacancy');
-
-    Route::post('admin-update-review', [Controllers\AdminController::class, 'updateReview'])
-        ->name('admin-update-review');
-
+    Route::post('update-entity', [Controllers\AdminController::class, 'updateEntity'])
+        ->name('update-entity');
 
     Route::get('admin-delete-entity', [Controllers\AdminController::class, 'deleteEntity'])
         ->name('admin-delete-entity');
     Route::get('admin-change-active-status', [Controllers\AdminController::class, 'changeActiveStatus'])
         ->name('admin-change-active-status');
 
-
     Route::get('analytics-line-chart/{entity}', [Controllers\AdminController::class, 'renderLineChartAnalytics'])
         ->name('analytics-line-chart');
 
     Route::get('analytics-pie-chart/{entity}', [Controllers\AdminController::class, 'renderRatioAnalytics'])
         ->name('analytics-pie-chart');
-
 });
-
-
 
 
 //debug routs
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
 Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo'])->middleware('auth');
-
-
-
-

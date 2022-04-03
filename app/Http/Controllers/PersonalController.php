@@ -28,6 +28,10 @@ class PersonalController extends BaseController
 
     public function getPersonalInfo()
     {
+        if (Helper::isAdmin()) {
+            return redirect()->route('admin-main');
+        }
+
         $user = auth()->user();
         $title = 'Personal info';
 
@@ -43,6 +47,11 @@ class PersonalController extends BaseController
 
     public function getCompanyVacancies()
     {
+        if (Helper::isAdmin()) {
+            return redirect()->route('admin-main');
+        }
+
+
         $title = 'Company vacancies';
         $user = auth()->user();
         $jobCategories = JobCategories::all();
@@ -60,6 +69,10 @@ class PersonalController extends BaseController
 
     public function getIterviewRequests($requestsType)
     {
+        if (Helper::isAdmin()) {
+            return redirect()->route('admin-main');
+        }
+
         $user = auth()->user();
         $isCompanyFlag = Helper::isCompany();
         $isCandidateFlag = Helper::isCandidate();
@@ -97,7 +110,6 @@ class PersonalController extends BaseController
 
     public function changeAdviceStatus($INVITE_ID, $STATUS)
     {
-
         $invitation = InterviewInvitations::find($INVITE_ID);
         $candidate = User::find($invitation->CANDIDATE_ID);
         $company = User::find($invitation->COMPANY_ID);
@@ -203,34 +215,34 @@ class PersonalController extends BaseController
 
     public function uploadUserImage(Request $request)
     {
-            if (Helper::isCompany()) {
-                $imgPath = Constants::USER_IMAGE_FOLDERS['companies'];
-            } elseif (Helper::isCandidate()) {
-                $imgPath = Constants::USER_IMAGE_FOLDERS['candidates'];
-            }
+        if (Helper::isCompany()) {
+            $imgPath = Constants::USER_IMAGE_FOLDERS['companies'];
+        } elseif (Helper::isCandidate()) {
+            $imgPath = Constants::USER_IMAGE_FOLDERS['candidates'];
+        }
 
-            $imageFullPath = $_SERVER['DOCUMENT_ROOT'].$imgPath;
-            $fileExtension = Helper::getExtension($_FILES["IMAGE"]["name"]);
-            $filename = uniqid() . '.' . $fileExtension;
-            move_uploaded_file($_FILES["IMAGE"]["tmp_name"], $imageFullPath.$filename);
+        $imageFullPath = $_SERVER['DOCUMENT_ROOT'].$imgPath;
+        $fileExtension = Helper::getExtension($_FILES["IMAGE"]["name"]);
+        $filename = uniqid() . '.' . $fileExtension;
+        move_uploaded_file($_FILES["IMAGE"]["tmp_name"], $imageFullPath.$filename);
 
-            $linkToImage = $imgPath.$filename;
+        $linkToImage = $imgPath.$filename;
 
-            $user = User::find(Auth::user()->id);
-            $user->IMAGE = $linkToImage;
-            $user->ACTIVE = 0;
-            $user->save();
+        $user = User::find(Auth::user()->id);
+        $user->IMAGE = $linkToImage;
+        $user->ACTIVE = 0;
+        $user->save();
 
-            //sending notification to admin
-            $date = (object) [
-                'entity' => 'user',
-                'message' =>  'User updated avatar',
-                'entity_id' => $user->id,
-            ];
+        //sending notification to admin
+        $date = (object) [
+            'entity' => 'user',
+            'message' =>  'User updated avatar',
+            'entity_id' => $user->id,
+        ];
 
-            event(new NewEntityCreated($date));
+        event(new NewEntityCreated($date));
 
-            return back();
+        return back();
     }
 
     public function updateUserInfo(Request $request)

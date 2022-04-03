@@ -16,9 +16,10 @@
                 <hr class="my-4">
             </div>
 
-            <form action="{{ route('admin-update-review') }}" method="post">
+            <form action="{{ route('update-entity') }}" method="post">
                 @csrf
                 <div class="col-lg-8">
+                    <input type="hidden" name="entity" class="form-control" value="review">
                     <input type="hidden" required name="id" class="form-control" value="{{$review->ID}}">
 
                     <div class="row mb-3">
