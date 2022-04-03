@@ -55,7 +55,7 @@ mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; 
 login: admin@admin.com<br/>
 password: A1P2vK<br/>
 
-<b>Registerd user password: almaz</b><br/>
+<b>Registerd user password:</b> almaz<br/>
 
 
 Link to the site deployed project: https://bestest.xyz/
