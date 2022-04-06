@@ -35,7 +35,8 @@ Technology stack:
 12) email alerts to email addresses of candidates and companies
 13) queues
 14) caching
-15) scheduled tasks    
+15) scheduled tasks
+16) custom admin panel
 
 
 <h3>Deploying the project:</h3>
