@@ -59,6 +59,3 @@ password: A1P2vK<br/>
 <b>Registered demo users (candidates, companies):</b><br/>
 login: user`s email<br/>
 password: almaz<br/>
-
-
-Link to the site deployed project: https://bestest.xyz/
