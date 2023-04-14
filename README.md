@@ -37,25 +37,3 @@ Technology stack:
 14) caching
 15) scheduled tasks
 16) custom admin panel
-
-
-<h3>Deploying the project:</h3>
-
-1) clone the project: git clone https://github.com/Pavel-Klimenko/job-board.git
-2) install external assets: composer install; npm install
-3) copy file .env.example to .env in root folder: copy .env.example .env
-5) open the .env file and set the connection to the project database, the name of the application and the url address APP_URL
-6) generate Application key: php artisan key:generate
-7) create cache folder tree: 
-mkdir storage; mkdir storage/framework/; mkdir storage/logs; mkdir storage/app; mkdir storage/framework/{cache,sessions,views}; mkdir storage/framework/cache/data; 
-8) create tables in database: php artisan migrate
-9) seeding demo data: php artisan db:seed --class=DemoDataSeeder
-
-
-<b>Admin credentials:</b><br/>
-login: admin@admin.com<br/>
-password: A1P2vK<br/>
-
-<b>Registered demo users (candidates, companies):</b><br/>
-login: user`s email<br/>
-password: almaz<br/>
