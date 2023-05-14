@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
+
+use App\Containers\Vacancies\UI\WEB\Controllers\VacancyController;
+use App\Containers\Candidates\UI\WEB\Controllers\CandidateController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +19,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+//TODO роуты для porto
+Route::get('browse-job', [VacancyController::class, 'getVacancies'])->name('browse-job');
+
+Route::group(['prefix' => 'detail-page'], function () {
+    Route::get('vacancy/{id}', [VacancyController::class, 'getVacancy'])->name('show-vacancy');
+    Route::get('candidate/{id}', [CandidateController::class, 'getCandidate'])->name('show-candidate');
+});
+
+
+
+
+
+//TODO перенести роутеры в конейнеры
+
 Route::get('test-email', [Controllers\JobController::class, 'enqueue'])->name('add-mail-to-queue');
 
 
@@ -25,16 +44,21 @@ Route::group(['prefix' => 'ajax'], function () {
 
 
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
-Route::get('browse-job', [Controllers\VacancyController::class, 'getVacancies'])->name('browse-job');
+
+
+//Route::get('browse-job', [Controllers\VacancyController::class, 'getVacancies'])->name('browse-job');
+
+
+
 Route::get('candidates', [Controllers\CandidateController::class, 'getCandidates'])->name('candidates');
 Route::get('contact', [Controllers\ContactController::class, 'renderContactPage'])->name('contact');
 Route::post('contact-us', [Controllers\ContactController::class, 'addUserMessage'])->name('contact-us');
 
 
-Route::group(['prefix' => 'detail-page'], function () {
+/*Route::group(['prefix' => 'detail-page'], function () {
     Route::get('vacancy/{id}', [Controllers\VacancyController::class, 'getVacancy'])->name('show-vacancy');
     Route::get('candidate/{id}', [Controllers\CandidateController::class, 'getCandidate'])->name('show-candidate');
-});
+});*/
 
 
 Route::group(['prefix' => 'form'], function () {

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+
+//TODO перенес в конейнер. Удалить!
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
