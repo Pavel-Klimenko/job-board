@@ -1,8 +1,7 @@
 <?php
 
-//TODO перенесено в ship, удалить
+namespace App\Ship\Contracts;
 
-namespace App\Contracts;
 
 interface CacheContract
 {

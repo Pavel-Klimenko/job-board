@@ -32,8 +32,6 @@ class VacancyController extends BaseController
 
     public function getVacancies(Request $request)
     {
-
-
         $getVacancies = new Actions\getVacancies();
         //TODO разобраться с Request
         $vacancies = $getVacancies->run($request);
@@ -89,7 +87,6 @@ class VacancyController extends BaseController
     }
 
 
-
     public function createVacancy(Request $request)
     {
         sleep(1);
@@ -136,30 +133,31 @@ class VacancyController extends BaseController
         return redirect()->route('personal-vacancies');
     }
 
+
     public function getVacancy($id)
     {
-        $cachedObject = $this->cacheService->getObjectIntoCache('vacancy_'.$id);
-        if (isset($cachedObject) && $cachedObject) {
-            $vacancy = $cachedObject;
-        } else {
-            $vacancy = Vacancies::find($id);
-            $this->cacheService->putObjectIntoCache('vacancy_'.$id, $vacancy);
+        //TODO разобраться с инициированием классов
+
+        $getVacancy= new Actions\getVacancy($this->cacheService);
+        $vacancy = $getVacancy->run($id);
+
+        if ($vacancy) {
+            $getCategory = new Actions\getCategory();
+            $category = $getCategory->run($vacancy);
+
+            $getCompany = new Actions\getCompany();
+            $company = $getCompany->run($vacancy);
         }
 
-        $category = Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
-        $company = Helper::getTableRow(User::class, 'ID', $vacancy->COMPANY_ID);
 
         $isCandidateFlag = Helper::isCandidate();
         $isCompanyFlag = Helper::isCompany();
 
+
         if ($isCandidateFlag) {
             $candidate = auth()->user();
-
-            $candidateInvitation = InterviewInvitations::select('ID','STATUS')
-                ->where('CANDIDATE_ID', $candidate->id)
-                ->where('COMPANY_ID', $company->id)
-                ->where('VACANCY_ID', $vacancy->ID)
-                ->first();
+            $getCandidateInvitations = new Actions\getCandidateInvitations();
+            $candidateInvitation = $getCandidateInvitations->run($candidate, $company, $vacancy);
 
             return view('detail_pages.vacancy',
                 compact('vacancy', 'category', 'company', 'isCompanyFlag', 'isCandidateFlag', 'candidateInvitation'));
@@ -172,10 +170,12 @@ class VacancyController extends BaseController
         }
     }
 
+
     public function deleteVacancy(Request $request)
     {
-        $vacancy = Vacancies::find($request->VACANCY_ID);
-        $vacancy->delete();
+        $deleteVacancy = new Actions\deleteVacancy();
+        //TODO разобраться с Request
+        $deleteVacancy->run($request);
         $this->cacheService->deleteKeyFromCache('vacancy_'.$request->VACANCY_ID);
         return back();
     }

@@ -1,12 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Containers\Vacancies\Models;
 
-//TODO перенес в конейнер. Удалить!
-
-use App\Constants;
-use App\Services\Helper;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InterviewInvitations extends Model
