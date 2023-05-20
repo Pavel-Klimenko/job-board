@@ -1,6 +1,6 @@
 <?php
 
-namespace LargeLaravel\Ship\Providers;
+namespace App\Ship\Providers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -33,18 +33,18 @@ class RouteServiceProvider extends ServiceProvider
             $uiRouteProviderList = [];
             $filesystem = new Filesystem();
 
-            foreach ($filesystem->directories(app_path('src/Containers')) as $directory) {
+            foreach ($filesystem->directories(app_path('Containers')) as $directory) {
                 $uiModuleName = last(explode('/', $directory));
 
                 $webRouteProvider = $directory . '/UI/WEB/Routes/RouteProvider.php';
                 if (file_exists($webRouteProvider)) {
-                    $webProviderClass = 'LargeLaravel\Containers\\' . $uiModuleName . '\UI\WEB\Routes\RouteProvider';
+                    $webProviderClass = 'App\Containers\\' . $uiModuleName . '\UI\WEB\Routes\RouteProvider';
                     $uiRouteProviderList[] = $webProviderClass;
                 }
 
                 $apiRouteProvider = $directory . '/UI/API/Routes/RouteProvider.php';
                 if (file_exists($apiRouteProvider)) {
-                    $apiProviderClass = 'LargeLaravel\Containers\\' . $uiModuleName . '\UI\API\Routes\RouteProvider';
+                    $apiProviderClass = 'App\Containers\\' . $uiModuleName . '\UI\API\Routes\RouteProvider';
                     $uiRouteProviderList[] = $apiProviderClass;
                 }
             }

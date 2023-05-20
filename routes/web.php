@@ -21,12 +21,12 @@ use App\Containers\Candidates\UI\WEB\Controllers\CandidateController;
 
 
 //TODO роуты для porto
-Route::get('browse-job', [VacancyController::class, 'getVacancies'])->name('browse-job');
+//Route::get('browse-job', [VacancyController::class, 'getVacancies'])->name('browse-job');
 
-Route::group(['prefix' => 'detail-page'], function () {
+/*Route::group(['prefix' => 'detail-page'], function () {
     Route::get('vacancy/{id}', [VacancyController::class, 'getVacancy'])->name('show-vacancy');
     Route::get('candidate/{id}', [CandidateController::class, 'getCandidate'])->name('show-candidate');
-});
+});*/
 
 
 
