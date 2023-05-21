@@ -29,30 +29,23 @@ use App\Containers\Candidates\UI\WEB\Controllers\CandidateController;
 });*/
 
 
+/*Route::group(['prefix' => 'ajax'], function () {
+    Route::post('get-vacancy',[Controllers\AjaxController::class, 'getVacancyById']);
+});*/
 
 
 
 //TODO перенести роутеры в конейнеры
 
 Route::get('test-email', [Controllers\JobController::class, 'enqueue'])->name('add-mail-to-queue');
-
-
-Route::group(['prefix' => 'ajax'], function () {
-    Route::post('get-vacancy',[Controllers\AjaxController::class, 'getVacancyById']);
-});
-
-
-
 Route::get('/', [Controllers\HomePageController::class, 'renderHomePage'])->name('homepage');
 
 
 //Route::get('browse-job', [Controllers\VacancyController::class, 'getVacancies'])->name('browse-job');
+//Route::get('candidates', [Controllers\CandidateController::class, 'getCandidates'])->name('candidates');
 
-
-
-Route::get('candidates', [Controllers\CandidateController::class, 'getCandidates'])->name('candidates');
-Route::get('contact', [Controllers\ContactController::class, 'renderContactPage'])->name('contact');
-Route::post('contact-us', [Controllers\ContactController::class, 'addUserMessage'])->name('contact-us');
+/*Route::get('contact', [Controllers\ContactController::class, 'renderContactPage'])->name('contact');
+Route::post('contact-us', [Controllers\ContactController::class, 'addUserMessage'])->name('contact-us');*/
 
 
 /*Route::group(['prefix' => 'detail-page'], function () {
@@ -67,7 +60,7 @@ Route::group(['prefix' => 'form'], function () {
 
 
 //company routes
-Route::middleware(['company.area'])->group(function () {
+/*Route::middleware(['company.area'])->group(function () {
     Route::group(['prefix' => 'form'], function () {
         Route::view('add-vacancy', 'forms.addVacancy')->name('add-vacancy');
     });
@@ -84,23 +77,23 @@ Route::middleware(['company.area'])->group(function () {
         Route::post('create-review', [Controllers\HomePageController::class, 'createUserReview'])
             ->name('create-review');
     });
-});
+});*/
 
 
 //candidate routes
-Route::middleware(['candidate.area'])->group(function () {
+/*Route::middleware(['candidate.area'])->group(function () {
     Route::group(['prefix' => 'form'], function () {
         Route::view('add-candidate', 'forms.addCandidateCV')->name('add-candidate');
     });
     Route::group(['prefix' => 'create'], function () {
         Route::post('candidate', [Controllers\CandidateController::class, 'createCandidate'])->name('create-candidate');
     });
-});
+});*/
 
 
 
 //Personal Area
-Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
+/*Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
     Route::get('info', [Controllers\PersonalController::class, 'getPersonalInfo'])
         ->name('personal-info');
     Route::get('vacancies', [Controllers\PersonalController::class, 'getCompanyVacancies'])
@@ -119,14 +112,14 @@ Route::group(['prefix' => 'personal', 'middleware' => 'auth'], function () {
     Route::post('update-user-info', [Controllers\PersonalController::class, 'updateUserInfo'])
         ->name('update-user-info');
 
- /*   Route::post('update-vacancy', [Controllers\PersonalController::class, 'updateUserInfo'])
-        ->name('update-vacancy');*/
-});
+   Route::post('update-vacancy', [Controllers\PersonalController::class, 'updateUserInfo'])
+        ->name('update-vacancy');
+});*/
 
 
-Route::get('personal', [Controllers\PersonalController::class, 'getCompanyVacancies'])
+/*Route::get('personal', [Controllers\PersonalController::class, 'getCompanyVacancies'])
     ->name('personal')
-    ->middleware('auth');
+    ->middleware('auth');*/
 
 Route::get('logout', [Controllers\Auth\LoginController::class, 'logout'])
     ->name('logout')
@@ -137,7 +130,7 @@ Auth::routes();
 
 //Admin panel routes
 
-Route::group(['prefix' => 'admin', 'middleware' => 'admin.area'], function () {
+/*Route::group(['prefix' => 'admin', 'middleware' => 'admin.area'], function () {
     Route::get('main', [Controllers\AdminController::class, 'renderAdminPanel'])
         ->name('admin-main');
 
@@ -170,9 +163,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin.area'], function () {
 
     Route::get('analytics-pie-chart/{entity}', [Controllers\AdminController::class, 'renderRatioAnalytics'])
         ->name('analytics-pie-chart');
-});
+});*/
 
 
 //debug routs
+//TODO в корабль!
 Route::get('test', [Controllers\TestController::class, 'testMethod']);
 Route::get('phpinfo', [Controllers\TestController::class, 'phpinfo'])->middleware('auth');

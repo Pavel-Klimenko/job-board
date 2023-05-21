@@ -1,9 +1,5 @@
 <?php
-namespace App\Http\Controllers;
-
-
-//TODO перенесено в контейнер
-
+namespace App\Containers\Contact\UI\WEB\Controllers;
 
 use App\Contracts\CacheContract;
 use App\Constants;
@@ -17,18 +13,18 @@ use Illuminate\Support\Facades\Auth;
 class ContactController extends BaseController
 {
 
-/*    protected $cacheService;
+    protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
-    }*/
+    }
 
 
     /**Rendering the page with JobBoard info
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-/*    public function renderContactPage() {
+    public function renderContactPage() {
         $contactData = [
           'ADDRESS' => Constants::ADDRESS,
           'PHONE' => Constants::PHONE,
@@ -43,9 +39,9 @@ class ContactController extends BaseController
         }
 
         return view('contact', $contactData);
-    }*/
+    }
 
-/*    public function addUserMessage(Request $request)
+    public function addUserMessage(Request $request)
     {
         sleep(1);
 
@@ -74,6 +70,6 @@ class ContactController extends BaseController
         event(new NewUserMessage($date));
 
         return redirect()->route('homepage');
-    }*/
+    }
 
 }

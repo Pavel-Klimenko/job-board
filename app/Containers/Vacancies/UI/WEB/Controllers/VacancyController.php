@@ -6,15 +6,13 @@ use App\Containers\Vacancies\Actions;
 
 use App\Contracts\CacheContract;
 use App\Events\NewEntityCreated;
-use App\Models\InterviewInvitations;
-use App\Models\JobCategories;
 use App\Models\User;
 use App\Services\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 
-//use App\Models\Vacancies;
+use App\Containers\Vacancies\Models\Vacancies;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -27,6 +25,11 @@ class VacancyController extends BaseController
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
+    }
+
+    public function getVacancyById(Request $request) {
+        $vacancy = Vacancies::find($request->ID);
+        return response()->json(array('vacancy'=> $vacancy), 200);
     }
 
 
@@ -212,6 +215,5 @@ class VacancyController extends BaseController
 
         return back();
     }
-
 
 }

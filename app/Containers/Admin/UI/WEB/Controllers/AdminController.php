@@ -1,10 +1,6 @@
 <?php
 
-
-//TODO пересено в котейнер
-
-
-/*namespace App\Http\Controllers;
+namespace App\Containers\Admin\UI\WEB\Controllers;
 
 use App\Models\InterviewInvitations;
 use function Doctrine\Common\Cache\Psr6\get;
@@ -18,21 +14,21 @@ use App\Services\Helper;
 use App\Services\Charts;
 use Illuminate\Http\Request;
 use App\Models\JobCategories;
-use App\Contracts\CacheContract;*/
+use App\Contracts\CacheContract;
 
 class AdminController extends BaseController
 {
-/*    protected $candidatesRole;
+    protected $candidatesRole;
     protected $companiesRole;
     protected $roles;
     protected $jobCategories;
-    protected $cacheService;*/
+    protected $cacheService;
 
 
     //TODO разобраться с '/////////' в JSON полях
 
 
-/*    public function __construct(CacheContract $cacheService) {
+    public function __construct(CacheContract $cacheService) {
         $this->candidatesRole = Constants::USER_ROLE_NAMES['candidate'];
         $this->companiesRole = Constants::USER_ROLE_NAMES['company'];
         $this->roles = Roles::all();
@@ -47,9 +43,9 @@ class AdminController extends BaseController
 
         return view('admin_area.main',
             compact( 'candidatesRole', 'companiesRole'));
-    }*/
+    }
 
-/*    public function renderUserList($userType) {
+    public function renderUserList($userType) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -65,9 +61,9 @@ class AdminController extends BaseController
         $arrVariables = ['candidatesRole', 'companiesRole', 'users', 'userType'];
 
         return view($view, compact($arrVariables));
-    }*/
+    }
 
-/*    public function renderUser($id) {
+    public function renderUser($id) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
         $user = User::find($id);
@@ -81,9 +77,9 @@ class AdminController extends BaseController
             $arrVariables = ['user','candidatesRole', 'companiesRole'];
         }
         return view($view, compact($arrVariables));
-    }*/
+    }
 
-/*    public function updateUserInfo(Request $request)
+    public function updateUserInfo(Request $request)
     {
         $user = User::find($request->id);
 
@@ -103,9 +99,9 @@ class AdminController extends BaseController
 
         $user->save();
         return redirect()->route('admin-users', ['name' => $userList]);
-    }*/
+    }
 
-/*    public function renderList($entity) {
+    public function renderList($entity) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -121,9 +117,9 @@ class AdminController extends BaseController
         $listElements = $model::paginate($itemsOnPage);
         $arrVariables = ['listElements', 'candidatesRole', 'companiesRole'];
         return view($view, compact($arrVariables));
-    }*/
+    }
 
-/*    public function renderEntity($id, $entity) {
+    public function renderEntity($id, $entity) {
         $candidatesRole = $this->candidatesRole;
         $companiesRole = $this->companiesRole;
 
@@ -141,9 +137,9 @@ class AdminController extends BaseController
         }
 
         return view($view, compact($arrVariables));
-    }*/
+    }
 
-/*    public function updateEntity(Request $request)
+    public function updateEntity(Request $request)
     {
         if ($request->entity == 'vacancy') {
             $element = Vacancies::find($request->id);
@@ -162,10 +158,10 @@ class AdminController extends BaseController
 
         $element->save();
         return redirect($linkForRedirect);
-    }*/
+    }
 
 
-/*    public function deleteEntity(Request $request)  {
+    public function deleteEntity(Request $request)  {
         if (in_array($request->entity, Constants::USER_ENTITIES)) {
             $model = User::class;
             $cachePrefix = 'user_';
@@ -184,9 +180,9 @@ class AdminController extends BaseController
         }
 
         return back();
-    }*/
+    }
 
-/*    public function changeActiveStatus(Request $request)  {
+    public function changeActiveStatus(Request $request)  {
         if (in_array($request->entity, Constants::USER_ENTITIES)) {
             $model = User::class;
             $cachePrefix = 'user_';
@@ -206,14 +202,14 @@ class AdminController extends BaseController
         }
 
         return back();
-    }*/
+    }
 
 
     /**Line chart of growth since start of the current year
      *
      * @param $entity
      */
-/*    public function renderLineChartAnalytics($entity) {
+    public function renderLineChartAnalytics($entity) {
        $currentMonth = Helper::getCurrentMonth();
 
        $quantityOfMonths = $currentMonth;
@@ -242,13 +238,13 @@ class AdminController extends BaseController
         }
 
         Charts::renderLineChart('New vacancies', $chartData['QUANTITY'], $chartData['MONTHS']);
-    }*/
+    }
 
     /**Pie charts
      *
      * @param $entity
      */
-/*    public function renderRatioAnalytics($entity) {
+    public function renderRatioAnalytics($entity) {
         if ($entity == 'users') {
             $candidatesQuantity = User::candidates()->count();
             $companiesQuantity = User::companies()->count();
@@ -262,6 +258,6 @@ class AdminController extends BaseController
             $arrTitles = ["Accepted", "Rejected", "No status"];
         }
         Charts::renderPieChart($arrData, $arrTitles);
-    }*/
+    }
 
 }

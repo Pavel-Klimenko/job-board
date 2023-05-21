@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
+//TODO перенесено в контейнер
+
+
 use App\Models\InterviewInvitations;
 use App\Models\User;
 use App\Services\Helper;
@@ -14,18 +18,18 @@ use App\Contracts\CacheContract;
 
 class CandidateController extends BaseController
 {
-    protected $cacheService;
+/*    protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
-    }
+    }*/
 
     /**Get Vacancies using filter
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function getCandidates(Request $request)
+ /*   public function getCandidates(Request $request)
     {
         $arrRequest = $request->all();
         $candidates = User::candidates()->where('ACTIVE', 1);
@@ -71,7 +75,7 @@ class CandidateController extends BaseController
         $candidates = $candidates->paginate($itemsOnPage)->withQueryString();
 
         return view('lists.candidates', compact('candidates'));
-    }
+    }*/
 
 
     /**Get candidate CV from the table
@@ -79,7 +83,7 @@ class CandidateController extends BaseController
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function getCandidate($id)
+/*    public function getCandidate($id)
     {
         $cachedObject = $this->cacheService->getObjectIntoCache('user_'.$id);
         if (isset($cachedObject) && $cachedObject) {
@@ -121,7 +125,7 @@ class CandidateController extends BaseController
         $inquries->VACANCY_ID = $request->VACANCY_ID;
         $inquries->COVERING_LETTER = $request->COVERING_LETTER;
         $inquries->save();
-    }
+    }*/
 
 
 }

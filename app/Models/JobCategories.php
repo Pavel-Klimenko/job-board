@@ -10,6 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobCategories extends Model
 {
-    protected $table = 'job_categories';
-    protected $primaryKey = 'ID';
+/*    protected $table = 'job_categories';
+    protected $primaryKey = 'ID';*/
 }

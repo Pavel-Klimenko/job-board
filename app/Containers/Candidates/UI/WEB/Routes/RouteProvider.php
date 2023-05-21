@@ -18,8 +18,20 @@ class RouteProvider extends ServiceProvider
 
     private function candidatesRoute(): void
     {
+        Route::get('candidates', [CandidateController::class, 'getCandidates'])->name('candidates');
+
         Route::group(['prefix' => 'detail-page'], function () {
             Route::get('candidate/{id}', [CandidateController::class, 'getCandidate'])->name('show-candidate');
+        });
+
+
+        Route::middleware(['candidate.area'])->group(function () {
+            Route::group(['prefix' => 'form'], function () {
+                Route::view('add-candidate', 'forms.addCandidateCV')->name('add-candidate');
+            });
+            Route::group(['prefix' => 'create'], function () {
+                Route::post('candidate', [CandidateController::class, 'createCandidate'])->name('create-candidate');
+            });
         });
     }
 

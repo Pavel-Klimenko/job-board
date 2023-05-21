@@ -23,5 +23,27 @@ class RouteProvider extends ServiceProvider
         Route::group(['prefix' => 'detail-page'], function () {
             Route::get('vacancy/{id}', [VacancyController::class, 'getVacancy'])->name('show-vacancy');
         });
+
+        Route::group(['prefix' => 'ajax'], function () {
+            Route::post('get-vacancy',[VacancyController::class, 'getVacancyById']);
+        });
+
+
+        Route::middleware(['company.area'])->group(function () {
+            Route::group(['prefix' => 'form'], function () {
+                Route::view('add-vacancy', 'forms.addVacancy')->name('add-vacancy');
+            });
+
+            Route::get('delete-vacancy', [VacancyController::class, 'deleteVacancy'])
+                ->name('delete-vacancy');
+
+            Route::post('update-vacancy', [VacancyController::class, 'updateVacancy'])
+                ->name('update-vacancy');
+
+            Route::group(['prefix' => 'create'], function () {
+                Route::post('vacancy', [VacancyController::class, 'createVacancy'])
+                    ->name('create-vacancy');
+            });
+        });
     }
 }

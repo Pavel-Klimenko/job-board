@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InterviewInvitations extends Model
 {
-    protected $table = 'invitations_to_interview';
+/*    protected $table = 'invitations_to_interview';
     protected $primaryKey = 'ID';
 
     public function scopeAccepted($query) {
@@ -24,6 +24,6 @@ class InterviewInvitations extends Model
 
     public function scopeNostatus($query) {
         return $query->where('STATUS', 'no_status');
-    }
+    }*/
 
 }

@@ -1,9 +1,6 @@
 <?php
 
-
-//TODO перенесено в контейнер
-
-/*namespace App\Http\Controllers;
+namespace App\Containers\Personal\UI\WEB\Controllers;
 
 use App\Events\NewEntityCreated;
 use App\Events\VacancyInterviewRequest;
@@ -14,14 +11,18 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Events\CandidateInvitation;
 use App\Contracts\CacheContract;
 
+
 use App\Models\User;
 use App\Models\Vacancies;
 use App\Models\InterviewInvitations;
 use App\Services\Helper;
-use App\Constants;*/
 
 
-/*class PersonalController extends BaseController
+
+use App\Constants;
+
+
+class PersonalController extends BaseController
 {
     protected $cacheService;
 
@@ -280,4 +281,4 @@ use App\Constants;*/
         return back();
     }
 
-}*/
+}

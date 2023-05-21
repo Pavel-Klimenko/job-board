@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+//TODO перенесено в контейнер
+
 use App\Contracts\CacheContract;
 use App\Events\NewEntityCreated;
 use App\Models\InterviewInvitations;
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 
 class VacancyController extends BaseController
 {
-    protected $cacheService;
+/*    protected $cacheService;
 
     public function __construct(CacheContract $cacheService){
         $this->cacheService = $cacheService;
@@ -116,9 +118,9 @@ class VacancyController extends BaseController
         event(new NewEntityCreated($date));
 
         return redirect()->route('personal-vacancies');
-    }
+    }*/
 
-    public function getVacancy($id)
+/*    public function getVacancy($id)
     {
         $cachedObject = $this->cacheService->getObjectIntoCache('vacancy_'.$id);
         if (isset($cachedObject) && $cachedObject) {
@@ -193,6 +195,6 @@ class VacancyController extends BaseController
         event(new NewEntityCreated($date));
 
         return back();
-    }
+    }*/
 
 }
