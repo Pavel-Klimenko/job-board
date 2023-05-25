@@ -14,9 +14,6 @@ use App\Ship\Helpers\Helper;
 
 class getCategory
 {
-    //TODO подключить репозиторий в конструкторе (работа с БД)
-    //TODO разобраться с Request
-
     public function run($vacancy) {
         return Helper::getTableRow(JobCategories::class, 'ID', $vacancy->CATEGORY_ID);
     }

@@ -12,18 +12,11 @@ use Illuminate\Http\Request;
 
 use App\Containers\Vacancies\Models\JobCategories;
 use App\Containers\Vacancies\Models\Vacancies;
-
-//use App\Models\User;
-
 use App\Ship\Helpers\Helper;
 
 
 class getVacancies
 {
-    //TODO подключить репозиторий в конструкторе (работа с БД)
-
-    //TODO разобраться с Request
-
     public function run(Request $request) {
         $arrRequest = $request->all();
         $vacancies = new Vacancies();
@@ -37,7 +30,6 @@ class getVacancies
         $filterParams = ['CATEGORY_ID', 'CITY', 'COMPANY_ID'];
 
         if (!empty($arrRequest)) {
-
             //assembling filter params
             $arrFilter = [];
             foreach ($arrRequest as $paramName => $paramValue) {
@@ -70,5 +62,4 @@ class getVacancies
 
         return $vacancies;
     }
-
 }

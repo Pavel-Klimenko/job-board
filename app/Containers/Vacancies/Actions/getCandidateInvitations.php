@@ -8,16 +8,11 @@
 
 namespace App\Containers\Vacancies\Actions;
 
-
 use App\Containers\Vacancies\Models\InterviewInvitations;
 
 
 class getCandidateInvitations
 {
-    //TODO подключить репозиторий в конструкторе (работа с БД)
-
-    //TODO разобраться с Request
-
     public function run($candidate, $company, $vacancy) {
         $candidateInvitation = InterviewInvitations::select('ID','STATUS')
             ->where('CANDIDATE_ID', $candidate->id)
@@ -27,5 +22,4 @@ class getCandidateInvitations
 
         return $candidateInvitation;
     }
-
 }

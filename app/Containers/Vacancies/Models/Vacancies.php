@@ -1,10 +1,5 @@
 <?php
-
 namespace App\Containers\Vacancies\Models;
-
-
-
-//TODO перенес в конейнер. Удалить!
 
 //use App\Services\Helper;
 //use Illuminate\Database\Eloquent\Factories\HasFactory;

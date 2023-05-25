@@ -5,14 +5,14 @@ namespace App\Models;
 
 //TODO перенес в конейнер. Удалить!
 
-/*use App\Services\Helper;
+use App\Services\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;*/
+use App\Models\User;
 
 class Vacancies extends Model
 {
-/*    protected $guarded = [];
+   protected $guarded = [];
     protected $table = 'vacancies';
     protected $primaryKey = 'ID';
 
@@ -24,6 +24,6 @@ class Vacancies extends Model
             'CATEGORY_ID', 'SALARY_FROM', 'DESCRIPTION',
             'RESPONSIBILITY', 'QUALIFICATIONS', 'BENEFITS'
         ];
-    }*/
+    }
 
 }
