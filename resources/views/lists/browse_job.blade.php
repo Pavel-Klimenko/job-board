@@ -31,8 +31,8 @@
                             @if (count($vacancies) > 0)
                                 @foreach ($vacancies as $vacancy)
                                     @php
-                                        $model = \App\Models\JobCategories::class;
-                                        $catedory = \App\Services\Helper::getTableRow($model, 'ID', $vacancy->CATEGORY_ID);
+                                        $model = \App\Containers\Vacancies\Models\JobCategories::class;
+                                        $catedory = \App\Ship\Helpers\Helper::getTableRow($model, 'ID', $vacancy->CATEGORY_ID);
                                     @endphp
                                     <div class="col-lg-12 col-md-12">
                                         <div class="single_jobs white-bg d-flex justify-content-between">

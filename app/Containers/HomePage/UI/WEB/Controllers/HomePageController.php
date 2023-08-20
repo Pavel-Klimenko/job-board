@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Containers\HomePage\UI\WEB\Controllers;
 
 use App\Contracts\CacheContract;
 use App\Events\NewEntityCreated;
 use App\Models\User;
-use App\Services\Helper;
+use App\Ship\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Routing\Controller;
 use App\Models\Reviews;
-use App\Models\JobCategories;
-use App\Models\Vacancies;
+use App\Containers\Vacancies\Models\JobCategories;
+use App\Containers\Vacancies\Models\Vacancies;
 use App\Constants;
 
 class HomePageController extends Controller

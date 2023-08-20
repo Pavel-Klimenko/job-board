@@ -10,8 +10,8 @@
         <div class="row">
             @foreach ($companies as $company)
                 @php
-                $vacancyModel = \App\Models\Vacancies::class;
-                $companyVacanciesQuantity = \App\Services\Helper::countTableRow($vacancyModel, 'COMPANY_ID', $company->id);
+                $vacancyModel = \App\Containers\Vacancies\Models\Vacancies::class;
+                $companyVacanciesQuantity = \App\Ship\Helpers\Helper::countTableRow($vacancyModel, 'COMPANY_ID', $company->id);
                 @endphp
                     @if($companyVacanciesQuantity > 0)
                         <div class="col-lg-4 col-xl-3 col-md-6">

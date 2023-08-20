@@ -27,8 +27,8 @@
                             @foreach ($users as $user)
                                 @php
                                     if ($userType == 'candidate') {
-                                            $model = \App\Models\JobCategories::class;
-                                            $category = \App\Services\Helper::getTableRow($model, 'ID', $user->CATEGORY_ID);
+                                            $model = \App\Containers\Vacancies\Models\JobCategories::class;
+                                            $category = \App\Ship\Helpers\Helper::getTableRow($model, 'ID', $user->CATEGORY_ID);
                                     }
                                 @endphp
                                 <tr>

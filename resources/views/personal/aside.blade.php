@@ -1,8 +1,8 @@
 <aside class="single_sidebar_widget post_category_widget">
     <h4 class="widget_title">{{$title}}</h4>
     @php
-    $isCompanyFlag = \App\Services\Helper::isCompany();
-    $isCandidateFlag = \App\Services\Helper::isCandidate();
+    $isCompanyFlag = \App\Ship\Helpers\Helper::isCompany();
+    $isCandidateFlag = \App\Ship\Helpers\Helper::isCandidate();
     @endphp
     <ul class="list cat-list">
         <li>

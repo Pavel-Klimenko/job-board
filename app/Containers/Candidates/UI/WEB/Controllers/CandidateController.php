@@ -3,12 +3,12 @@
 
 namespace App\Containers\Candidates\UI\WEB\Controllers;
 
-use App\Models\InterviewInvitations;
+use App\Containers\Vacancies\Models\InterviewInvitations;
 use App\Models\User;
-use App\Services\Helper;
+use App\Ship\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use App\Models\JobCategories;
+use App\Containers\Vacancies\Models\JobCategories;
 use App\Contracts\CacheContract;
 
 

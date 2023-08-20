@@ -6,14 +6,11 @@ use App\Containers\Vacancies\Actions;
 
 use App\Contracts\CacheContract;
 use App\Events\NewEntityCreated;
-use App\Models\User;
-use App\Services\Helper;
+use App\Ship\Helpers\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
 
 use App\Containers\Vacancies\Models\Vacancies;
-use Illuminate\Support\Facades\Hash;
 
 
 class VacancyController extends BaseController

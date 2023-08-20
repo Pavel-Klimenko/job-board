@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use TCG\Voyager\Models\Role;
 use App\Constants;
-use App\Services\Helper;
-use App\Models\InterviewInvitations;
+use App\Ship\Helpers\Helper;
+use App\Containers\Vacancies\Models\InterviewInvitations;
 
 class User extends \TCG\Voyager\Models\User
 {

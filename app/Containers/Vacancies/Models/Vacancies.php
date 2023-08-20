@@ -1,10 +1,8 @@
 <?php
 namespace App\Containers\Vacancies\Models;
 
-//use App\Services\Helper;
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use App\Models\User;
+
 
 class Vacancies extends Model
 {

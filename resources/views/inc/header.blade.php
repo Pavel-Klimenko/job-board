@@ -29,7 +29,7 @@
 
                                         @if (Auth::guest())
                                             <li><a href="/login/">Login</a></li>
-                                        @elseif (\App\Services\Helper::isAdmin() == false)
+                                        @elseif (\App\Ship\Helpers\Helper::isAdmin() == false)
                                             <li><a href="{{ route('personal-info') }}">Personal area</a></li>
                                         @else
                                             <li><a href="{{ route('personal-info') }}">Admin area</a></li>

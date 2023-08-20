@@ -3,8 +3,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\DB;
-use App\Models\JobCategories;
-use App\Services\Helper;
+use App\Containers\Vacancies\Models\JobCategories;
+use App\Ship\Helpers\Helper;
 use App\Constants;
 
 class CandidatesFilter extends Component

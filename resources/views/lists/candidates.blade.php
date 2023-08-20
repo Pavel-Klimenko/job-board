@@ -31,8 +31,8 @@
                                 @foreach ($candidates as $candidate)
 
                                     @php
-                                    $model = \App\Models\JobCategories::class;
-                                    $catedory = \App\Services\Helper::getTableRow($model, 'ID', $candidate->CATEGORY_ID);
+                                    $model = \App\Containers\Vacancies\Models\JobCategories::class;
+                                    $catedory = \App\Ship\Helpers\Helper::getTableRow($model, 'ID', $candidate->CATEGORY_ID);
                                     @endphp
 
 

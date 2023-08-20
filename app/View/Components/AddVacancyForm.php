@@ -3,7 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use App\Models\JobCategories;
+use App\Containers\Vacancies\Models\JobCategories;
 
 class AddVacancyForm extends Component
 {

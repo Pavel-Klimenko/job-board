@@ -40,7 +40,7 @@
                                         @elseif($isCandidateFlag)
                                             @php
                                                 $model = \App\Models\User::class;
-                                                $company = \App\Services\Helper::getTableRow($model, 'id', $request->COMPANY_ID)
+                                                $company = \App\Ship\Helpers\Helper::getTableRow($model, 'id', $request->COMPANY_ID)
                                             @endphp
 
                                             @if($request->STATUS == 'accepted')

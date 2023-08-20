@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Containers\Job\UI\WEB\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;

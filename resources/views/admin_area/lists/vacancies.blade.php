@@ -24,10 +24,10 @@
                             <tbody>
                             @foreach ($listElements as $vacancy)
                                 @php
-                                    $jobCategories = \App\Models\JobCategories::class;
-                                    $category = \App\Services\Helper::getTableRow($jobCategories, 'ID', $vacancy->CATEGORY_ID);
+                                    $jobCategories = \App\Containers\Vacancies\Models\JobCategories::class;
+                                    $category = \App\Ship\Helpers\Helper::getTableRow($jobCategories, 'ID', $vacancy->CATEGORY_ID);
                                     $user = \App\Models\User::class;
-                                    $company = \App\Services\Helper::getTableRow($user, 'id', $vacancy->COMPANY_ID);
+                                    $company = \App\Ship\Helpers\Helper::getTableRow($user, 'id', $vacancy->COMPANY_ID);
                                 @endphp
 
 

@@ -4,7 +4,7 @@ namespace App\Containers\Personal\UI\WEB\Controllers;
 
 use App\Events\NewEntityCreated;
 use App\Events\VacancyInterviewRequest;
-use App\Models\JobCategories;
+use App\Containers\Vacancies\Models\JobCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,9 +13,9 @@ use App\Contracts\CacheContract;
 
 
 use App\Models\User;
-use App\Models\Vacancies;
-use App\Models\InterviewInvitations;
-use App\Services\Helper;
+use App\Containers\Vacancies\Models\Vacancies;
+use App\Containers\Vacancies\Models\InterviewInvitations;
+use App\Ship\Helpers\Helper;
 
 
 
