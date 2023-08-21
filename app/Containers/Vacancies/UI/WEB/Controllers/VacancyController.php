@@ -48,7 +48,7 @@ class VacancyController extends BaseController
             'BENEFITS' => 'required|max:2500',
         ]);
 
-        $newVacancy = app(Actions\createVacancy::class)->run($request);
+        $newVacancy = app(Actions\getCandidates::class)->run($request);
 
         //sending notification to admin
         $date = (object) [

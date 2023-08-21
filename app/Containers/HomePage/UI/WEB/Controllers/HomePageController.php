@@ -2,107 +2,22 @@
 
 namespace App\Containers\HomePage\UI\WEB\Controllers;
 
-use App\Contracts\CacheContract;
+use App\Containers\HomePage\Actions;
 use App\Events\NewEntityCreated;
-use App\Models\User;
-use App\Ship\Helpers\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller;
-use App\Models\Reviews;
-use App\Containers\Vacancies\Models\JobCategories;
-use App\Containers\Vacancies\Models\Vacancies;
-use App\Constants;
 
 class HomePageController extends Controller
 {
-    protected $cacheService;
-    public function __construct(CacheContract $cacheService){
-        $this->cacheService = $cacheService;
-    }
-
     public function renderHomePage()
     {
-        $cities = DB::table('vacancies')->select('CITY')
-            ->distinct()
-            ->where('CITY', '<>', '')
-            ->where('ACTIVE', 1)
-            ->get();
-
-        $jobCategories = JobCategories::all();
-        $vacancyCategories = $this->getVacanciesCategories();
-
-        $vacanciesQuantuty = 6;
-        $vacancies = Vacancies::limit($vacanciesQuantuty)->where('ACTIVE', 1)->get();
-
-        $candidatesQuantuty = 15;
-        $candidates = User::candidates()->limit($candidatesQuantuty)->where('ACTIVE', 1)->get();
-
-        $companiesQuantuty = 4;
-        $companies = User::companies()->limit($companiesQuantuty)->where('ACTIVE', 1)->get();
-
-        $reviewsQuantuty = 10;
-        $reviews = Reviews::limit($reviewsQuantuty)->where('ACTIVE', 1)->get();
-
-
-        return view('homepage',
-            compact('cities',
-                'jobCategories',
-                'vacancyCategories',
-                'vacancies',
-                'candidates' ,
-                'companies',
-                'reviews'
-            ));
+        return app(Actions\renderHomePage::class)->run();
     }
-
-
-    private function getVacanciesCategories()
-    {
-        return Vacancies::select('CATEGORY_ID')
-            ->distinct()
-            ->where('ACTIVE', 1)
-            ->limit(8)
-            ->get();
-    }
-
-
 
     public function createUserReview(Request $request)
     {
-        sleep(1);
-
-        $request->validate([
-            'NAME' => 'required|max:255',
-            'REVIEW' => 'required|max:2500',
-            'PHOTO' => 'required'
-        ]);
-
-        $imgPath = Constants::USER_IMAGE_FOLDERS['reviews'];
-        $imageFullPath = $_SERVER['DOCUMENT_ROOT'].$imgPath;
-        $fileExtension = Helper::getExtension($_FILES["PHOTO"]["name"]);
-        $filename = uniqid() . '.' . $fileExtension;
-        move_uploaded_file($_FILES["PHOTO"]["tmp_name"], $imageFullPath.$filename);
-        $linkToImage = $imgPath.$filename;
-
-
-        $arrReviewFields = [
-            'NAME' => $request->NAME,
-            'REVIEW' => $request->REVIEW,
-            'PHOTO' => $linkToImage,
-        ];
-
-        $newReview = Reviews::create($arrReviewFields);
-
-        //sending notification to admin
-        $date = (object) [
-            'entity' => 'review',
-            'message' =>  'Added new review',
-            'entity_id' => $newReview->ID,
-        ];
-
+        $date = app(Actions\createUserReview::class)->run($request);
         event(new NewEntityCreated($date));
-
         return redirect()->route('homepage');
     }
 

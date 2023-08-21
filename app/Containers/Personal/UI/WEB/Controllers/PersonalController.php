@@ -2,213 +2,54 @@
 
 namespace App\Containers\Personal\UI\WEB\Controllers;
 
+use Illuminate\Routing\Controller as BaseController;
+
+use App\Containers\Personal\Actions;
 use App\Events\NewEntityCreated;
 use App\Events\VacancyInterviewRequest;
-use App\Containers\Vacancies\Models\JobCategories;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Routing\Controller as BaseController;
 use App\Events\CandidateInvitation;
-use App\Contracts\CacheContract;
-
-
-use App\Models\User;
 use App\Containers\Vacancies\Models\Vacancies;
 use App\Containers\Vacancies\Models\InterviewInvitations;
 use App\Ship\Helpers\Helper;
 
 
-
-use App\Constants;
-
-
 class PersonalController extends BaseController
 {
-    protected $cacheService;
-
-    public function __construct(CacheContract $cacheService){
-        $this->cacheService = $cacheService;
-    }
-
     public function getPersonalInfo()
     {
-        if (Helper::isAdmin()) {
-            return redirect()->route('admin-main');
-        }
-
-        $user = auth()->user();
-        $title = 'Personal info';
-
-        if (Helper::isCompany()) {
-            return view('personal.companyInfo', compact('user', 'title'));
-        } elseif (Helper::isCandidate()) {
-            $jobCategories = JobCategories::all();
-            $category = Helper::getTableRow(\App\Models\JobCategories::class, 'ID', $user->CATEGORY_ID);
-            return view('personal.candidateInfo',
-                compact('user', 'title', 'category', 'jobCategories'));
-        }
+        return app(Actions\getPersonalInfo::class)->run();
     }
 
     public function getCompanyVacancies()
     {
-        if (Helper::isAdmin()) {
-            return redirect()->route('admin-main');
-        }
-
-
-        $title = 'Company vacancies';
-        $user = auth()->user();
-        $jobCategories = JobCategories::all();
-
-        $itemsOnPage = 4;
-        $vacancies = User::find($user->id)
-            ->vacancies()
-            ->where('ACTIVE', 1)
-            ->paginate($itemsOnPage)
-            ->withQueryString();
-
-        return view('personal.vacancies',
-            compact('vacancies', 'jobCategories', 'title'));
+        return app(Actions\getCompanyVacancies::class)->run();
     }
 
     public function getIterviewRequests($requestsType)
     {
-        if (Helper::isAdmin()) {
-            return redirect()->route('admin-main');
-        }
-
-        $user = auth()->user();
-        $isCompanyFlag = Helper::isCompany();
-        $isCandidateFlag = Helper::isCandidate();
-
-        $itemsOnPage = 2;
-        switch ($requestsType) {
-            case 'all':
-                $title = 'All interview requests';
-                $candidatesRequests = User::find($user->id)
-                    ->allAdvices()
-                    ->paginate($itemsOnPage)
-                    ->withQueryString();
-                break;
-            case 'accepted':
-                $title = 'Accepted interview requests';
-                $candidatesRequests = User::find($user->id)
-                    ->acceptedAdvices()
-                    ->paginate($itemsOnPage)
-                    ->withQueryString();
-
-                break;
-            case 'rejected':
-                $title = 'Rejected interview requests';
-                $candidatesRequests = User::find($user->id)
-                    ->rejectedAdvices()
-                    ->paginate($itemsOnPage)
-                    ->withQueryString();
-                break;
-        }
-
-
-        return view('personal.InterviewRequests',
-            compact('candidatesRequests', 'title', 'isCompanyFlag', 'isCandidateFlag'));
+        return app(Actions\getIterviewRequests::class)->run($requestsType);
     }
 
     public function changeAdviceStatus($INVITE_ID, $STATUS)
     {
-        $invitation = InterviewInvitations::find($INVITE_ID);
-        $candidate = User::find($invitation->CANDIDATE_ID);
-        $company = User::find($invitation->COMPANY_ID);
-
-        $invitation->STATUS = $STATUS;
-        $invitation->save();
-
-
-        //sending notification to candidate email
-        if ($STATUS == 'rejected') {
-            $message = 'Unfortunately company can\'t invite you to the interview';
-        } elseif ($STATUS == 'accepted') {
-            $message = 'You have been invited for an interview';
-        }
-
-       $date = (object)[
-            'name' => Constants::SITE_NAME,
-            'email' => Constants::EMAIL,
-            'message' => $message,
-            'candidate_email' => $candidate->EMAIL,
-            'company_name' => $company->NAME,
-            'company_email' => $company->EMAIL,
-            'company_phone' => $company->PHONE,
-            'company_website' => $company->WEB_SITE,
-            'vacancy_id' => $invitation->VACANCY_ID,
-            'vacancy_name' => $invitation->VACANCY_NAME,
-        ];
-
+        $date = app(Actions\changeAdviceStatus::class)->run($INVITE_ID, $STATUS);
         event(new CandidateInvitation($date));
         return back();
     }
 
     public function createInterviewInvite(Request $request)
     {
-
         $invitation = new InterviewInvitations();
         $vacancy = Helper::getTableRow(Vacancies::class, 'ID', $request->VACANCY_ID);
 
-
         if (Helper::isCompany()) {
-            $invitation->COMPANY_ID = Auth::user()->id;
-            $invitation->CANDIDATE_ID = $request->CANDIDATE_ID;
-            $invitation->CANDIDATE_NAME = $request->CANDIDATE_NAME;
-            $invitation->VACANCY_ID = $request->VACANCY_ID;
-            $invitation->VACANCY_NAME = $vacancy->NAME;
-            $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['ACCEPTED'];
-
-            $candidate = User::find($request->CANDIDATE_ID);
-
-            //sending notification to candidate email
-            $date = (object) [
-                'name' => Constants::SITE_NAME,
-                'email' => Constants::EMAIL,
-                'message' => 'You are invited for an interview!',
-                'candidate_email' => $candidate->EMAIL,
-                'company_name' => Auth::user()->NAME,
-                'company_email' => Auth::user()->EMAIL,
-                'company_phone' => Auth::user()->PHONE,
-                'company_website' => Auth::user()->WEB_SITE,
-                'vacancy_id' => $request->VACANCY_ID,
-                'vacancy_name' => $vacancy->NAME,
-            ];
-
+            $date = app(Actions\createInterviewInviteFromCompany::class)->run($invitation, $vacancy, $request);
             event(new CandidateInvitation($date));
         }
 
-
         if (Helper::isCandidate()) {
-            $invitation->COMPANY_ID = $request->COMPANY_ID;
-            $invitation->CANDIDATE_ID = Auth::user()->id;
-            $invitation->CANDIDATE_NAME = Auth::user()->NAME;
-            $invitation->VACANCY_ID = $request->VACANCY_ID;
-            $invitation->VACANCY_NAME = $vacancy->NAME;
-            $invitation->CANDIDATE_COVERING_LETTER = $request->CANDIDATE_COVERING_LETTER;
-            $invitation->STATUS = Constants::INTERVIEW_ADVICES_STATUSES['NO_STATUS'];
-
-            $candidate = User::find(Auth::user()->id);
-            $company = User::find($request->COMPANY_ID);
-
-            //sending notification to candidate email
-            $date = (object)[
-                'name' => Constants::SITE_NAME,
-                'email' => Constants::EMAIL,
-                //'template' => '',
-                'message' => 'Candidate send ad interview request',
-                'company_email' => $company->EMAIL,
-                'candidate_id' => $candidate->id,
-                'candidate_name' => $candidate->NAME,
-                'candidate_email' => $candidate->EMAIL,
-                'candidate_phone' => $candidate->PHONE,
-                'covering_letter' => $request->CANDIDATE_COVERING_LETTER,
-                'vacancy_id' => $request->VACANCY_ID,
-                'vacancy_name' => $vacancy->NAME,
-            ];
-
+            $date = app(Actions\createInterviewInviteFromCandidate::class)->run($invitation, $vacancy, $request);
             event(new VacancyInterviewRequest($date));
 
         }
@@ -219,64 +60,14 @@ class PersonalController extends BaseController
 
     public function uploadUserImage(Request $request)
     {
-        if (Helper::isCompany()) {
-            $imgPath = Constants::USER_IMAGE_FOLDERS['companies'];
-        } elseif (Helper::isCandidate()) {
-            $imgPath = Constants::USER_IMAGE_FOLDERS['candidates'];
-        }
-
-        $imageFullPath = $_SERVER['DOCUMENT_ROOT'].$imgPath;
-        $fileExtension = Helper::getExtension($_FILES["IMAGE"]["name"]);
-        $filename = uniqid() . '.' . $fileExtension;
-        move_uploaded_file($_FILES["IMAGE"]["tmp_name"], $imageFullPath.$filename);
-
-        $linkToImage = $imgPath.$filename;
-
-        $user = User::find(Auth::user()->id);
-        $user->IMAGE = $linkToImage;
-        $user->ACTIVE = 0;
-        $user->save();
-
-        //sending notification to admin
-        $date = (object) [
-            'entity' => 'user',
-            'message' =>  'User updated avatar',
-            'entity_id' => $user->id,
-        ];
-
+        $date = app(Actions\uploadUserImage::class)->run($request);
         event(new NewEntityCreated($date));
-
         return back();
     }
 
     public function updateUserInfo(Request $request)
     {
-        sleep(1);
-
-        $user = User::find(Auth::user()->id);
-
-        if (Helper::isCompany()) {
-            $arrUserFields = User::getCompanyFields();
-        } elseif (Helper::isCandidate()) {
-            $arrUserFields = User::getCandidateFields();
-        }
-
-        foreach ($arrUserFields as $field) {
-            $user->$field = $request->$field;
-        }
-        $user->ACTIVE = 0;
-        $user->save();
-
-        $this->cacheService->deleteKeyFromCache('user_'.$user->id);
-
-
-        //sending notification to admin
-        $date = (object) [
-            'entity' => 'user',
-            'message' =>  'User updated personal info',
-            'entity_id' => $user->id,
-        ];
-
+        $date = app(Actions\updateUserInfo::class)->run($request);
         event(new NewEntityCreated($date));
         return back();
     }

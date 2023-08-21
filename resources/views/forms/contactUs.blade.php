@@ -8,9 +8,9 @@
                           onblur="this.placeholder = 'Type your message'"
                           placeholder='Enter Message'>{{ old('MESSAGE') }}</textarea>
             </div>
-            @error('MESSAGE')
+{{--            @error('MESSAGE')
             <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
-            @enderror
+            @enderror--}}
         </div>
 
 
@@ -22,9 +22,9 @@
                        onblur="this.placeholder = 'Name'"
                        placeholder='Enter your name'>
             </div>
-            @error('NAME')
+{{--            @error('NAME')
             <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
-            @enderror
+            @enderror--}}
         </div>
 
 
@@ -36,9 +36,9 @@
                        onblur="this.placeholder = 'Email address'"
                        placeholder='Enter email address'>
             </div>
-            @error('EMAIL')
+{{--            @error('EMAIL')
             <div class="alert alert-danger">{{ mb_strtoupper($message) }}</div>
-            @enderror
+            @enderror--}}
         </div>
 
     </div>
